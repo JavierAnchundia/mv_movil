@@ -1,0 +1,13 @@
+{
+  "appId": "com.mapavirtual.app",
+  "appName": "mapavirtual",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

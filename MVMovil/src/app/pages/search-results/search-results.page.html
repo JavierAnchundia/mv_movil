@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/search"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Fallecidos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card
+    *ngFor="let difunto of this.lista_resultados"
+    routerLink="/ubicacion-fallecido"
+  >
+    <ion-item>
+      <ion-avatar>
+        <ion-icon name="person-circle-sharp" size="large"></ion-icon>
+      </ion-avatar>
+      <ion-label>{{difunto.nombre}} {{difunto.apellido}}</ion-label>
+    </ion-item>
+    <ion-card-content>
+      <h3><b>Fecha de nacimiento: </b>{{difunto.fecha_nacimiento}}</h3>
+      <h3><b>Fecha de defunción: </b>{{difunto.fecha_difuncion}}</h3>
+      <p><b>Nº lápida: </b>{{difunto.no_lapida}}</p>
+    </ion-card-content>
+  </ion-card>
+  
+</ion-content>

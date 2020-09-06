@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Buscar fallecido</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-list lines="full" class="ion-no-margin ion-no-padding">
+    <form [formGroup]="searchFG" (ngSubmit)="onSubmit(searchFG.value)">
+      <ion-item>
+        <ion-input
+          clearInput
+          type="text"
+          placeholder="Nombres del fallecido"
+          formControlName="nombres"
+        >
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          clearInput
+          type="text"
+          placeholder="Apellidos del fallecido"
+          formControlName="apellidos"
+        >
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Fecha defunción</ion-label>
+        <ion-datetime
+          value="1990-02-19"
+          placeholder="Seleccionar fecha"
+          formControlName="fechaDefuncion"
+        ></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>Tipo de sepultura</ion-label>
+        <ion-select interface="popover" formControlName="tipoSepultura">
+          <ion-select-option
+            *ngFor="let sep of this.lista_sepultura"
+            value="{{sep.id_tip_sepultura}}"
+            >{{sep.nombre}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Sector</ion-label>
+        <ion-select interface="popover" formControlName="sector">
+          <ion-select-option
+            *ngFor="let sec of this.lista_sector"
+            value="{{sec.id_sector}}"
+            >{{sec.nombre}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          clearInput
+          type="text"
+          placeholder="No. de lápida"
+          formControlName="noLapida"
+        >
+        </ion-input>
+      </ion-item>
+      <div class="ion-padding">
+        <ion-button expand="block" type="submit" class="ion-no-margin"
+          >Buscar</ion-button
+        >
+      </div>
+    </form>
+  </ion-list>
+  <div class="text-center">
+    <ion-spinner name="lines" color="tertiary" *ngIf="showSpinner"></ion-spinner>
+  </div>
+</ion-content>

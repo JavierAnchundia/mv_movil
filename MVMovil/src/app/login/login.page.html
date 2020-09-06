@@ -1,0 +1,75 @@
+<ion-content>
+  <ion-grid class="justify-content-center align-items-center gridContent">
+    <ion-row class="ion-align-items-center">
+      <ion-col>
+        <ion-text>
+          <h3>LOGO</h3>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+    <form [formGroup] = "credentialsForm" (ngSubmit) = "onSubmit()">
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-icon
+              name="person-circle-outline"
+              class="ion-margin-end"
+            ></ion-icon>
+            <ion-input type = "email" placeholder="email" formControlName = "email"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-icon
+              name="lock-closed-outline"
+              class="ion-margin-end"
+            ></ion-icon>
+            <ion-input [type]="showPassword ? 'text' : 'password'" placeholder="Contraseña" formControlName = "password"></ion-input>
+            <ion-icon
+              slot="end"
+              [name] = "passwordToggle"
+              (click) = "togglePassword()"
+            ></ion-icon>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-margin-top">
+        <ion-col>
+          <ion-button expand="block" type="submit" [disabled]="!credentialsForm.valid">Iniciar Sesión</ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+    <ion-row class="ion-align-items-center">
+      <ion-col>
+        <ion-spinner name="lines" color="tertiary" *ngIf="showSpinner"></ion-spinner>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-margin-top">
+      <ion-col>
+        <ion-text><small>¿Olvidaste tú contraseña?</small></ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-margin-top">
+      <ion-col>
+        <ion-text><strong>Ingresar con</strong></ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-margin-top">
+      <ion-col>
+        <ion-icon name="logo-facebook" class="iconFacebook" (click) = "signIn()"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-margin-top">
+      <ion-col>
+        <ion-text
+          >¿Eres nuevo?
+          <ion-router-link href="/register" class="underline"
+            >Regístrate aquí</ion-router-link
+          ></ion-text
+        >
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

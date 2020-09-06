@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/search"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <agm-map
+    [latitude]="latFallecido"
+    [longitude]="lngFallecido"
+    [zoom]="zoom"
+    [zoomControl] = "true"
+    [disableDefaultUI]="false"
+    [zoomControl]="false"
+  >
+    <!-- (mapDblClick)="setCurrentPosition()" -->
+    <agm-marker
+      [latitude]="lat"
+      [longitude]="lng"
+      [markerDraggable]="false"
+      [label]="{color: 'black', text: 'Me'}"
+    ></agm-marker>
+    <agm-marker
+      [latitude]="latFallecido"
+      [longitude]="lngFallecido"
+      [markerDraggable]="false"
+      [label]="{color: 'white', text: 'F'}"
+    ></agm-marker>
+
+    <agm-polyline [visible]="true" [strokeWeight]="4" [strokeColor]="'#07b57a'">
+      <agm-polyline-point [latitude]="lat" [longitude]="lng">
+      </agm-polyline-point>
+      <agm-polyline-point [latitude]="latFallecido" [longitude]="lngFallecido">
+      </agm-polyline-point>
+    </agm-polyline>
+  </agm-map>
+</ion-content>

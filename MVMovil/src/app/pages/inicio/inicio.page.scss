@@ -1,0 +1,28 @@
+ion-icon {
+    --ionicon-stroke-width: 25px;
+    font-size: 60px;
+  }
+  
+  ion-button {
+    width:110px;
+    height:110px;
+    border-radius: 10px;
+  }
+  
+  ion-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  ion-tab-button[aria-selected=true] {
+    --ripple-color: 0 2px 0 0 blue inset;
+  }
+  
+  ion-tab-button{
+    color: black;
+    --border-width: 2px;
+  }
+  

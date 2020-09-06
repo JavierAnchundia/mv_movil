@@ -1,0 +1,8 @@
+{
+  "name": "MVMovil",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

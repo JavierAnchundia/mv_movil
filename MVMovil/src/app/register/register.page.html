@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <form [formGroup]="registrationFormGroup" (ngSubmit)="onSubmitRegisterDetails()">
+    <ion-grid class="justify-content-center align-items-center">
+      <ion-row color="primary" justify-content-center>
+        <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
+          <div class="text-center">
+            <h3>¡Crea tú cuenta!</h3>
+          </div>
+          <div padding>
+
+              <ion-item>
+                <ion-input type="text" placeholder="Nombres" formControlName="nombres" required></ion-input>
+              </ion-item>
+              <p style="color: red;"
+                *ngIf="registrationFormGroup.controls.nombres.errors?.required && registrationFormGroup.controls.nombres.touched">
+                Este campo es obligatorio</p>
+              <ion-item>
+                <ion-input type="text" placeholder="Apellidos" formControlName="apellidos" required></ion-input>
+              </ion-item>
+              <p style="color: red;"
+                *ngIf="registrationFormGroup.controls.apellidos.errors?.required && registrationFormGroup.controls.apellidos.touched">
+                Este campo es obligatorio</p>
+              <ion-item>
+                <ion-input type="email" placeholder="correo@email.com" formControlName="email" required></ion-input>
+              </ion-item>
+              <p style="color: red;"
+                *ngIf="registrationFormGroup.controls.email.errors?.required && registrationFormGroup.controls.email.touched">
+                Ingrese una dirección de correo.</p>
+              <div [formGroup]="passwordFormGroup">
+                <ion-item>
+                  <ion-input [type]="showPassword ? 'text' : 'password'" placeholder="Contraseña" formControlName="password" required></ion-input>
+                  <ion-icon
+                    slot="end"
+                    [name] = "passwordToggle"
+                    (click) = "togglePassword()"
+                  ></ion-icon>
+                </ion-item>
+                <p style="color: red;"
+                *ngIf="passwordFormGroup.controls.password.errors?.required && passwordFormGroup.controls.password.touched">
+                La contraseña no es válida</p>
+                <ion-item>
+                  <ion-input [type]="showConfiPassword ? 'text' : 'password'" placeholder="Confirmar contraseña" formControlName="repeatPassword" required></ion-input>
+                  <ion-icon
+                    slot="end"
+                    [name] = "passwordConfiToggle"
+                    (click) = "toggleConfiPassword()"
+                  ></ion-icon>
+                </ion-item>
+                <p style="color: red;"
+                  *ngIf="passwordFormGroup.controls.repeatPassword.errors?.required && passwordFormGroup.controls.repeatPassword.touched">
+                  La contraseña no es válida</p>
+                <p style="color: red;" *ngIf="passwordFormGroup.errors?.doesMatchPassword">Las contraseñas no coinciden.</p>
+            </div>
+            <br><br><br>
+            <div padding>
+              <ion-button type="submit" expand="block" [disabled]="!registrationFormGroup.valid">Registrarme
+              </ion-button>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+  <div class="text-center">
+    <ion-spinner name="lines" color="tertiary" *ngIf="showSpinner"></ion-spinner>
+  </div>
+</ion-content>
