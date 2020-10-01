@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from '@angular/router';
 import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { Platform } from '@ionic/angular';
 import { environment } from '../../../environments/environment'
@@ -21,9 +22,14 @@ export class UbicacionFallecidoPage implements OnInit {
   constructor(
     private platform: Platform,
     private geolocation: Geolocation,
-    private _serviceGeo: GeolocalizacionService
+    private _serviceGeo: GeolocalizacionService,
+    private router: Router
     ) 
-    {}
+    {
+      this.platform.backButton.subscribeWithPriority(30, () => {
+        this.router.navigate(['search-results']);
+      });
+    }
 
   ngOnInit() {
     this.setCurrentPosition();

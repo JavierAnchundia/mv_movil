@@ -15,9 +15,13 @@
               name="person-circle-outline"
               class="ion-margin-end"
             ></ion-icon>
-            <ion-input type = "email" placeholder="email" formControlName = "email"></ion-input>
+            <ion-input type = "text" placeholder="username" formControlName = "username"></ion-input>
           </ion-item>
         </ion-col>
+      </ion-row>
+      <ion-row>
+        <span class="text_danger" *ngIf="credentialsForm.controls['username'].touched && credentialsForm.controls['username'].hasError('required')">
+          Username es requerido!</span>
       </ion-row>
       <ion-row>
         <ion-col>
@@ -34,6 +38,10 @@
             ></ion-icon>
           </ion-item>
         </ion-col>
+      </ion-row>
+      <ion-row>
+        <span class="text_danger" *ngIf="credentialsForm.controls['password'].touched && credentialsForm.controls['password'].hasError('required')">
+          Contraseña es requerida!</span>
       </ion-row>
       <ion-row class="ion-margin-top">
         <ion-col>

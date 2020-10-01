@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { NavigationExtras, Router } from '@angular/router';
 import { SectorService } from 'src/app/services/sector/sector.service';
 import { TiposepulturaService } from 'src/app/services/tiposepultura/tiposepultura.service';
 import { environment } from '../../../environments/environment';
 import { AlertController } from '@ionic/angular';
 import { DifuntoService } from 'src/app/services/difunto/difunto.service';
-
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-search',
@@ -34,6 +34,8 @@ export class SearchPage implements OnInit {
     public navCtrl: NavController,
     private alertController: AlertController,
     private _difunto: DifuntoService,
+    private platform: Platform,
+    private loadingController: LoadingController
     ) 
     { 
     this.searchFG = new FormGroup({
@@ -45,7 +47,9 @@ export class SearchPage implements OnInit {
       noLapida: new FormControl('')
     });
     
-    
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this.router.navigate(['inicio']);
+    });
   }
   
   ngOnInit() {
@@ -54,15 +58,17 @@ export class SearchPage implements OnInit {
     this.cargarSepultura();
   }
 
-  onSubmit(value) {
-    this.showSpinner = true;
+  async onSubmit(value) {
+    // this.showSpinner = true;
+    await this.showSearchLoading('id_search');
     this.cargarResultados(value);
   }
 
   async cargarResultados(value) {
-    await this._difunto.getDifuntos(this.id_camposanto, value.nombres, value.apellidos)
-      .subscribe((resp: any) =>{
-        this.showSpinner = false;
+    await this._difunto.getDifuntos(this.id_camposanto, value.nombres, value.apellidos).toPromise()
+      .then((resp: any) =>{
+        // this.showSpinner = false;
+        this.dismissSearchLoading('id_search');
         this.lista_resultados = resp;
         if(this.lista_resultados == 0){
           this.noFoundAlert();
@@ -73,10 +79,27 @@ export class SearchPage implements OnInit {
         }
       },
       (error) =>{
-        this.showSpinner = false;
+        // this.showSpinner = false;
+        this.dismissSearchLoading('id_search');
         this.noFoundAlert();
       }
     )
+  }
+
+  // mostrar register controller de registrar usuario
+  async showSearchLoading(idLoading) {
+    const loading = await this.loadingController.create({
+      id: idLoading,
+      cssClass: 'my-custom-class',
+      message: 'Cargando difuntos...'
+    });
+    
+    return await loading.present();
+  }
+
+  // ocultar loading controller para registrar de usuario
+  async dismissSearchLoading(idLoading){
+    return await this.loadingController.dismiss(null, null, idLoading);
   }
 
   async noFoundAlert() {

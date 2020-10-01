@@ -8,6 +8,7 @@ import { LoginPageRoutingModule } from './login-routing.module';
 
 import { LoginPage } from './login.page';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 
 @NgModule({
@@ -16,9 +17,9 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    LoginPageRoutingModule
+    LoginPageRoutingModule,
   ],
   declarations: [LoginPage],
-  providers: [Facebook]
+  providers: [Facebook, Keyboard]
 })
 export class LoginPageModule {}

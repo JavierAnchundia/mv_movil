@@ -1,6 +1,11 @@
-const URL_ROOT = 'https://carmsanc.pythonanywhere.com/api'
+// const URL_ROOT = 'https://carmsanc.pythonanywhere.com/api'
+// const URL_ROOT_AUTH = 'https://carmsanc.pythonanywhere.com'
+
+const URL_ROOT = 'http://192.168.0.101:8100/api'
+const URL_ROOT_AUTH = 'http://192.168.0.101:8100'
 
 const URL_SERVICIOS = {
+    url_backend: URL_ROOT_AUTH,
     camposantos : URL_ROOT + '/camposantos/',
     camposanto : URL_ROOT + '/camposanto/',
     difunto : URL_ROOT + '/difunto/',
@@ -17,10 +22,11 @@ const URL_SERVICIOS = {
     empresas: URL_ROOT + '/empresas/',
     empresa_get: URL_ROOT + '/empresa_get/',
     token: URL_ROOT + '/token/',
-    users: 'https://carmsanc.pythonanywhere.com/users/',
+    users: URL_ROOT_AUTH + '/users/',
     refresh_token: URL_ROOT + '/token/refresh/',
     fblogin: 'https://carmsanc.pythonanywhere.com/auth/convert-token/',
-    
+    obtener_usuarios: URL_ROOT + '/obtener_usuarios/',
+    get_token_facebook: URL_ROOT + "/get_token_facebook/"
 }
 
 export default URL_SERVICIOS

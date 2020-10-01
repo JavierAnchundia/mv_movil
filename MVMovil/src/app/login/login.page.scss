@@ -1,3 +1,4 @@
+
 .gridContent {
     width: 100%;
     height: 100%;
@@ -14,4 +15,12 @@
 
 ion-spinner {
     transform: scale(3);
+}
+ion-input{
+    overflow-x: scroll;
+    overflow-x: hidden;
+}
+
+.text_danger{
+    color: red;
 }

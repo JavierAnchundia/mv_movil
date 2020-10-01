@@ -17,6 +17,7 @@ import { Storage, IonicStorageModule } from '@ionic/storage';
 import { JwtModule, JWT_OPTIONS } from "@auth0/angular-jwt";
 
 import { Facebook } from '@ionic-native/facebook/ngx';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 export function jwtOptionsFactory(storage) {
   return {
@@ -29,10 +30,15 @@ export function jwtOptionsFactory(storage) {
 
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
+  entryComponents: [AppComponent],
   imports: [
     BrowserModule, 
-    IonicModule.forRoot(), 
+    IonicModule.forRoot(
+      // {
+      // scrollPadding: false,
+      // scrollAssist: false,
+      // }
+    ), 
     AppRoutingModule,
     HttpClientModule,
     AgmCoreModule.forRoot({
@@ -49,6 +55,7 @@ export function jwtOptionsFactory(storage) {
     IonicStorageModule.forRoot(),
   ],
   providers: [
+    Keyboard,
     Geolocation,
     StatusBar,
     SplashScreen,

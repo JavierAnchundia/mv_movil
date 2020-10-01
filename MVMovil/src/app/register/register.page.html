@@ -28,12 +28,26 @@
               <p style="color: red;"
                 *ngIf="registrationFormGroup.controls.apellidos.errors?.required && registrationFormGroup.controls.apellidos.touched">
                 Este campo es obligatorio</p>
-              <ion-item>
-                <ion-input type="email" placeholder="correo@email.com" formControlName="email" required></ion-input>
-              </ion-item>
-              <p style="color: red;"
-                *ngIf="registrationFormGroup.controls.email.errors?.required && registrationFormGroup.controls.email.touched">
-                Ingrese una dirección de correo.</p>
+                <ion-item>
+                  <ion-input type="text" placeholder="username" formControlName="username" required
+                    [ngClass]="{ 'is-invalid': submitted && registrationFormGroup.controls.username.errors }"  
+                  ></ion-input>
+                </ion-item>
+                <div *ngIf=" registrationFormGroup.controls.username.invalid && (registrationFormGroup.controls.username.dirty || registrationFormGroup.controls.username.touched)" class="">
+                  <div *ngIf="registrationFormGroup.controls.username.errors.required " class="text_danger">Ingresar un nombre de usuario</div>
+                  <div *ngIf="registrationFormGroup.controls.username.errors.usernameMatch" class="text_danger">Nombre de usuario ya registrado</div>
+                </div>
+                <ion-item>
+                  <ion-input type="email" placeholder="correo@email.com" formControlName="email" 
+                  [ngClass]="{ 'is-invalid': submitted && registrationFormGroup.controls.email.errors }" required
+                  ></ion-input>
+                </ion-item>
+              <div *ngIf=" registrationFormGroup.controls.email.invalid && (registrationFormGroup.controls.email.dirty || registrationFormGroup.controls.email.touched ) " class="">
+                <div *ngIf="registrationFormGroup.controls.email.errors.required" class="text_danger">Ingresar un correo electrónico</div>
+                <div *ngIf="registrationFormGroup.controls.email.errors?.pattern" class="text_danger">Ingresar un correo electrónico válido</div>
+                <div *ngIf="registrationFormGroup.controls.email.errors.correoMatch" class="text_danger">Este correo ya ha sido registrado</div> 
+              </div>
+              
               <div [formGroup]="passwordFormGroup">
                 <ion-item>
                   <ion-input [type]="showPassword ? 'text' : 'password'" placeholder="Contraseña" formControlName="password" required></ion-input>

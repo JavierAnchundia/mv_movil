@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonRouterOutlet, Platform } from '@ionic/angular';
 import { environment } from '../../environments/environment';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
-
+import { Plugins } from '@capacitor/core';
+const { App } = Plugins;
+import { Keyboard } from '@ionic-native/keyboard/ngx';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -24,12 +27,24 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder,
     private _authService: AuthService,
     private alertController: AlertController,
-    private facebook: Facebook
-  ) { }
+    private facebook: Facebook,
+    private platform: Platform,
+    private routerOutlet: IonRouterOutlet,
+    private keyboard: Keyboard,
+    private loadingController: LoadingController
+  ) {
+    this.platform.backButton.subscribeWithPriority(-1, () => {
+      if (!this.routerOutlet.canGoBack()) {
+        App.exitApp();
+      }
+      
+    this.keyboard.disableScroll(true);
+    });
+   }
 
   ngOnInit() {
     this.credentialsForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required]],
       password: ['', [Validators.required]]
     });
   }
@@ -45,50 +60,79 @@ export class LoginPage implements OnInit {
   }
   
   async onSubmit(){
-    this.showSpinner = true;
+    
+    await this.showAuthLoading('idAuth');
     await this._authService.login(this.credentialsForm.value).subscribe(
       (resp) => {
         if(resp){
-          this.showSpinner = false;
+          this.dismissAuthLoading('idAuth');
+          // this.showSpinner = false;
         }
       },
       (error) =>{
+          this.dismissAuthLoading('idAuth');
           console.log(error.status)
           this.loginAlert();
-          this.showSpinner = false;
+          // this.showSpinner = false;
       }
     );
   }
 
+  
+
+
   async signIn(): Promise<void> {
-    this.showSpinner = true;
+    // this.showSpinner = true;
+    await this.showAuthLoading('idAuth');
     await this.facebook.login(['email', 'public_profile']).then((response: FacebookLoginResponse) => {
-      this.facebook.api('me?fields=id,name,email,first_name,last_name', []).then(profile => {
-         let dataUser = {
-          'grant_type': 'convert_token',
-          'client_id': environment.client_id,
-          'backend': 'facebook',
-          'token': response.authResponse.accessToken,
-          'first_name': profile.first_name,
-          'email': profile.email,
-          'id_camposanto': environment.camposanto.idCamposanto
+      console.log(response.authResponse.accessToken);
+      // this.facebook.api('me?fields=id,name,email,first_name,last_name', []).then(profile => {
+        //  let dataUser = {
+        //   'grant_type': 'convert_token',
+        //   'client_id': environment.client_id,
+        //   'backend': 'facebook',
+        //   'token': response.authResponse.accessToken,
+        //   'first_name': profile.first_name,
+        //   'email': profile.email,
+        //   'id_camposanto': environment.camposanto.idCamposanto
+        // }
+        let access_token = {
+          "access_token": response.authResponse.accessToken
         }
-        this._authService.crearUsuarioFB(dataUser).subscribe(
+        this._authService.crearUsuarioFB(access_token).subscribe(
           (resp) => {
             if(resp){
-              this.showSpinner = false;
+              this.dismissAuthLoading('idAuth');
+              // this.showSpinner = false;
             }
           },
           (error) =>{
               console.log(error.status)
+              this.dismissAuthLoading('idAuth');
               this.facebbookAlert();
-              this.showSpinner = false;
+              // this.showSpinner = false;
           }
         );
-      });
+      // });
     });
   }
   
+  // mostrar login controller de authenticando usuario
+  async showAuthLoading(idLoading) {
+    const loading = await this.loadingController.create({
+      id: idLoading,
+      cssClass: 'my-custom-class',
+      message: 'Autenticando credenciales...'
+    });
+    
+    return await loading.present();
+  }
+
+  // ocultar loading controller para authenticacion de usuario
+  async dismissAuthLoading(idLoading){
+    return await this.loadingController.dismiss(null, null, idLoading);
+  }
+
   async loginAlert() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',

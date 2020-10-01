@@ -38,22 +38,42 @@ export class AuthService {
         if(token){
           let decoded = this.helper.decodeToken(token);
           let isExpired = this.helper.isTokenExpired(token);
+          console.log(isExpired);
           console.log('expired',isExpired)
           if(!isExpired){
             this.user = decoded;
             this.authenticationState.next(true);
           }
           else{
-            this.storage.remove(TOKEN_KEY);
+            this.storage.get(REFRESH_TOKEN).then(
+              (refresh) => {
+                this.refresh_token(refresh);
+              },
+              (error) => {
+                this.authenticationState.next(false);
+              }
+            );
           }
         }
       }
     )
   };
 
-  // refresh_toke(){
-  //   this.http
-  // }
+  async refresh_token(refresh){
+    if(refresh){
+      let url = URL_SERVICIOS.refresh_token;
+      let refresh_token = {
+        "refresh": refresh
+      }
+      await this.http.post(url, refresh_token).toPromise().then(
+        (resp) => {
+          this.storage.set(TOKEN_KEY, resp['access']);
+          // this.storage.remove(TOKEN_KEY);
+          this.authenticationState.next(true);
+        }
+      );
+    }
+  }
 
   login(credentials){
     let url = URL_SERVICIOS.token;
@@ -100,9 +120,9 @@ export class AuthService {
     return this.authenticationState.value;
   };
 
-  crearUsuarioFB(usuario){
-    let url = URL_SERVICIOS.fblogin;
-    return this.http.post(url, usuario).pipe(
+  crearUsuarioFB(access_token){
+    let url = URL_SERVICIOS.get_token_facebook;
+    return this.http.post(url, access_token).pipe(
       tap(
         resp => {
           this.storage.set(TOKEN_KEY, resp['access'])
@@ -113,8 +133,13 @@ export class AuthService {
     )
   }
 
-  
   getInfoUsuario(url){
     return this.http.get(url);
   }
+  
+  getUsersAll(){
+    let url = URL_SERVICIOS.obtener_usuarios;
+    return this.http.get(url);
+  }
+  
 }

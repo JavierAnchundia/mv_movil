@@ -29,10 +29,18 @@
         </ion-input>
       </ion-item>
       <ion-item>
-        <ion-label>Fecha defunción</ion-label>
+        <ion-label>Fecha defunción desde:</ion-label>
         <ion-datetime
           value="1990-02-19"
-          placeholder="Seleccionar fecha"
+          placeholder="Fecha inicio"
+          formControlName="fechaDefuncion"
+        ></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>Fecha defunción hasta:</ion-label>
+        <ion-datetime
+          value="1990-02-19"
+          placeholder="Fecha fin"
           formControlName="fechaDefuncion"
         ></ion-datetime>
       </ion-item>
