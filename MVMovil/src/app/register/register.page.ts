@@ -200,7 +200,7 @@ export class RegisterPage implements OnInit {
         this.lista_usuarios = data;
       });
     for (let i = 0; i < this.lista_usuarios.length; i++) {
-      console.log(this.lista_usuarios[i]['username'])
+      // console.log(this.lista_usuarios[i]['username'])
       this.usernameLista.push(this.lista_usuarios[i]['username']);
       if (this.lista_usuarios[i]['id_camposanto'] == this.id) {
         this.emailLista.push(this.lista_usuarios[i]['email']);

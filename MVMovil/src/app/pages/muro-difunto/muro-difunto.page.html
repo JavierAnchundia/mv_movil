@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Muro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-grid>
+    <ion-row id="detalle-difunto">
+      <ion-col size="9.5">
+        <ion-row class="altura-row">
+          Carmen Leon
+        </ion-row>
+        <ion-row class="altura-row">
+          02/04/1950 | 30/10/2000
+        </ion-row>
+        <ion-row class="altura-row">
+          <ion-col size=2.5 class="icon_align">
+            <ion-img src="./assets/muro_difunto/mapa.png" alt=""></ion-img>
+          </ion-col>
+          <ion-col size=2.5 class="icon_align">
+            <ion-img src="./assets/muro_difunto/pin_1.png" alt=""></ion-img>
+          </ion-col>
+          <ion-col size=2.5 class="icon_align">
+            <ion-img src="./assets/muro_difunto/rosa.png" alt=""></ion-img>
+          </ion-col>
+          <ion-col size=4.5 class="icon_align">
+            36 Rosas
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="2.5" >
+        <ion-row id="avatar_difunto">
+          <ion-avatar>
+            <ion-img src="./assets/muro_difunto/avatar_difunto.png"></ion-img>
+          </ion-avatar>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+  <div class="ion-padding">
+
+  </div>
+  
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="modalTexto()">
+        <ion-icon name="text"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="modalImagen()">
+        <ion-icon name="image"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="modalAudio()">
+        <ion-icon name="musical-note"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="modalVideo()">
+        <ion-icon name="videocam"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>

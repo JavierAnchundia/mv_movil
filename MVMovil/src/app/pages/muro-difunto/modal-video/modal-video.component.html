@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Publicar Video</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click) = "dismiss()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-textarea 
+      placeholder="Escriba aquí su mensaje..."
+      rows="10" cols="20"
+      >
+    </ion-textarea>
+  </ion-item>
+  <br/>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size=4>
+        <ion-row id="alinear_row">
+          <ion-img id="img_foto" src="./assets/muro_difunto/video.png"></ion-img>
+        </ion-row>  
+      </ion-col>
+      <ion-col size=8>
+        <ion-button shape="block">
+          Publicar
+          <ion-icon slot="end" name="send"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

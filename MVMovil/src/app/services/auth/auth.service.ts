@@ -9,7 +9,10 @@ import { tap, catchError } from 'rxjs/operators';
 import URL_SERVICIOS from 'src/app/config/config';
 
 const TOKEN_KEY = 'access_token';
-const REFRESH_TOKEN = 'refresh_token'
+const REFRESH_TOKEN = 'refresh_token';
+const USERNAME = 'username';
+const PASSWORD = 'password';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -45,14 +48,27 @@ export class AuthService {
             this.authenticationState.next(true);
           }
           else{
-            this.storage.get(REFRESH_TOKEN).then(
-              (refresh) => {
-                this.refresh_token(refresh);
-              },
-              (error) => {
-                this.authenticationState.next(false);
+            this.storage.get(USERNAME).then(
+              username => {
+                if(username){
+                  this.storage.get(PASSWORD).then(
+                    password => {
+                      if(password){
+                        let credential = {
+                          "username" : username,
+                          "password" : password 
+                        }
+                        this.login(credential).subscribe(
+                          resp=> {
+                            console.log("toekn actualizado")
+                          }
+                        )
+                      }
+                    }
+                  )
+                }
               }
-            );
+            )
           }
         }
       }
@@ -77,6 +93,8 @@ export class AuthService {
 
   login(credentials){
     let url = URL_SERVICIOS.token;
+    this.storage.set(USERNAME,credentials.username)
+    this.storage.set(PASSWORD, credentials.password)
     return this.http.post(url, credentials).pipe(
       tap(
         resp => {
@@ -111,7 +129,10 @@ export class AuthService {
     await this.storage.remove(TOKEN_KEY).then(
       () => {
         this.authenticationState.next(false);
+        this.storage.remove(TOKEN_KEY).then();
         this.storage.remove(REFRESH_TOKEN).then();
+        this.storage.remove(USERNAME).then();
+        this.storage.remove(PASSWORD).then();
       }
     )
   };
