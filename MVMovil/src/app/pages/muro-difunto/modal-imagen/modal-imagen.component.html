@@ -8,38 +8,64 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-item>
-    <ion-textarea 
-      placeholder="Escriba aquí su mensaje..."
-      rows="10" cols="20"
-      >
-    </ion-textarea>
-  </ion-item>
-  <br/>
-
-  <ion-grid>
-    <ion-row>
-      <ion-col size=4>
-        <ion-row id="alinear_row">
-          <ion-img id="img_foto" src="./assets/muro_difunto/foto.png"></ion-img>
-        </ion-row>  
-      </ion-col>
-      <ion-col size=8>
-        <ion-button shape="block">
-          Publicar
-          <ion-icon slot="end" name="send"></ion-icon>
+  <form [formGroup]="mensajeImagenForm" (ngSubmit)="submit()">
+    <ion-item>
+      <ion-textarea 
+        placeholder="Escriba aquí su mensaje..."
+        rows="6" cols="20"
+        formControlName = "mensaje"
+        >
+      </ion-textarea>
+    </ion-item>
+    
+    <div 
+      *ngIf="mensajeImagenForm.controls['mensaje'].invalid && mensajeImagenForm.controls['mensaje'].touched">
+        <span class="advertencia"  *ngIf="mensajeImagenForm.controls['mensaje'].errors.required">
+        <small>Mensaje es requerido!</small>
+        </span>
+        <span class="advertencia"
+          *ngIf="mensajeImagenForm.controls['mensaje'].errors.minlength || mensajeImagenForm.controls['mensaje'].errors.maxlength">
+          <small>Mensaje debe tener entre 10 y 200 carácteres</small>
+        </span>
+      </div>
+    <br/>
+    
+    <ion-list>
+      <ion-item *ngFor="let img of imagen; index as pos" text-wrap>
+        <ion-thumbnail slot="start">
+          <ion-img [src]="img.path"></ion-img>
+        </ion-thumbnail>
+        <ion-label>
+          {{ img.name }}
+        </ion-label>
+        <ion-button slot="end" fill="clear" (click)="eliminarImagen(img)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
         </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <!-- <ion-buttons>
-    <ion-button>
-      <ion-icon name="image"></ion-icon>
-    </ion-button>
-    <ion-button shape="block">
-      Publicar
-      <ion-icon slot="end" name="send"></ion-icon>
-    </ion-button>
-  </ion-buttons> -->
-  
+      </ion-item>
+    </ion-list>
+    <ion-grid>
+      <ion-row>
+        <ion-col size=2.5>
+          <ion-row id="alinear_row" (click)="seleccionarImagen()">
+            <ion-img id="img_foto" src="./assets/muro_difunto/foto.png"></ion-img>
+          </ion-row>  
+        </ion-col>
+        <ion-col size=2.5>
+          <ion-row id="alinear_row" (click)="tomarImagen()">
+            <ion-img id="img_foto" src="./assets/muro_difunto/camera.png"></ion-img>
+          </ion-row>  
+        </ion-col>
+        <ion-col size=7>
+          <ion-button shape="block" type="submit" [disabled]="!mensajeImagenForm.valid">
+            Publicar
+            <ion-icon slot="end" name="send"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <br/>
+      <ion-row>
+        <small *ngIf="imagen.length == 0" text-center class="advertencia">Seleccione alguna Imagen!</small>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>

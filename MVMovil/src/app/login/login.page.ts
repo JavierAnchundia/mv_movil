@@ -85,17 +85,6 @@ export class LoginPage implements OnInit {
     // this.showSpinner = true;
     await this.showAuthLoading('idAuth');
     await this.facebook.login(['email', 'public_profile']).then((response: FacebookLoginResponse) => {
-      console.log(response.authResponse.accessToken);
-      // this.facebook.api('me?fields=id,name,email,first_name,last_name', []).then(profile => {
-        //  let dataUser = {
-        //   'grant_type': 'convert_token',
-        //   'client_id': environment.client_id,
-        //   'backend': 'facebook',
-        //   'token': response.authResponse.accessToken,
-        //   'first_name': profile.first_name,
-        //   'email': profile.email,
-        //   'id_camposanto': environment.camposanto.idCamposanto
-        // }
         let access_token = {
           "access_token": response.authResponse.accessToken
         }
