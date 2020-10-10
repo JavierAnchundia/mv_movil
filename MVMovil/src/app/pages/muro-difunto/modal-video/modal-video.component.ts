@@ -1,9 +1,16 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastController, Platform, LoadingController, AlertController } from "@ionic/angular";
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { HomenajeImagenService } from 'src/app/services/homenaje_imagen/homenaje-imagen.service';
+import { HomenajesService } from 'src/app/services/homenajes/homenajes.service'
+import { DatePipe } from '@angular/common';
+import { Storage } from '@ionic/storage';
+import { HomenajeVideoService } from 'src/app/services/homenaje_video/homenaje-video.service'
+
+const IDUSER = 'id_usuario';
+const TOKEN_KEY = 'access_token';
 
 @Component({
   selector: 'app-modal-video',
@@ -11,18 +18,26 @@ import { HomenajeImagenService } from 'src/app/services/homenaje_imagen/homenaje
   styleUrls: ['./modal-video.component.scss'],
 })
 export class ModalVideoComponent implements OnInit {
+  @Input() difunto: any;
+
   safeUrl: SafeUrl;
   video = [];
   mensajeVideoForm: FormGroup;
   archivo: File = null;
   url = "";
+  file_video: File = null;
+
   constructor(
     private alertController: AlertController,
     public modalController: ModalController,
     private formBuilder: FormBuilder,
     private toastController: ToastController,
     private loadingController: LoadingController,
-    private service_homenaje: HomenajeImagenService
+    private service_homenaje: HomenajeImagenService,
+    private storage: Storage,
+    public datepipe: DatePipe,
+    private homenaje: HomenajesService,
+    private homenaje_video: HomenajeVideoService
   ) { }
 
   ngOnInit() {
@@ -32,60 +47,111 @@ export class ModalVideoComponent implements OnInit {
   }
 
   selectFile(event) {
-    const file = event.target.files[0];
+    this.file_video = event.target.files[0];
     let data = new FormData()
-    data.append("audio", file)
+    data.append("audio", this.file_video)
     // this.service_homenaje.post_homenaje(data).then()
   }
-  selectMp3(event){
-    const file = event.target.files[0];
-    let data = new FormData()
-    data.append("video", file)
-    // this.service_homenaje.post_homenaje(data).then()
-    
-  }
+  
 
   async submit(){
-    if(this.video.length === 0){
-      this.faltaVideoAlert();
-    }
-    else{
-      
-      // await this.showMensajeLoading('idMensaje');
-      console.log(this.mensajeVideoForm.value.mensaje);
-    }
+    // if(this.video.length === 0){
+    //   this.faltaImagenAlert('Por favor escoja una video...', 'Alerta Video');
+    // }
+    // else{
+      await this.showMensajeLoading('idMensaje');
+      this.postVideo();
+    // }
   }
 
-  crearNombreArchivo() {
-    var d = new Date(),
-      n = d.getTime(),
-      newFileName = n + ".mp4";
-    return newFileName;
+  async postVideo(){
+    
+    let videoData = await new FormData();
+    videoData.append('video', this.file_video);
+    videoData.append('mensaje', this.mensajeVideoForm.value.mensaje);
+
+    this.storage.get(TOKEN_KEY).then(
+      (token)=>{
+        this.homenaje_video.postVideo(videoData, token).toPromise().then(
+          (resp) => {
+            this.storage.get(IDUSER).then(
+              (id) => { 
+                console.log(id)
+                let fecha = this.getFechaPublicacion();
+                let id_video = resp['id_video']
+                const homenajePost = new FormData();
+                homenajePost.append('id_usuario', id);
+                homenajePost.append('id_difunto', this.difunto.id_difunto);
+                homenajePost.append('fecha_publicacion', fecha as string);
+                homenajePost.append('estado', 'True');
+                homenajePost.append('likes', '0');
+                homenajePost.append('id_videocontent', id_video);
+                this.homenaje.postHomenajeGeneral(homenajePost, token).subscribe(
+                  async (resp: any) => {
+                    await this.dismissMensajeLoading('idMensaje');
+                    await this.dismiss()
+                    await this.faltaImagenAlert('Se ha subido con éxito', 'Publicación');
+                  },
+                  async (error)=>{
+                    await this.faltaImagenAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
+                  }
+                )
+              }
+            ) 
+          },
+          async (error)=>{
+            await this.faltaImagenAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
+          }
+        )
+      }
+    )
+    
+  }
+  
+  getFechaPublicacion() {
+    let date = new Date();
+    let latest_date = this.datepipe.transform(date, 'yyyy-MM-dd');
+    return latest_date;
+  }
+
+  async faltaImagenAlert(mensaje, titulo) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: titulo,
+      message: mensaje,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 
   async presentToast(text) {
     const toast = await this.toastController.create({
       message: text,
       position: "bottom",
-      duration: 20000,
+      duration: 500,
     });
     toast.present();
   }
 
-  async faltaVideoAlert() {
-    const alert = await this.alertController.create({
+  // mostrar subir imagen controller
+  async showMensajeLoading(idLoading) {
+    const loading = await this.loadingController.create({
+      id: idLoading,
       cssClass: 'my-custom-class',
-      header: 'Alerta Imagen',
-      message: 'Por favor escoja un  video..',
-      buttons: ['OK']
+      message: 'Publicando mensaje...'
     });
-    await alert.present();
+    
+    return await loading.present();
+  }
+
+  // ocultar loading controller
+  async dismissMensajeLoading(idLoading){
+    return await this.loadingController.dismiss(null, null, idLoading);
   }
 
   async dismiss() {
     await this.modalController.dismiss({
-      'dismissed': true
+      dismissed: true,
     });
   }
-
 }

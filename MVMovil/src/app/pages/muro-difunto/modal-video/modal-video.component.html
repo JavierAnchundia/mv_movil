@@ -45,9 +45,8 @@
     </ion-list>
     <ion-grid>
       <ion-row>
-        <ion-img [src]="url"></ion-img>
-        <ion-input type="file" (change)="selectFile($event)"></ion-input>
-        <ion-input type="file" (change)="selectMp3($event)"></ion-input>
+        <!-- <ion-img [src]="url"></ion-img> -->
+        <ion-input type="file" accept="video/*" (change)="selectFile($event)"></ion-input>
         <!-- <input type="file" name="myFile" accept="video/*"> -->
         <ion-col size=4>
           <ion-row id="alinear_row" (click)="seleccionarVideo()">

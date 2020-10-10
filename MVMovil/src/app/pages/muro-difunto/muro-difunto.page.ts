@@ -58,7 +58,10 @@ export class MuroDifuntoPage implements OnInit {
   async modalVideo() {
     const modal = await this.modalController.create({
       component: ModalVideoComponent,
-      cssClass: 'my-custom-class'
+      cssClass: 'my-custom-class',
+      componentProps: {
+        'difunto': this.difunto
+      }
     });
     return await modal.present();
   }
@@ -66,7 +69,10 @@ export class MuroDifuntoPage implements OnInit {
   async modalAudio() {
     const modal = await this.modalController.create({
       component: ModalAudioComponent,
-      cssClass: 'my-custom-class'
+      cssClass: 'my-custom-class',
+      componentProps: {
+        'difunto': this.difunto
+      }
     });
     return await modal.present();
   }

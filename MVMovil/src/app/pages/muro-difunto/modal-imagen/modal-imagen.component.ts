@@ -12,6 +12,7 @@ const { Filesystem } = Plugins;
 const { Camera } = Plugins;
 const IDUSER = 'id_usuario';
 const TOKEN_KEY = 'access_token';
+
 @Component({
   selector: "app-modal-imagen",
   templateUrl: "./modal-imagen.component.html",
@@ -19,7 +20,7 @@ const TOKEN_KEY = 'access_token';
 })
 export class ModalImagenComponent implements OnInit {
   @Input() difunto: any;
-  
+
   imagen: any = [];
   mensajeImagenForm: FormGroup;
 
