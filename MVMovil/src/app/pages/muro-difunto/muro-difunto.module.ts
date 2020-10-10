@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
-
+import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { MuroDifuntoPageRoutingModule } from './muro-difunto-routing.module';
 import { ContentPublicacionesComponent } from './content-publicaciones/content-publicaciones.component'
 import { MuroDifuntoPage } from './muro-difunto.page';
@@ -12,6 +12,7 @@ import { ModalVideoComponent } from './modal-video/modal-video.component'
 import { ModalAudioComponent } from './modal-audio/modal-audio.component'
 import { ModalTextoComponent } from './modal-texto/modal-texto.component'
 import { DatePipe } from '@angular/common'
+import { ModalRosaComponent } from './modal-rosa/modal-rosa.component';
 
 @NgModule({
   imports: [
@@ -28,10 +29,11 @@ import { DatePipe } from '@angular/common'
     ModalImagenComponent,
     ModalVideoComponent,
     ModalAudioComponent,
-    ModalTextoComponent
-    
+    ModalTextoComponent,
+    ModalRosaComponent
   ],
   providers: [
+    Geolocation,
     DatePipe
   ]
 })

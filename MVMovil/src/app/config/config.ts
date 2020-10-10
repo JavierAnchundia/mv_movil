@@ -21,6 +21,7 @@ const URL_SERVICIOS = {
     geolocalizacion_post: URL_ROOT + '/geolocalizacion_post/',
     empresas: URL_ROOT + '/empresas/',
     empresa_get: URL_ROOT + '/empresa_get/',
+    geolocalizacion_camp: URL_ROOT + '/geolocalizacion_camp/',
     token: URL_ROOT + '/token/',
     users: URL_ROOT_AUTH + '/users/',
     datosUsuario: URL_ROOT + '/usuario/',

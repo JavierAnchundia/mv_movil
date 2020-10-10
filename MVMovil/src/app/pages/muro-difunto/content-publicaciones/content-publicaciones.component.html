@@ -6,7 +6,7 @@
     </div>
     <ion-card *ngFor="let publicacion of this.lista_publicaciones; index as pos">
       <ion-card-header>
-        <ion-card-subtitle class="alinear_fecha"><small>{{publicacion.fecha_publicacion}}</small></ion-card-subtitle>
+        <ion-card-subtitle class="alinear_fecha"><small>{{publicacion.fecha_publicacion| date:'MMM d, y HH:mm:ss a':'+0:00'}}</small></ion-card-subtitle>
         <ion-card-title>{{publicacion.id_usuario.first_name}} {{publicacion.id_usuario.last_name}}</ion-card-title>
       </ion-card-header>
       <ion-card-content *ngIf="publicacion.id_videocontent != null">
@@ -49,56 +49,5 @@
         </p>
       </ion-card-content>
     </ion-card>
-
-    <!-- <ion-card>
-      <ion-card-header>
-        <ion-card-subtitle class="alinear_fecha"><small>10/14/2020</small></ion-card-subtitle>
-        <ion-card-title>Bryan Tutivén</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <audio controls>
-          <source 
-            src="https://carmsanc.pythonanywhere.com/media/h_video/videoplayback_xwjY1vO.mp4"
-            type="video/mp4"
-          >
-        </audio>
-      </ion-card-content>
-
-
-    </ion-card>
-
-    <ion-card>
-      <ion-card-header>
-        <ion-card-subtitle class="alinear_fecha"><small>10/14/2020</small></ion-card-subtitle>
-        <ion-card-title>Bryan Tutivén</ion-card-title>
-      </ion-card-header>
-
-      <ion-card-content>
-        <audio controls>
-          <source 
-            src="https://carmsanc.pythonanywhere.com/media/h_audio/BANNERS_-_Start_A_Riot_Audio__128kbps_.mp3" 
-            type="audio/mpeg"
-          >
-        </audio>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card>
-      <ion-card-header>
-        <ion-card-subtitle class="alinear_fecha"><small>10/14/2020</small></ion-card-subtitle>
-        <ion-card-title>Bryan Tutivén</ion-card-title>
-      </ion-card-header>
-      
-
-      <ion-card-content>
-        <p class="ion-text-justify ion-padding-bottom">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores veniam accusantium reprehenderit quaerat esse nemo, minus quisquam numquam, perspiciatis porro facilis ipsa iure voluptas expedita aliquam eveniet sint sed quibusdam?  
-        </p>
-        <ion-img 
-          class="pt-4"
-          src="https://carmsanc.pythonanywhere.com/media/h_imagen/082000_0192_mMDW6zx.jpg"
-        ></ion-img>
-      </ion-card-content> -->
-    <!-- </ion-card> -->
   </div>
 <!-- </ion-content> -->

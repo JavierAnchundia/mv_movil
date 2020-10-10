@@ -30,6 +30,13 @@ export class ContentPublicacionesComponent implements OnInit {
   ngOnInit() {
     console.log(this.difunto_datos)
     this.getHomenajes()
+    this.serv_h_general.muroMensaje$.subscribe(
+      message => {
+        if(message == "cargar"){
+          this.getHomenajes();
+        }
+      }
+    )
   }
 
   getHomenajes() {

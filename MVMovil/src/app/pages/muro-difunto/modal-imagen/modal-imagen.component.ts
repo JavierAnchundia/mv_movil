@@ -138,7 +138,7 @@ export class ModalImagenComponent implements OnInit {
   
   getFechaPublicacion() {
     let date = new Date();
-    let latest_date = this.datepipe.transform(date, 'yyyy-MM-dd');
+    let latest_date = this.datepipe.transform(date, 'yyyy-MM-dd HH:mm');
     return latest_date;
   }
   async faltaImagenAlert(mensaje, titulo) {

@@ -24,10 +24,10 @@
           <ion-col size=2.5 class="icon_align">
             <ion-img src="./assets/muro_difunto/pin_1.png" alt=""></ion-img>
           </ion-col>
-          <ion-col size=2.5 class="icon_align">
+          <ion-col size=2.5 class="icon_align" (click)="addRose()">
             <ion-img src="./assets/muro_difunto/rosa.png" alt=""></ion-img>
           </ion-col>
-          <ion-col size=4.5 class="icon_align">
+          <ion-col size=4.5 class="icon_align" (click)="modalHistorialRosas()">
             {{difunto.num_rosas}} Rosas
           </ion-col>
         </ion-row>
@@ -42,7 +42,7 @@
     </ion-row>
   </ion-grid>
   
-  <app-content-publicaciones [difunto_datos]="difunto" #content_publicaciones>
+  <app-content-publicaciones [difunto_datos]="difunto" >
 
   </app-content-publicaciones>
   
@@ -57,7 +57,7 @@
       <ion-fab-button (click)="modalImagen()">
         <ion-icon name="image"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button (click)="modalAudio()"  (myEvent)="content_publicaciones.getHomenajes()">
+      <ion-fab-button (click)="modalAudio()" >
         <ion-icon name="musical-note"></ion-icon>
       </ion-fab-button>
       <ion-fab-button (click)="modalVideo()">

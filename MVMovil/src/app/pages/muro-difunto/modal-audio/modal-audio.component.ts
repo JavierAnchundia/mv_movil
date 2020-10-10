@@ -96,7 +96,7 @@ export class ModalAudioComponent implements OnInit {
                     await this.dismissMensajeLoading('idMensaje');
                     await this.dismiss()
                     await this.faltaImagenAlert('Se ha subido con éxito', 'Publicación');
-                    this.myEvent.emit(null);
+                    this.cargarMudo();
                   },
                   async (error)=>{
                     await this.dismissMensajeLoading("idMensaje");
@@ -117,10 +117,13 @@ export class ModalAudioComponent implements OnInit {
     )
     
   }
-  
+
+  cargarMudo(){
+    this.homenaje.sendMessage('cargar');
+  }
   getFechaPublicacion() {
     let date = new Date();
-    let latest_date = this.datepipe.transform(date, 'yyyy-MM-dd');
+    let latest_date = this.datepipe.transform(date, 'yyyy-MM-dd HH:mm');
     return latest_date;
   }
 
