@@ -136,6 +136,7 @@ export class AuthService {
         this.storage.remove(REFRESH_TOKEN).then();
         this.storage.remove(USERNAME).then();
         this.storage.remove(PASSWORD).then();
+        this.storage.remove(IDUSER).then();
       }
     )
   };

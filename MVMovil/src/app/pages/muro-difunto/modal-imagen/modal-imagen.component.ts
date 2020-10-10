@@ -119,6 +119,7 @@ export class ModalImagenComponent implements OnInit {
                     await this.faltaImagenAlert('Se ha subido con éxito', 'Publicación');
                   },
                   async (error)=>{
+                    await this.dismiss()
                     await this.faltaImagenAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
                   }
                 )
@@ -126,6 +127,7 @@ export class ModalImagenComponent implements OnInit {
             ) 
           },
           async (error)=>{
+            await this.dismiss()
             await this.faltaImagenAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
           }
         )

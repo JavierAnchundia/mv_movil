@@ -39,7 +39,10 @@ export class MuroDifuntoPage implements OnInit {
   async modalTexto() {
     const modal = await this.modalController.create({
       component: ModalTextoComponent,
-      cssClass: 'my-custom-class'
+      cssClass: 'my-custom-class',
+      componentProps: {
+        'difunto': this.difunto
+      }
     });
     return await modal.present();
   }

@@ -3,7 +3,6 @@ import { ModalController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastController, Platform, LoadingController, AlertController } from "@ionic/angular";
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { HomenajeImagenService } from 'src/app/services/homenaje_imagen/homenaje-imagen.service';
 import { HomenajesService } from 'src/app/services/homenajes/homenajes.service'
 import { DatePipe } from '@angular/common';
 import { Storage } from '@ionic/storage';
@@ -33,7 +32,6 @@ export class ModalVideoComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastController: ToastController,
     private loadingController: LoadingController,
-    private service_homenaje: HomenajeImagenService,
     private storage: Storage,
     public datepipe: DatePipe,
     private homenaje: HomenajesService,
@@ -50,18 +48,25 @@ export class ModalVideoComponent implements OnInit {
     this.file_video = event.target.files[0];
     let data = new FormData()
     data.append("audio", this.file_video)
-    // this.service_homenaje.post_homenaje(data).then()
+    this.video = [{
+      path: 'assets/muro_difunto/video-file.png',
+      nombre: event.target.files[0].name
+    }]
   }
   
+  eliminarVideo(){
+    this.video = [];
+    this.presentToast("Se ha eliminado el video...")
+  }
 
   async submit(){
-    // if(this.video.length === 0){
-    //   this.faltaImagenAlert('Por favor escoja una video...', 'Alerta Video');
-    // }
-    // else{
+    if(this.video.length === 0){
+      this.faltaImagenAlert('Por favor escoja un video...', 'Alerta Video');
+    }
+    else{
       await this.showMensajeLoading('idMensaje');
       this.postVideo();
-    // }
+    }
   }
 
   async postVideo(){
@@ -93,6 +98,7 @@ export class ModalVideoComponent implements OnInit {
                     await this.faltaImagenAlert('Se ha subido con éxito', 'Publicación');
                   },
                   async (error)=>{
+                    await this.dismiss()
                     await this.faltaImagenAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
                   }
                 )
@@ -100,6 +106,7 @@ export class ModalVideoComponent implements OnInit {
             ) 
           },
           async (error)=>{
+            await this.dismiss()
             await this.faltaImagenAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
           }
         )

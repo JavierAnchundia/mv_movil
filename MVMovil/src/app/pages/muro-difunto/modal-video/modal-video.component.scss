@@ -1,6 +1,19 @@
 #img_foto{
-    width: 40%;
+    width: 140%;
 }
+
+label{
+    width: 30%;
+}
+
 #alinear_row{
     justify-content: center;
+}
+
+.advertencia{
+    color: red;
+}
+
+#file-input {
+    display: none;
 }

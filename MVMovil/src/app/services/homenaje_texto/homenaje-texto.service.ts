@@ -7,21 +7,21 @@ import { Storage  } from '@ionic/storage';
 @Injectable({
   providedIn: 'root'
 })
-export class HomenajeMensajeService {
+export class HomenajeTextoService {
 
   constructor(
     private http: HttpClient,
     private storage: Storage
   ) { }
 
-  postMensaje(mensaje, token):Observable<FormData>{
-    let url = URL_SERVICIOS.himagen_post;
+  postTexto(texto, token):Observable<FormData>{
+    let url = URL_SERVICIOS.hmensaje_post;
     console.log(token)
     let httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Bearer '+ token,
       })
     }
-    return this.http.post<FormData>(url, mensaje, httpOptions);
+    return this.http.post<FormData>(url, texto, httpOptions);
   }
 }

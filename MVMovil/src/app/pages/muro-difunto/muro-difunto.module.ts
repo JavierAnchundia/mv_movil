@@ -9,6 +9,8 @@ import { ContentPublicacionesComponent } from './content-publicaciones/content-p
 import { MuroDifuntoPage } from './muro-difunto.page';
 import { ModalImagenComponent } from './modal-imagen/modal-imagen.component'
 import { ModalVideoComponent } from './modal-video/modal-video.component'
+import { ModalAudioComponent } from './modal-audio/modal-audio.component'
+import { ModalTextoComponent } from './modal-texto/modal-texto.component'
 import { DatePipe } from '@angular/common'
 
 @NgModule({
@@ -24,7 +26,10 @@ import { DatePipe } from '@angular/common'
     MuroDifuntoPage,
     ContentPublicacionesComponent,
     ModalImagenComponent,
-    ModalVideoComponent
+    ModalVideoComponent,
+    ModalAudioComponent,
+    ModalTextoComponent
+    
   ],
   providers: [
     DatePipe

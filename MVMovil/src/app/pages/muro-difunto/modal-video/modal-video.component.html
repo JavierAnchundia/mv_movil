@@ -32,25 +32,27 @@
     
     <ion-list>
       <ion-item *ngFor="let vid of video; index as pos" text-wrap>
-        <!-- <ion-thumbnail slot="start">
+        <ion-thumbnail slot="start">
           <ion-img [src]="vid.path"></ion-img>
-        </ion-thumbnail> -->
+        </ion-thumbnail>
         <ion-label>
-          {{ vid.name }}
+          {{ vid.nombre }}
         </ion-label>
-        <ion-button slot="end" fill="clear" (click)="eliminarVideo(vid)">
+        <ion-button slot="end" fill="clear" (click)="eliminarAudio()">
           <ion-icon slot="icon-only" name="trash"></ion-icon>
         </ion-button>
       </ion-item>
     </ion-list>
     <ion-grid>
+      <!-- <ion-input type="file" accept="video/*" (change)="selectFile($event)"></ion-input> -->
       <ion-row>
-        <!-- <ion-img [src]="url"></ion-img> -->
-        <ion-input type="file" accept="video/*" (change)="selectFile($event)"></ion-input>
-        <!-- <input type="file" name="myFile" accept="video/*"> -->
         <ion-col size=4>
-          <ion-row id="alinear_row" (click)="seleccionarVideo()">
-            <ion-img id="img_foto" src="./assets/muro_difunto/video.png"></ion-img>
+          <ion-row id="alinear_row" class="pr-4">
+            <label for="file-input">
+              <ion-img id="img_foto" src="./assets/muro_difunto/video.png"></ion-img>
+            </label>
+            <input id="file-input" type="file" accept="video/*" (change)="selectFile($event)"/>
+            <!-- <ion-img id="img_foto" src="./assets/muro_difunto/video.png"></ion-img> -->
           </ion-row>  
         </ion-col>
         <ion-col size=8>
@@ -62,7 +64,7 @@
       </ion-row>
       <br/>
       <ion-row>
-        <small *ngIf="video.length == 0" text-center class="advertencia">Seleccione alguna Imagen!</small>
+        <small *ngIf="video.length == 0" text-center class="advertencia">Seleccione algún Video!</small>
       </ion-row>
     </ion-grid>
   </form>
