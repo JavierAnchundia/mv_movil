@@ -25,4 +25,9 @@ export class HomenajesService {
     }
     return this.http.post<FormData>(url, homenaje, httpOptions);
   }
+
+  getHomenajesDifunto(id: String) {
+    let url = URL_SERVICIOS.homenajes + id + '/';
+    return this.http.get(url)
+  }
 }

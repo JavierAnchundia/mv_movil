@@ -42,7 +42,7 @@
     </ion-row>
   </ion-grid>
   
-  <app-content-publicaciones>
+  <app-content-publicaciones [difunto_datos]="difunto" #content_publicaciones>
 
   </app-content-publicaciones>
   
@@ -57,7 +57,7 @@
       <ion-fab-button (click)="modalImagen()">
         <ion-icon name="image"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button (click)="modalAudio()">
+      <ion-fab-button (click)="modalAudio()"  (myEvent)="content_publicaciones.getHomenajes()">
         <ion-icon name="musical-note"></ion-icon>
       </ion-fab-button>
       <ion-fab-button (click)="modalVideo()">

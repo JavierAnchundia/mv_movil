@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastController, Platform, LoadingController, AlertController } from "@ionic/angular";
@@ -18,6 +18,7 @@ const TOKEN_KEY = 'access_token';
 })
 export class ModalAudioComponent implements OnInit {
   @Input() difunto: any;
+  @Output() myEvent = new EventEmitter();
   safeUrl: SafeUrl;
   audio = [];
   mensajeAudioForm: FormGroup;
@@ -95,8 +96,10 @@ export class ModalAudioComponent implements OnInit {
                     await this.dismissMensajeLoading('idMensaje');
                     await this.dismiss()
                     await this.faltaImagenAlert('Se ha subido con éxito', 'Publicación');
+                    this.myEvent.emit(null);
                   },
                   async (error)=>{
+                    await this.dismissMensajeLoading("idMensaje");
                     await this.dismiss()
                     await this.faltaImagenAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
                   }
@@ -105,6 +108,7 @@ export class ModalAudioComponent implements OnInit {
             ) 
           },
           async (error)=>{
+            await this.dismissMensajeLoading("idMensaje");
             await this.dismiss();
             await this.faltaImagenAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
           }
