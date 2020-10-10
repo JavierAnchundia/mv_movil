@@ -1,40 +1,39 @@
-import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
-import { Camera, CameraOptions, PictureSourceType } from "@ionic-native/Camera/ngx";
 import { ToastController, Platform, LoadingController, AlertController } from "@ionic/angular";
-import { File, FileEntry } from "@ionic-native/File/ngx";
-import { WebView } from "@ionic-native/ionic-webview/ngx";
-import { Storage } from "@ionic/storage";
-import { FilePath } from "@ionic-native/file-path/ngx";
-
-import { finalize } from "rxjs/operators";
-
-const STORAGE_KEY = "my_images";
-
+import { Plugins, CameraResultType } from '@capacitor/core';
+import { HomenajeImagenService } from 'src/app/services/homenaje_imagen/homenaje-imagen.service';
+import { FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
+import { Storage } from '@ionic/storage';
+import { DatePipe } from '@angular/common'
+import { HomenajesService } from 'src/app/services/homenajes/homenajes.service'
+const { Filesystem } = Plugins;
+const { Camera } = Plugins;
+const IDUSER = 'id_usuario';
+const TOKEN_KEY = 'access_token';
 @Component({
   selector: "app-modal-imagen",
   templateUrl: "./modal-imagen.component.html",
   styleUrls: ["./modal-imagen.component.scss"],
 })
 export class ModalImagenComponent implements OnInit {
-  imagen = [];
+  @Input() difunto: any;
+  
+  imagen: any = [];
   mensajeImagenForm: FormGroup;
 
   constructor(
     private alertController: AlertController,
     private formBuilder: FormBuilder,
     public modalController: ModalController,
-    private camera: Camera,
-    private file: File,
-    private webview: WebView,
+    private loadingController: LoadingController,
     private toastController: ToastController,
-    private storage: Storage,
     private plt: Platform,
-    private ref: ChangeDetectorRef,
-    private filePath: FilePath,
-    private loadingController: LoadingController
+    private service_homenaje: HomenajeImagenService,
+    private storage: Storage,
+    public datepipe: DatePipe,
+    private homenaje: HomenajesService
   ) {}
 
   ngOnInit() {
@@ -45,161 +44,105 @@ export class ModalImagenComponent implements OnInit {
 
   async submit(){
     if(this.imagen.length === 0){
-      this.faltaImagenAlert();
+      this.faltaImagenAlert('Por favor escoja una imagen...', 'Alerta Imagen');
     }
     else{
-      
-      // await this.showMensajeLoading('idMensaje');
-      console.log(this.mensajeImagenForm.value.mensaje);
+      await this.showMensajeLoading('idMensaje');
+      this.postImagen();
     }
   }
 
-  cargarImagen(imgEntry) {
-    this.file.resolveLocalFilesystemUrl(imgEntry.filePath)
-        .then(entry => {
-            ( < FileEntry > entry).file(file => this.leerImageDir(file))
-        })
-        .catch(err => {
-            this.presentToast('Error al leer la imagen...');
-        });
-  }
- 
-  leerImageDir(file: any) {
-      const reader = new FileReader();
-      reader.onload = () => {
-          const formData = new FormData();
-          const imgBlob = new Blob([reader.result], {
-              type: file.type
-          });
-          formData.append("mensaje", this.mensajeImagenForm.value.mensaje)
-          formData.append('imagen', imgBlob, file.name);
-          this.subirMensajeImagenPost(formData);
-      };
-      reader.readAsArrayBuffer(file);
-  }
-
-  subirMensajeImagenPost(formData: FormData){
-
-  }
-
+  
   crearNombreArchivo() {
     var d = new Date(),
       n = d.getTime(),
-      newFileName = n + ".jpg";
+      newFileName = n + ".png";
     return newFileName;
   }
 
-  crearPathImagen(img) {
-    if (img === null) {
-      return "";
-    } else {
-      let converted = this.webview.convertFileSrc(img);
-      return converted;
-    }
-  }
-
   async seleccionarImagen() {
-    await this.obtenerImagen(this.camera.PictureSourceType.PHOTOLIBRARY);
+    await this.capturarFoto();
   }
 
-  async tomarImagen(){
-    await this.obtenerImagen(this.camera.PictureSourceType.CAMERA);
+  async capturarFoto() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.Base64,
+      saveToGallery: true
+    }).then(async (resp) => {
+      let imageUrl = await 'data:image/png;base64,'+ resp.base64String;
+      // this.img_path = imageUrl;
+      this.imagen = [{
+        path: imageUrl,
+        nombre: this.crearNombreArchivo()
+      }]
+      this.presentToast("Se ha cargado la imagen...")
+    });
+    
   }
 
-  obtenerImagen(sourceType: PictureSourceType) {
-    var options: CameraOptions = {
-      quality: 100,
-      sourceType: sourceType,
-      saveToPhotoAlbum: false,
-      correctOrientation: true,
-    };
+  eliminarImagen(){
+    this.imagen = [];
+    this.presentToast("Se ha eliminado la imagen...")
+  }
 
-    this.camera.getPicture(options).then((imagePath) => {
-      if (
-        this.plt.is("android") &&
-        sourceType === this.camera.PictureSourceType.PHOTOLIBRARY
-      ) {
-        this.filePath.resolveNativePath(imagePath).then((filePath) => {
-          let correctPath = filePath.substr(0, filePath.lastIndexOf("/") + 1);
-          let currentName = imagePath.substring(
-            imagePath.lastIndexOf("/") + 1,
-            imagePath.lastIndexOf("?")
-          );
-          this.copiarFile_localDir(
-            correctPath,
-            currentName,
-            this.crearNombreArchivo()
-          );
-        });
-      } else {
-        var currentName = imagePath.substr(imagePath.lastIndexOf("/") + 1);
-        var correctPath = imagePath.substr(0, imagePath.lastIndexOf("/") + 1);
-        this.copiarFile_localDir(
-          correctPath,
-          currentName,
-          this.crearNombreArchivo()
-        );
+  async postImagen(){
+    let nombre = await this.imagen[0].nombre;
+    let img_base64 = await this.imagen[0].path 
+    let imagenData = await new FormData();
+    imagenData.append('nombre_file', nombre);
+    imagenData.append('mensaje', this.mensajeImagenForm.value.mensaje)
+    imagenData.append("img_base64", img_base64);
+
+    this.storage.get(TOKEN_KEY).then(
+      (token)=>{
+        this.service_homenaje.postImagen(imagenData, token).toPromise().then(
+          (resp) => {
+            this.storage.get(IDUSER).then(
+              (id) => { 
+                console.log(id)
+                let fecha = this.getFechaPublicacion();
+                let id_imagen = resp['id_imagen']
+                const homenajePost = new FormData();
+                homenajePost.append('id_usuario', id);
+                homenajePost.append('id_difunto', this.difunto.id_difunto);
+                homenajePost.append('fecha_publicacion', fecha as string);
+                homenajePost.append('estado', 'True');
+                homenajePost.append('likes', '0');
+                homenajePost.append('id_imagecontent', id_imagen);
+                this.homenaje.postHomenajeGeneral(homenajePost, token).subscribe(
+                  async (resp: any) => {
+                    await this.dismissMensajeLoading('idMensaje');
+                    await this.dismiss()
+                    await this.faltaImagenAlert('Se ha subido con éxito', 'Publicación');
+                  },
+                  async (error)=>{
+                    await this.faltaImagenAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
+                  }
+                )
+              }
+            ) 
+          },
+          async (error)=>{
+            await this.faltaImagenAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
+          }
+        )
       }
-    });
+    )
+    
   }
-
-  copiarFile_localDir(namePath, currentName, newFileName) {
-    this.file
-      .copyFile(namePath, currentName, this.file.dataDirectory, newFileName)
-      .then(
-        (success) => {
-          this.actualizarImagen(newFileName);
-        },
-        (error) => {
-          this.presentToast(
-            "Error al gaurdar imagen en el directorio de la App...!"
-          );
-        }
-      );
+  
+  getFechaPublicacion() {
+    let date = new Date();
+    let latest_date = this.datepipe.transform(date, 'yyyy-MM-dd');
+    return latest_date;
   }
-
-  actualizarImagen(name) {
-    this.storage.remove(STORAGE_KEY).then((resp) => {
-      let correctPath = this.imagen[0].filePath.substr(
-        0,
-        this.imagen[0].filePath.lastIndexOf("/") + 1
-      );
-      this.file.removeFile(correctPath, this.imagen[0].name).then();
-      this.imagen = [];
-    });
-    this.storage.get(STORAGE_KEY).then(async (images) => {
-      let newImages = [name];
-      this.storage.set(STORAGE_KEY, JSON.stringify(newImages));
-      let filePath = this.file.dataDirectory + name;
-      let resPath = await this.crearPathImagen(filePath);
-      let newEntry = {
-        name: name,
-        path: resPath,
-        filePath: filePath,
-      };
-      this.imagen = [newEntry, ...this.imagen];
-      this.ref.detectChanges();
-    });
-  }
-
-  eliminarImagen(imgEntry) {
-    this.storage.remove(STORAGE_KEY).then((resp) => {
-      let correctPath = imgEntry.filePath.substr(
-        0,
-        imgEntry.filePath.lastIndexOf("/") + 1
-      );
-      this.file.removeFile(correctPath, imgEntry.name).then((res) => {
-        this.presentToast("Se ha eliminado la imagen...");
-        this.imagen = [];
-      });
-    });
-  }
-
-  async faltaImagenAlert() {
+  async faltaImagenAlert(mensaje, titulo) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Alerta Imagen',
-      message: 'Por favor escoja una imagen.',
+      header: titulo,
+      message: mensaje,
       buttons: ['OK']
     });
     await alert.present();
@@ -209,7 +152,7 @@ export class ModalImagenComponent implements OnInit {
     const toast = await this.toastController.create({
       message: text,
       position: "bottom",
-      duration: 3000,
+      duration: 500,
     });
     toast.present();
   }
@@ -219,7 +162,7 @@ export class ModalImagenComponent implements OnInit {
     const loading = await this.loadingController.create({
       id: idLoading,
       cssClass: 'my-custom-class',
-      message: 'Autenticando credenciales...'
+      message: 'Publicando mensaje...'
     });
     
     return await loading.present();

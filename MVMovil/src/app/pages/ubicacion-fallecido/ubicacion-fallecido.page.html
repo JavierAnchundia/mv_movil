@@ -27,7 +27,13 @@
       [longitude]="lngFallecido"
       [markerDraggable]="false"
       [label]="{color: 'white', text: 'F'}"
-    ></agm-marker>
+    >
+      <agm-info-window>
+        <strong>Información</strong>
+        <p class="pt-2"><b>Sector: </b> {{sector.nombre}}</p>
+        <p class="pt-1"><b>Tipo Sepultura: </b> {{tipo_sepultura.nombre}}</p>
+      </agm-info-window>
+    </agm-marker>
 
     <agm-polyline [visible]="true" [strokeWeight]="4" [strokeColor]="'#07b57a'">
       <agm-polyline-point [latitude]="lat" [longitude]="lng">

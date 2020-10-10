@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { environment } from '../../../environments/environment'
 
@@ -17,17 +17,21 @@ export class SearchResultsPage implements OnInit {
     private platform: Platform
     ) 
     {
-    this.route.queryParams.subscribe(params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.lista_resultados = this.router.getCurrentNavigation().extras.state.listaFallecidos
-      }
-    });
     this.platform.backButton.subscribeWithPriority(20, () => {
       this.router.navigate(['search']);
     });
    }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.lista_resultados = this.router.getCurrentNavigation().extras.state.listaFallecidos
+      }
+    });
+  }
 
+  cargar_muro(difunto){
+    let navigationExtras: NavigationExtras = { state: { difunto: difunto} };
+    this.router.navigate(['muro-difunto'], navigationExtras);
   }
 }

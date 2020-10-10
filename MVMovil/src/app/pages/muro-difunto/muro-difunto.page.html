@@ -12,13 +12,13 @@
     <ion-row id="detalle-difunto">
       <ion-col size="9.5">
         <ion-row class="altura-row">
-          Carmen Leon
+          {{difunto.nombre}} {{difunto.apellido}}
         </ion-row>
         <ion-row class="altura-row">
-          02/04/1950 | 30/10/2000
+          {{difunto.fecha_nacimiento}} | {{difunto.fecha_difuncion}}
         </ion-row>
         <ion-row class="altura-row">
-          <ion-col size=2.5 class="icon_align">
+          <ion-col size=2.5 class="icon_align" (click)="cargar_mapa()">
             <ion-img src="./assets/muro_difunto/mapa.png" alt=""></ion-img>
           </ion-col>
           <ion-col size=2.5 class="icon_align">
@@ -28,7 +28,7 @@
             <ion-img src="./assets/muro_difunto/rosa.png" alt=""></ion-img>
           </ion-col>
           <ion-col size=4.5 class="icon_align">
-            36 Rosas
+            {{difunto.num_rosas}} Rosas
           </ion-col>
         </ion-row>
       </ion-col>

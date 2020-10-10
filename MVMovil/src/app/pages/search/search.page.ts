@@ -86,6 +86,7 @@ export class SearchPage implements OnInit {
     )
   }
 
+  
   // mostrar register controller de registrar usuario
   async showSearchLoading(idLoading) {
     const loading = await this.loadingController.create({

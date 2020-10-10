@@ -1,8 +1,8 @@
 const URL_ROOT = 'https://carmsanc.pythonanywhere.com/api'
 const URL_ROOT_AUTH = 'https://carmsanc.pythonanywhere.com'
 
-// const URL_ROOT = 'http://192.168.0.114:8000/api'
-// const URL_ROOT_AUTH = 'http://192.168.0.114:8000'
+// const URL_ROOT = 'http://192.168.0.112:8100/api'
+// const URL_ROOT_AUTH = 'http://192.168.0.112:8100'
 
 const URL_SERVICIOS = {
     url_backend: URL_ROOT_AUTH,
@@ -23,10 +23,19 @@ const URL_SERVICIOS = {
     empresa_get: URL_ROOT + '/empresa_get/',
     token: URL_ROOT + '/token/',
     users: URL_ROOT_AUTH + '/users/',
+    datosUsuario: URL_ROOT + '/usuario/',
     refresh_token: URL_ROOT + '/token/refresh/',
-    fblogin: 'https://carmsanc.pythonanywhere.com/auth/convert-token/',
     obtener_usuarios: URL_ROOT + '/obtener_usuarios/',
-    get_token_facebook: URL_ROOT + "/get_token_facebook/"
+    get_token_facebook: URL_ROOT + "/get_token_facebook/",
+    homenajes: URL_ROOT + '/homenajes/',
+    homenaje_post: URL_ROOT + '/homenajes_post/',
+    hmensaje_post: URL_ROOT + '/hmensaje_post/',
+    himagen_post: URL_ROOT +'/himagen_post/',
+    hvideo_post: URL_ROOT + '/hvideo_post/',
+    haudio_post: URL_ROOT +'/haudio_post/',
+    addRoses: URL_ROOT + '/difunto/update-partial/',
+    registroRosa: URL_ROOT +'/historial_rosas_post/',
+    logRosas: URL_ROOT + '/historial_rosas/',
 }
 
 export default URL_SERVICIOS

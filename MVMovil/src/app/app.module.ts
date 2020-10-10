@@ -15,7 +15,7 @@ import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { HttpClientModule } from '@angular/common/http';
 import { Storage, IonicStorageModule } from '@ionic/storage';
 import { JwtModule, JWT_OPTIONS } from "@auth0/angular-jwt";
-
+import { DatePipe } from '@angular/common'
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 
@@ -60,7 +60,8 @@ export function jwtOptionsFactory(storage) {
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Facebook
+    Facebook,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

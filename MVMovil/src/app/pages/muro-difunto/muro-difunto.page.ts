@@ -4,6 +4,8 @@ import { ModalImagenComponent } from './modal-imagen/modal-imagen.component'
 import { ModalController } from '@ionic/angular';
 import { ModalVideoComponent } from './modal-video/modal-video.component'
 import { ModalAudioComponent } from './modal-audio/modal-audio.component'
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+
 @Component({
   selector: 'app-muro-difunto',
   templateUrl: './muro-difunto.page.html',
@@ -11,11 +13,27 @@ import { ModalAudioComponent } from './modal-audio/modal-audio.component'
 })
 export class MuroDifuntoPage implements OnInit {
 
+  difunto: any = []
   constructor(
-    public modalController: ModalController
-  ) { }
+    public modalController: ModalController,
+    private route: ActivatedRoute, 
+    private router: Router
+  )
+  {
+  }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.difunto = this.router.getCurrentNavigation().extras.state.difunto
+      }
+      console.log(this.difunto)
+    });
+  }
+
+  cargar_mapa(){
+    let navigationExtras: NavigationExtras = { state: { difunto: this.difunto} };
+    this.router.navigate(['ubicacion-fallecido'], navigationExtras);
   }
 
   async modalTexto() {
@@ -29,7 +47,10 @@ export class MuroDifuntoPage implements OnInit {
   async modalImagen() {
     const modal = await this.modalController.create({
       component: ModalImagenComponent,
-      cssClass: 'my-custom-class'
+      cssClass: 'my-custom-class',
+      componentProps: {
+        'difunto': this.difunto
+      }
     });
     return await modal.present();
   }

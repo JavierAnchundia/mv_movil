@@ -11,6 +11,7 @@
   <ion-card
     *ngFor="let difunto of this.lista_resultados"
     routerLink="/ubicacion-fallecido"
+    (click)="cargar_muro(difunto)"
   >
     <ion-item>
       <ion-avatar>

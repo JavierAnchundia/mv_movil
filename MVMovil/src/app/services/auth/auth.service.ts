@@ -12,6 +12,7 @@ const TOKEN_KEY = 'access_token';
 const REFRESH_TOKEN = 'refresh_token';
 const USERNAME = 'username';
 const PASSWORD = 'password';
+const IDUSER = 'id_usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -101,6 +102,8 @@ export class AuthService {
           if(resp['access'] && resp['refresh']){
             this.storage.set(TOKEN_KEY, resp['access'])
             this.storage.set(REFRESH_TOKEN, resp['refresh'])
+            let user_id = this.helper.decodeToken(resp['access'])
+            this.storage.set(IDUSER, user_id.user_id)
             this.authenticationState.next(true);
           }
         }
@@ -148,6 +151,8 @@ export class AuthService {
         resp => {
           this.storage.set(TOKEN_KEY, resp['access'])
           this.storage.set(REFRESH_TOKEN, resp['refresh'])
+          let user_id = this.helper.decodeToken(resp['access'])
+          this.storage.set(IDUSER, user_id.user_id)
           this.authenticationState.next(true);
         }
       )
@@ -156,6 +161,10 @@ export class AuthService {
 
   getInfoUsuario(url){
     return this.http.get(url);
+  }
+
+  getDatosUsuario(){
+    let url = URL_SERVICIOS.datosUsuario + this.storage.get('')
   }
   
   getUsersAll(){

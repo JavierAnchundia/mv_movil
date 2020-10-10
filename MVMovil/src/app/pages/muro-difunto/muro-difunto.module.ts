@@ -8,11 +8,8 @@ import { MuroDifuntoPageRoutingModule } from './muro-difunto-routing.module';
 import { ContentPublicacionesComponent } from './content-publicaciones/content-publicaciones.component'
 import { MuroDifuntoPage } from './muro-difunto.page';
 import { ModalImagenComponent } from './modal-imagen/modal-imagen.component'
-// para carga imagenes
-import { Camera } from '@ionic-native/Camera/ngx';
-import { File } from '@ionic-native/File/ngx';
-import { WebView } from '@ionic-native/ionic-webview/ngx';
-import { FilePath } from '@ionic-native/file-path/ngx';
+import { ModalVideoComponent } from './modal-video/modal-video.component'
+import { DatePipe } from '@angular/common'
 
 @NgModule({
   imports: [
@@ -26,13 +23,11 @@ import { FilePath } from '@ionic-native/file-path/ngx';
   declarations: [
     MuroDifuntoPage,
     ContentPublicacionesComponent,
-    ModalImagenComponent
+    ModalImagenComponent,
+    ModalVideoComponent
   ],
   providers: [
-    Camera,
-    File,
-    WebView,
-    FilePath
+    DatePipe
   ]
 })
 export class MuroDifuntoPageModule {}

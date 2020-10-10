@@ -10,9 +10,9 @@ export class SectorService {
   constructor(private http: HttpClient) { }
 
 
-getSector(id) {
-  let url = URL_SERVICIOS.sector + id+'/';
+  getSector(id) {
+    let url = URL_SERVICIOS.sector + id+'/';
 
-  return this.http.get(url);
-}
+    return this.http.get(url);
+  }
 }
