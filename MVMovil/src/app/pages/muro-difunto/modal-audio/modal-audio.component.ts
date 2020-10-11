@@ -18,7 +18,6 @@ const TOKEN_KEY = 'access_token';
 })
 export class ModalAudioComponent implements OnInit {
   @Input() difunto: any;
-  @Output() myEvent = new EventEmitter();
   safeUrl: SafeUrl;
   audio = [];
   mensajeAudioForm: FormGroup;
@@ -56,7 +55,7 @@ export class ModalAudioComponent implements OnInit {
 
   async submit(){
     if(this.audio.length === 0){
-      this.faltaImagenAlert('Por favor escoja un audio...', 'Alerta Audio');
+      this.audioAlert('Por favor escoja un audio...', 'Alerta Audio');
     }
     else{
       await this.showMensajeLoading('idMensaje');
@@ -95,13 +94,13 @@ export class ModalAudioComponent implements OnInit {
                   async (resp: any) => {
                     await this.dismissMensajeLoading('idMensaje');
                     await this.dismiss()
-                    await this.faltaImagenAlert('Se ha subido con éxito', 'Publicación');
-                    this.cargarMudo();
+                    await this.audioAlert('Se ha subido con éxito', 'Publicación');
+                    this.cargarMuro();
                   },
                   async (error)=>{
                     await this.dismissMensajeLoading("idMensaje");
                     await this.dismiss()
-                    await this.faltaImagenAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
+                    await this.audioAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
                   }
                 )
               }
@@ -110,7 +109,7 @@ export class ModalAudioComponent implements OnInit {
           async (error)=>{
             await this.dismissMensajeLoading("idMensaje");
             await this.dismiss();
-            await this.faltaImagenAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
+            await this.audioAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
           }
         )
       }
@@ -118,7 +117,7 @@ export class ModalAudioComponent implements OnInit {
     
   }
 
-  cargarMudo(){
+  cargarMuro(){
     this.homenaje.sendMessage('cargar');
   }
   getFechaPublicacion() {
@@ -127,7 +126,7 @@ export class ModalAudioComponent implements OnInit {
     return latest_date;
   }
 
-  async faltaImagenAlert(mensaje, titulo) {
+  async audioAlert(mensaje, titulo) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: titulo,

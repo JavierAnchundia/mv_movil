@@ -61,7 +61,7 @@ export class ModalVideoComponent implements OnInit {
 
   async submit(){
     if(this.video.length === 0){
-      this.faltaImagenAlert('Por favor escoja un video...', 'Alerta Video');
+      this.videoAlert('Por favor escoja un video...', 'Alerta Video');
     }
     else{
       await this.showMensajeLoading('idMensaje');
@@ -95,19 +95,22 @@ export class ModalVideoComponent implements OnInit {
                   async (resp: any) => {
                     await this.dismissMensajeLoading('idMensaje');
                     await this.dismiss()
-                    await this.faltaImagenAlert('Se ha subido con éxito', 'Publicación');
+                    await this.videoAlert('Se ha subido con éxito', 'Publicación');
+                    this.cargarMuro();
                   },
                   async (error)=>{
+                    await this.dismissMensajeLoading('idMensaje');
                     await this.dismiss()
-                    await this.faltaImagenAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
+                    await this.videoAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
                   }
                 )
               }
             ) 
           },
           async (error)=>{
+            await this.dismissMensajeLoading('idMensaje');
             await this.dismiss()
-            await this.faltaImagenAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
+            await this.videoAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
           }
         )
       }
@@ -115,13 +118,17 @@ export class ModalVideoComponent implements OnInit {
     
   }
   
+  cargarMuro(){
+    this.homenaje.sendMessage('cargar');
+  }
+
   getFechaPublicacion() {
     let date = new Date();
     let latest_date = this.datepipe.transform(date, 'yyyy-MM-dd HH:mm');
     return latest_date;
   }
 
-  async faltaImagenAlert(mensaje, titulo) {
+  async videoAlert(mensaje, titulo) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: titulo,

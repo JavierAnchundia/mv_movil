@@ -67,33 +67,40 @@ export class ModalTextoComponent implements OnInit {
                   async (resp: any) => {
                     await this.dismissMensajeLoading('idMensaje');
                     await this.dismiss()
-                    await this.faltaImagenAlert('Se ha subido con éxito', 'Publicación');
+                    await this.textoAlert('Se ha subido con éxito', 'Publicación');
+                    this.cargarMuro();
                   },
                   async (error)=>{
+                    await this.dismissMensajeLoading('idMensaje');
                     await this.dismiss()
-                    await this.faltaImagenAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
+                    await this.textoAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
                   }
                 )
               }
             ) 
           },
           async (error)=>{
+            await this.dismissMensajeLoading('idMensaje');
             await this.dismiss();
-            await this.faltaImagenAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
+            await this.textoAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
           }
         )
       }
     )
     
   }
-  
+
+  cargarMuro(){
+    this.homenaje.sendMessage('cargar');
+  }
+
   getFechaPublicacion() {
     let date = new Date();
     let latest_date = this.datepipe.transform(date, 'yyyy-MM-dd HH:mm');
     return latest_date;
   }
 
-  async faltaImagenAlert(mensaje, titulo) {
+  async textoAlert(mensaje, titulo) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: titulo,

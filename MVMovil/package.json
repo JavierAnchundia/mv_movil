@@ -35,7 +35,6 @@
     "cordova-plugin-facebook4": "^6.4.0",
     "cordova-plugin-geolocation": "^4.0.2",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
-    "point-in-polygon": "^1.0.1",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
