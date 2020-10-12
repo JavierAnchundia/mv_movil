@@ -13,7 +13,6 @@ export class ModalRosaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.historial)
   }
 
   async dismiss() {

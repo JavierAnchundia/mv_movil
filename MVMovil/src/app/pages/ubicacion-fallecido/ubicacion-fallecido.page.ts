@@ -59,7 +59,6 @@ export class UbicacionFallecidoPage implements OnInit {
       (resp) => {
         for(let sect in resp){
           if(resp[sect].id_sector == id_sector){
-            console.log(resp[sect])
             this.sector = resp[sect];
           }
         }
@@ -72,7 +71,6 @@ export class UbicacionFallecidoPage implements OnInit {
       (resp) =>{
         for(let tip in resp){
           if(resp[tip].id_tip_sepultura == id_tip_sepultura){
-            console.log(resp[tip])
             this.tipo_sepultura = resp[tip];
           }
         }

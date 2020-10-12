@@ -54,7 +54,6 @@ export class MuroDifuntoPage implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.difunto = this.router.getCurrentNavigation().extras.state.difunto
       }
-      console.log(this.difunto)
     });
     this.setCurrentPosition();
     this.cargarPuntosPoligono();
@@ -101,19 +100,20 @@ export class MuroDifuntoPage implements OnInit {
     let navigationExtras: NavigationExtras = { state: { difunto: this.difunto} };
     this.router.navigate(['ubicacion-fallecido'], navigationExtras);
   }
-  addRose(){
-    this.postRegistroUserRose();
+  async addRose(){
+    await this.presentToast("Dejando Rosa!!!", 500, 'top');
+    await this.postRegistroUserRose();
   }
 
   async cargarHistorialRosas(){
     await this.homenaje.getLogRosas(this.difunto.id_difunto).subscribe((resp: any) => {
-      console.log(resp);
       this.historial_rosas = resp.reverse();
     })
   }
   async postContRose(){
     await this.homenaje.dejarRosa(this.difunto.id_difunto).toPromise().then(
-      (resp)=>{
+      async (resp)=>{
+        await this.presentToast("Ha dejado una rosa al difunto", 600, 'middle');
         this.getDatosDifunto();
         this.cargarHistorialRosas();
       }
@@ -133,6 +133,9 @@ export class MuroDifuntoPage implements OnInit {
             this.homenaje.postRegistroRosa(log, token).toPromise().then(
               (resp)=>{
                 this.postContRose();
+              },
+              (error) =>{
+                this.presentToast("No se ha podido dejar la rosa...", 500, 'bottom');
               }
             )
           }
@@ -245,13 +248,13 @@ export class MuroDifuntoPage implements OnInit {
   }
 
 
-  async presentToast(text) {
+  async presentToast(text, tiempo, position) {
     const toast = await this.toastController.create({
       message: text,
-      position: "bottom",
-      duration: 500,
+      position: position,
+      duration: tiempo,
     });
-    toast.present();
+    await toast.present();
   }
 
   // mostrar subir imagen controller

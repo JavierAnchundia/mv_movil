@@ -28,7 +28,6 @@ export class ContentPublicacionesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.difunto_datos)
     this.getHomenajes()
     this.serv_h_general.muroMensaje$.subscribe(
       message => {
@@ -42,10 +41,8 @@ export class ContentPublicacionesComponent implements OnInit {
   getHomenajes() {
     this.serv_h_general.getHomenajesDifunto(this.difunto_datos.id_difunto).subscribe(
       (resp: any) => {
-        console.log(resp);
         this.lista_publicaciones = resp;
         this.lista_publicaciones.reverse();
-        console.log(this.lista_publicaciones)
       })
   }
 }

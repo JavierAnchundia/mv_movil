@@ -42,8 +42,6 @@ export class AuthService {
         if(token){
           let decoded = this.helper.decodeToken(token);
           let isExpired = this.helper.isTokenExpired(token);
-          console.log(isExpired);
-          console.log('expired',isExpired)
           if(!isExpired){
             this.user = decoded;
             this.authenticationState.next(true);
@@ -59,11 +57,7 @@ export class AuthService {
                           "username" : username,
                           "password" : password 
                         }
-                        this.login(credential).subscribe(
-                          resp=> {
-                            console.log("toekn actualizado")
-                          }
-                        )
+                        this.login(credential).subscribe()
                       }
                     }
                   )
@@ -164,9 +158,6 @@ export class AuthService {
     return this.http.get(url);
   }
 
-  getDatosUsuario(){
-    let url = URL_SERVICIOS.datosUsuario + this.storage.get('')
-  }
   
   getUsersAll(){
     let url = URL_SERVICIOS.obtener_usuarios;
