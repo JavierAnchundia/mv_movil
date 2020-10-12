@@ -65,7 +65,7 @@ export class ModalAudioComponent implements OnInit {
 
   eliminarAudio(){
     this.audio = [];
-    this.presentToast("Se ha subido con éxito...", 'bottom')
+    this.presentToast("Se ha eliminado el audio...", 'bottom', 'warning')
   }
 
   async postAudio(){
@@ -94,7 +94,7 @@ export class ModalAudioComponent implements OnInit {
                   async (resp: any) => {
                     await this.dismissMensajeLoading('idMensaje');
                     await this.dismiss()
-                    await this.presentToast("Se ha subido con éxito...", 'middle')
+                    await this.presentToast("Se ha subido con éxito...", 'middle', 'success')
                     // await this.audioAlert('Se ha subido con éxito', 'Publicación');
                     this.cargarMuro();
                   },
@@ -137,11 +137,12 @@ export class ModalAudioComponent implements OnInit {
     await alert.present();
   }
 
-  async presentToast(text, position) {
+  async presentToast(text, position, color) {
     const toast = await this.toastController.create({
       message: text,
       position: position,
       duration: 900,
+      color: color,
     });
     toast.present();
   }

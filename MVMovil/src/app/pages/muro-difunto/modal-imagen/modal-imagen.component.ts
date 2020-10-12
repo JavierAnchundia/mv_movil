@@ -78,7 +78,7 @@ export class ModalImagenComponent implements OnInit {
         path: imageUrl,
         nombre: this.crearNombreArchivo()
       }]
-      this.presentToast("Se ha cargado la imagen...", 'bottom')
+      this.presentToast("Se ha cargado la imagen...", 'bottom', 'primary')
     });
     
   }
@@ -86,7 +86,7 @@ export class ModalImagenComponent implements OnInit {
   eliminarImagen(){
     this.imagen = [];
     
-    this.presentToast("Se ha eliminado la imagen...", 'bottom')
+    this.presentToast("Se ha eliminado la imagen...", 'bottom', 'warning')
   }
 
   async postImagen(){
@@ -117,7 +117,7 @@ export class ModalImagenComponent implements OnInit {
                   async (resp: any) => {
                     await this.dismissMensajeLoading('idMensaje');
                     await this.dismiss()
-                    await this.presentToast("Se ha subido con éxito...", 'middle')
+                    await this.presentToast("Se ha subido con éxito...", 'middle', 'success')
                     // await this.imagenAlert('Se ha subido con éxito', 'Publicación');
                     this.cargarMuro();
                   },
@@ -160,11 +160,12 @@ export class ModalImagenComponent implements OnInit {
     await alert.present();
   }
 
-  async presentToast(text, position) {
+  async presentToast(text, position, color) {
     const toast = await this.toastController.create({
       message: text,
       position: position,
       duration: 900,
+      color: color,
     });
     toast.present();
   }

@@ -56,7 +56,7 @@ export class ModalVideoComponent implements OnInit {
   
   eliminarVideo(){
     this.video = [];
-    this.presentToast("Se ha eliminado el video...", 'bottom')
+    this.presentToast("Se ha eliminado el video...", 'bottom', "warning")
   }
 
   async submit(){
@@ -95,7 +95,7 @@ export class ModalVideoComponent implements OnInit {
                   async (resp: any) => {
                     await this.dismissMensajeLoading('idMensaje');
                     await this.dismiss()
-                    await this.presentToast("Se ha subido con éxito...", 'middle')
+                    await this.presentToast("Se ha subido con éxito...", 'middle', "success")
                     // await this.videoAlert('Se ha subido con éxito', 'Publicación');
                     this.cargarMuro();
                   },
@@ -139,11 +139,12 @@ export class ModalVideoComponent implements OnInit {
     await alert.present();
   }
 
-  async presentToast(text, position) {
+  async presentToast(text, position, color) {
     const toast = await this.toastController.create({
       message: text,
       position: position,
       duration: 900,
+      color: color,
     });
     toast.present();
   }

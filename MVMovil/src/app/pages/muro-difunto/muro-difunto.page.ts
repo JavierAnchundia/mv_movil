@@ -101,7 +101,7 @@ export class MuroDifuntoPage implements OnInit {
     this.router.navigate(['ubicacion-fallecido'], navigationExtras);
   }
   async addRose(){
-    await this.presentToast("Dejando Rosa!!!", 500, 'top');
+    await this.presentToast("Dejando Rosa!!!", 500, 'top', 'secondary');
     await this.postRegistroUserRose();
   }
 
@@ -113,7 +113,7 @@ export class MuroDifuntoPage implements OnInit {
   async postContRose(){
     await this.homenaje.dejarRosa(this.difunto.id_difunto).toPromise().then(
       async (resp)=>{
-        await this.presentToast("Ha dejado una rosa al difunto", 600, 'middle');
+        await this.presentToast("Ha dejado una rosa al difunto", 600, 'middle', 'success');
         this.getDatosDifunto();
         this.cargarHistorialRosas();
       }
@@ -135,7 +135,7 @@ export class MuroDifuntoPage implements OnInit {
                 this.postContRose();
               },
               (error) =>{
-                this.presentToast("No se ha podido dejar la rosa...", 500, 'bottom');
+                this.presentToast("No se ha podido dejar la rosa...", 500, 'bottom', 'danger');
               }
             )
           }
@@ -248,11 +248,12 @@ export class MuroDifuntoPage implements OnInit {
   }
 
 
-  async presentToast(text, tiempo, position) {
+  async presentToast(text, tiempo, position, color) {
     const toast = await this.toastController.create({
       message: text,
       position: position,
       duration: tiempo,
+      color: color,
     });
     await toast.present();
   }
