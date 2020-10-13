@@ -46,12 +46,18 @@ export class ModalVideoComponent implements OnInit {
 
   selectFile(event) {
     this.file_video = event.target.files[0];
-    let data = new FormData()
-    data.append("audio", this.file_video)
-    this.video = [{
-      path: 'assets/muro_difunto/video-file.png',
-      nombre: event.target.files[0].name
-    }]
+    if(this.file_video.size <= 5000000){
+      let data = new FormData()
+      data.append("audio", this.file_video)
+      this.video = [{
+        path: 'assets/muro_difunto/video-file.png',
+        nombre: event.target.files[0].name
+      }]
+    }
+    else{
+      this.video = [];
+      this.videoAlert('El tamaño del video es pesado', 'Alerta Video');
+    }
   }
   
   eliminarVideo(){

@@ -45,12 +45,19 @@ export class ModalAudioComponent implements OnInit {
 
   selectFile(event) {
     this.file_audio = event.target.files[0];
-    let data = new FormData()
-    data.append("audio", this.file_audio)
-    this.audio = [{
-      path: 'assets/muro_difunto/audio-file.png',
-      nombre: event.target.files[0].name
-    }]
+    if(this.file_audio.size <= 5000000){
+      let data = new FormData()
+      data.append("audio", this.file_audio)
+      this.audio = [{
+        path: 'assets/muro_difunto/audio-file.png',
+        nombre: event.target.files[0].name
+      }]
+    }
+    else{
+      this.audio = [];
+      this.audioAlert('El tamaño del audio es pesado', 'Alerta audio');
+    }
+    
   }
 
   async submit(){
