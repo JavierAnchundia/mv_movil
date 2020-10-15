@@ -1,13 +1,14 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title>Muro</ion-title>
   </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true" class="ion-padding">
+</ion-header> -->
+<app-header titulo="muro" ruta="/search-results"></app-header>
+<app-menu></app-menu>
+<ion-content [fullscreen]="true" id="main" class="ion-padding">
   <ion-grid>
     <ion-row id="detalle-difunto">
       <ion-col size="9.5">

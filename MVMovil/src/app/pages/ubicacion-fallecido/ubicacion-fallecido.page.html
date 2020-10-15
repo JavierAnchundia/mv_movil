@@ -1,11 +1,13 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/search"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
+<app-header titulo="Mapa" ruta="/muro-difunto"></app-header>
+<!-- <app-menu></app-menu> -->
 <ion-content>
   <agm-map
     [latitude]="latFallecido"
@@ -32,7 +34,7 @@
         <strong>Información</strong>
         <p class="pt-2"><b>Sector: </b> {{sector.nombre}}</p>
         <p class="pt-1"><b>Tipo Sepultura: </b> {{tipo_sepultura.nombre}}</p>
-        <p class="pt-1"><b>Nº de lápida: </b> {{difunto.no_lapida}}</p>
+        <p class="pt-1"><b>Lápida: </b> {{difunto.no_lapida}}</p>
       </agm-info-window>
     </agm-marker>
 

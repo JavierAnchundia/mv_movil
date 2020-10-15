@@ -13,7 +13,7 @@ import { ModalAudioComponent } from './modal-audio/modal-audio.component'
 import { ModalTextoComponent } from './modal-texto/modal-texto.component'
 import { DatePipe } from '@angular/common'
 import { ModalRosaComponent } from './modal-rosa/modal-rosa.component';
-
+import { ComponentsModule } from 'src/app/components/components.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -22,6 +22,7 @@ import { ModalRosaComponent } from './modal-rosa/modal-rosa.component';
     MuroDifuntoPageRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    ComponentsModule,
   ],
   declarations: [
     MuroDifuntoPage,

@@ -46,7 +46,7 @@ export class ModalVideoComponent implements OnInit {
 
   selectFile(event) {
     this.file_video = event.target.files[0];
-    if(this.file_video.size <= 5000000){
+    if(this.file_video.size <= 10485760){
       let data = new FormData()
       data.append("audio", this.file_video)
       this.video = [{

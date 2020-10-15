@@ -49,6 +49,7 @@ export class LoginPage implements OnInit {
     });
   }
 
+  
   togglePassword(): void {
     this.showPassword = !this.showPassword;
     if(this.passwordToggle == 'eye'){

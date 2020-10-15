@@ -1,10 +1,11 @@
 <ion-header>
   <ion-toolbar>
+    <ion-menu-button slot="start" color="primary" menu="menu_button"></ion-menu-button>
     <ion-title>¡Bienvenido a mapa virtual!</ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content fullscreen>
+<!-- <app-menu></app-menu> -->
+<ion-content id="main">
   <ion-toolbar>
     <ion-grid class="center-grid">
       <ion-row>
@@ -43,6 +44,15 @@
           </ion-tab-button>
         </ion-col>
         <ion-col>
+          <ion-tab-button (click)="cerrar()">
+            <ion-icon name="close-circle-outline"></ion-icon>
+            <ion-label>Cerrar Sesión</ion-label>
+          </ion-tab-button>
+        </ion-col>
+        
+      </ion-row>
+      <!-- <ion-row>
+        <ion-col>
           <ion-tab-button>
             <ion-icon
               name="map-outline"
@@ -51,21 +61,12 @@
             <ion-label>Ubicación</ion-label>
           </ion-tab-button>
         </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-tab-button (click)="cerrar()">
-            <ion-icon name="close-circle-outline"></ion-icon>
-            <ion-label>Cerrar Sesión</ion-label>
-          </ion-tab-button>
-        </ion-col>
-        <ion-col>
           <ion-tab-button>
             <ion-icon name="card-outline" routerLink="/muro-difunto"></ion-icon>
             <ion-label>Muro</ion-label>
           </ion-tab-button>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
     </ion-grid>
   </ion-toolbar>
 </ion-content>

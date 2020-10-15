@@ -8,6 +8,7 @@ import { SearchPageRoutingModule } from './search-routing.module';
 
 import { SearchPage } from './search.page';
 import { HttpClientModule } from '@angular/common/http';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
     SearchPageRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    ComponentsModule
   ],
   declarations: [SearchPage]
 })

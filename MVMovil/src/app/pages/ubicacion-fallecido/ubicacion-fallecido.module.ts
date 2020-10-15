@@ -11,6 +11,7 @@ import { AgmCoreModule } from "@agm/core";
 import { environment } from "../../../environments/environment";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { GeolocalizacionService } from '../../services/geolocalizacion/geolocalizacion.service';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { GeolocalizacionService } from '../../services/geolocalizacion/geolocali
       apiKey: environment.api_key,
       libraries: ["places", "drawing", "geometry"],
     }),
+    ComponentsModule
   ],
   declarations: [UbicacionFallecidoPage],
   providers: [Geolocation, GeolocalizacionService],

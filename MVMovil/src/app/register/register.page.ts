@@ -83,13 +83,13 @@ export class RegisterPage implements OnInit {
     this.submitted = true;
     // this.showSpinner = true;
     let datosForm = this.registrationFormGroup.value;
-    let splitEmamil = datosForm['email'].split("@");
-    let username = splitEmamil[0];
+    // let splitEmamil = datosForm['email'].split("@");
+    // let username = splitEmamil[0];
     this.usuarioRegistro = {
       first_name: datosForm['nombres'],
       last_name: datosForm['apellidos'],
       email: datosForm['email'],
-      username: username,
+      username: datosForm['username'],
       password: datosForm['passwordFormGroup'].password,
       telefono: '',
       direccion: '',

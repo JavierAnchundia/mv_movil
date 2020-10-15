@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { SearchResultsPageRoutingModule } from './search-results-routing.module';
 
 import { SearchResultsPage } from './search-results.page';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SearchResultsPageRoutingModule
+    SearchResultsPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [SearchResultsPage]
 })

@@ -18,7 +18,7 @@ import { JwtModule, JWT_OPTIONS } from "@auth0/angular-jwt";
 import { DatePipe } from '@angular/common'
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
-
+import { ComponentsModule } from './components/components.module'
 export function jwtOptionsFactory(storage) {
   return {
     tokenGetter: () => {
@@ -53,6 +53,7 @@ export function jwtOptionsFactory(storage) {
       }
     }),
     IonicStorageModule.forRoot(),
+    ComponentsModule
   ],
   providers: [
     Keyboard,

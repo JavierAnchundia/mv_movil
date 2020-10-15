@@ -45,7 +45,7 @@ export class ModalAudioComponent implements OnInit {
 
   selectFile(event) {
     this.file_audio = event.target.files[0];
-    if(this.file_audio.size <= 5000000){
+    if(this.file_audio.size <= 10485760){
       let data = new FormData()
       data.append("audio", this.file_audio)
       this.audio = [{

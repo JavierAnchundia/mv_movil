@@ -1,12 +1,13 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/search"></ion-back-button>
     </ion-buttons>
     <ion-title>Fallecidos</ion-title>
   </ion-toolbar>
-</ion-header>
-
+</ion-header> -->
+<app-header titulo="fallecidos" ruta="/search"></app-header>
+<!-- <app-menu></app-menu> -->
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-card
     *ngFor="let difunto of this.lista_resultados"
