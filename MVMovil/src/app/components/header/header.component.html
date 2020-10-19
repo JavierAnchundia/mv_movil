@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="{{ruta}}"></ion-back-button>
+      <ion-back-button (click)="validateIonMenu()" defaultHref="{{ruta}}"></ion-back-button>
     </ion-buttons>
     <ion-title class="ion-text-capitalize">{{titulo}}</ion-title>
   </ion-toolbar>

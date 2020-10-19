@@ -1,13 +1,4 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Buscar fallecido</ion-title>
-  </ion-toolbar>
-</ion-header> -->
-<app-header titulo="buscar fallecido" ruta="/"></app-header>
-<!-- <app-menu></app-menu> -->
+<app-header titulo="buscar fallecido" ruta="/inicio" enableIonMenu="true"></app-header>
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-list lines="full" class="ion-no-margin ion-no-padding">
     <form [formGroup]="searchFG" (ngSubmit)="onSubmit(searchFG.value)">

@@ -8,6 +8,7 @@ import { environment } from '../../../environments/environment';
 import { AlertController } from '@ionic/angular';
 import { DifuntoService } from 'src/app/services/difunto/difunto.service';
 import { LoadingController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-search',
@@ -35,7 +36,8 @@ export class SearchPage implements OnInit {
     private alertController: AlertController,
     private _difunto: DifuntoService,
     private platform: Platform,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private menu: MenuController
     ) 
     { 
     this.searchFG = new FormGroup({
@@ -56,6 +58,11 @@ export class SearchPage implements OnInit {
     this.id = environment.camposanto.idCamposanto;
     this.cargarSector();
     this.cargarSepultura();
+    this.bloquearIonMenu();
+  }
+
+  bloquearIonMenu(){
+    this.menu.enable(false, 'menu_button');
   }
 
   async onSubmit(value) {

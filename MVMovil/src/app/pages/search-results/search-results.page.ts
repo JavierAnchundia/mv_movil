@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { Platform } from '@ionic/angular';
+import { MenuController, Platform } from '@ionic/angular';
 import { environment } from '../../../environments/environment'
 
 @Component({
@@ -14,7 +14,8 @@ export class SearchResultsPage implements OnInit {
   constructor(
     private route: ActivatedRoute, 
     private router: Router,
-    private platform: Platform
+    private platform: Platform,
+    private menu: MenuController
     ) 
     {
     this.platform.backButton.subscribeWithPriority(20, () => {
@@ -29,6 +30,7 @@ export class SearchResultsPage implements OnInit {
       }
     });
   }
+
 
   cargar_muro(difunto){
     let navigationExtras: NavigationExtras = { state: { difunto: difunto} };

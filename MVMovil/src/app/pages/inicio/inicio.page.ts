@@ -4,6 +4,7 @@ import { star } from 'ionicons/icons';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-inicio',
@@ -15,7 +16,8 @@ export class InicioPage implements OnInit {
   constructor(
     private _authService: AuthService,
     private router: Router,
-    private platform: Platform
+    private platform: Platform,
+    private menu: MenuController
   ) {
     this.platform.ready().then(() => {
       this.platform.backButton.subscribeWithPriority(9999, () => {
@@ -29,6 +31,7 @@ export class InicioPage implements OnInit {
 
   ngOnInit() {
   }
+
   async cerrar(){
     await this._authService.logout().then(
       (resp) => { 
