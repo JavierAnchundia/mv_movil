@@ -1,28 +1,93 @@
-ion-icon {
-    --ionicon-stroke-width: 25px;
-    font-size: 60px;
+// ion-icon {
+//     --ionicon-stroke-width: 25px;
+//     font-size: 30px;
+//   }
+ion-header{
+  #ovalo {
+    background-color:  #acc969;
+    position: fixed;
+    top: -13.5%;
+    display: block;
+    width: 100%;
+    height: 30%;
+    border-radius: 0 0 46% 46%;
   }
   
+  #cuadrado{
+    top: -8%;
+    position: fixed;
+    background-color: #acc969;
+    border-radius:initial;
+    width: 100%;
+    height: 10%;
+  }
+
+  ion-toolbar {
+    --background: transparent;
+    --ion-color-base: transparent !important;
+  }
+
+  ion-title{
+    text-align: center;
+    margin-top: 10%;
+    color: white;
+  }
+
+  .botonHeader{
+    color: white;
+  }
+}
+
+
   ion-button {
     width:110px;
     height:110px;
     border-radius: 10px;
   }
   
-  ion-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+ion-content {
+    
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  ion-toolbar{
+    margin-top: 18%;
+  }
+
+  .iconInicio{
+    font-size: 100px;
+  }
+
+  .labelInicio{
+    font-size: 1.2em;
+    color:  #acc969;
+  }
+
+  ion-col{
+    border: 1.2px solid black;
+    border-radius: 10%;
+    padding: 10% 5% 10%;
+  }
+
+  ion-row{
+    margin: 7% 20% 9%;
   }
   
-  ion-tab-button[aria-selected=true] {
-    --ripple-color: 0 2px 0 0 blue inset;
+  ion-tab-button div {
+    text-align: center;
   }
+  #colorWhatsapp{
+    --background: #42d77d;
+    --background-activated:  #42d77d;
+    --background-focused: #42d77d;
+    --background-hover: #42d77d;
+  }
+  ion-fab{
+    margin: 4% 2% 4%;
+  }
+}
   
-  ion-tab-button{
-    color: black;
-    --border-width: 2px;
-  }
+
   

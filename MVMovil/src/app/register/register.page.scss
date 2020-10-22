@@ -1,26 +1,89 @@
-ion-item{
-    --background: #fcfcfc;
-    --color: rgb(92, 89, 89);
-}
-
-ion-button{
-    --background: #062f77;
-}
-
-p{
-    --color: red;
-}
-ion-spinner {
-    transform: scale(3);
+ion-header{
+    ion-title{
+        font-size: 0.85em;
+        color:  #acc969;
+    
+    }
+    ion-back-button{
+        --color: #acc969;
+    }
 }
 
 ion-content {
-    --padding-top: 50px;
-}
-.text-center{
-    text-align: center;
+    width: 100%;
+    height: 100%;
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: flex-start;
+    #cuadro{
+        width: 100;
+        height: 100px;
+    }
+    ion-item{
+        --ion-background-color: #e9e8e877;
+        --border-radius: 12px;
+        padding-top: 20px;
+    }
+    
+    p{
+        --color: red;
+    }
+
+    form{
+        width: 100%;
+        height: 100%;
+    }
+    
+    #contenido{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        // overflow-y: scroll;
+    }
+    
+    #contentDatos{
+        // width: 100%;
+        // height: 90%;
+        // height: 90%;
+        overflow-y: scroll;
+        padding: 0% 8% 15%;
+    }
+    
+     
+    #contentAceptar {
+        // width: 100%;
+        // height: 10%;
+        // display: flex;
+        // flex-direction: column;
+        // align-content: flex-end;
+        // justify-content: flex-end;
+        bottom: 0;
+    }
+
+    // .eyeIcon{
+    //     font-size: 1.2em;
+    // }
+    
+    ion-input{
+        font-size: 0.85em;
+    }
+    
+    #registerButton{
+        --background: #acc969;
+        --width: 100%;
+        height: 50px;
+        margin: 0;
+    }
+    
+    .text-center{
+        text-align: center;
+    }
+    
+    .text_danger{
+        color:  #acc969;
+        font-size: 0.8em;
+    }
 }
 
-.text_danger{
-    color: red;
-}

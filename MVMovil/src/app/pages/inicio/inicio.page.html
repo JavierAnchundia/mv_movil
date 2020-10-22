@@ -1,11 +1,20 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button autoHide="false"></ion-menu-button>
-    </ion-buttons>
-    <!-- <ion-menu-button slot="start" color="primary" menu="menu_button"></ion-menu-button> -->
-    <ion-title>¡Bienvenido a mapa virtual!</ion-title>
-  </ion-toolbar>
+<ion-header class="ion-no-border">
+  <div>
+    <div id="ovalo">
+    </div>
+    <div id="cuadrado"></div>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button autoHide="false" class="botonHeader"></ion-menu-button>
+      </ion-buttons>
+      <ion-title class="ion-text-uppercase">Camposanto</ion-title>
+      <ion-buttons slot="end">
+        <ion-tab-button>
+          <ion-icon name="notifications" class="botonHeader"></ion-icon>
+        </ion-tab-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </div>
 </ion-header>
 <app-menu></app-menu>
 <ion-content id="main">
@@ -14,62 +23,31 @@
       <ion-row>
         <ion-col>
           <ion-tab-button routerLink="/search">
-            <ion-icon name="search-circle-outline"></ion-icon>
-            <ion-label>Consultar</ion-label>
-          </ion-tab-button>
-        </ion-col>
-        <ion-col>
-          <ion-tab-button>
-            <ion-icon name="people-circle-outline"></ion-icon>
-            <ion-label>Guardados</ion-label>
+            <ion-icon name="search-circle-outline" class="iconInicio"></ion-icon>
+            <div>
+              <ion-label class="labelInicio ion-text-uppercase">consultar difuntos</ion-label>
+            </div>
           </ion-tab-button>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
           <ion-tab-button>
-            <ion-icon name="file-tray-stacked-outline"></ion-icon>
-            <ion-label>Sugerencias</ion-label>
-          </ion-tab-button>
-        </ion-col>
-        <ion-col>
-          <ion-tab-button>
-            <ion-icon name="chatbubbles-outline"></ion-icon>
-            <ion-label>Chat</ion-label>
+            <ion-icon name="people-circle-outline" class="iconInicio"></ion-icon>
+            <div>
+              <ion-label class="labelInicio ion-text-uppercase">difuntos guardados</ion-label>
+            </div>
+            
           </ion-tab-button>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-tab-button>
-            <ion-icon name="information-circle"></ion-icon>
-            <ion-label>Sobre nosotros</ion-label>
-          </ion-tab-button>
-        </ion-col>
-        <ion-col>
-          <ion-tab-button (click)="cerrar()">
-            <ion-icon name="close-circle-outline"></ion-icon>
-            <ion-label>Cerrar Sesión</ion-label>
-          </ion-tab-button>
-        </ion-col>
-        
-      </ion-row>
-      <!-- <ion-row>
-        <ion-col>
-          <ion-tab-button>
-            <ion-icon
-              name="map-outline"
-              routerLink="/ubicacion-fallecido"
-            ></ion-icon>
-            <ion-label>Ubicación</ion-label>
-          </ion-tab-button>
-        </ion-col>
-          <ion-tab-button>
-            <ion-icon name="card-outline" routerLink="/muro-difunto"></ion-icon>
-            <ion-label>Muro</ion-label>
-          </ion-tab-button>
-        </ion-col>
-      </ion-row> -->
+      
     </ion-grid>
   </ion-toolbar>
+  
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button id="colorWhatsapp">
+      <ion-icon name="logo-whatsapp"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

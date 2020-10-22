@@ -34,10 +34,10 @@ export function jwtOptionsFactory(storage) {
   imports: [
     BrowserModule, 
     IonicModule.forRoot(
-      // {
+      {
       // scrollPadding: false,
       // scrollAssist: false,
-      // }
+      }
     ), 
     AppRoutingModule,
     HttpClientModule,

@@ -1,16 +1,25 @@
 <ion-menu side="start" menuId="menu_button" contentId="main">
-  <ion-header>
-    <ion-toolbar color="tertiary">
-      <ion-title>Menú Usuario</ion-title>
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-item lines="none">
+        <ion-avatar slot="start">
+          <img src="assets/user.png">
+        </ion-avatar>
+        <ion-label id="labelUser">Usuario</ion-label>
+      </ion-item>
     </ion-toolbar>
   </ion-header>
   <ion-content>
     <ion-list>
-      <ion-item>Perfil</ion-item>
-      <ion-item>Inicio</ion-item>
-      <ion-item>Ajustes</ion-item>
-      <ion-item>Ayuda</ion-item>
-      <ion-item>Cerrar Sesión</ion-item>
+      <ion-item lines="none" class="seleccionItem">Sugerencias</ion-item>
+      <ion-item lines="none" class="seleccionItem">Acerca de Nosotros</ion-item>
     </ion-list>
   </ion-content>
+  
+  <ion-footer class="ion-no-border">
+    <hr>
+    <label id="labelCSesion" (click)="cerrar()">
+      Cerrar Sesión
+    </label>
+  </ion-footer>
 </ion-menu>
