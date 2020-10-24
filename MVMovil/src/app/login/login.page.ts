@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
-import { AlertController, IonRouterOutlet, Platform } from '@ionic/angular';
+import { AlertController, IonRouterOutlet, MenuController, Platform } from '@ionic/angular';
 import { environment } from '../../environments/environment';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { Plugins } from '@capacitor/core';
@@ -31,8 +31,10 @@ export class LoginPage implements OnInit {
     private platform: Platform,
     private routerOutlet: IonRouterOutlet,
     private keyboard: Keyboard,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private menu: MenuController
   ) {
+    this.menu.enable(false);
     this.platform.backButton.subscribeWithPriority(-1, () => {
       if (!this.routerOutlet.canGoBack()) {
         App.exitApp();
@@ -66,6 +68,7 @@ export class LoginPage implements OnInit {
     await this._authService.login(this.credentialsForm.value).subscribe(
       (resp) => {
         if(resp){
+          this.menu.enable(true)
           this.dismissAuthLoading('idAuth');
           // this.showSpinner = false;
         }
@@ -92,6 +95,7 @@ export class LoginPage implements OnInit {
         this._authService.crearUsuarioFB(access_token).subscribe(
           (resp) => {
             if(resp){
+              this.menu.enable(true)
               this.dismissAuthLoading('idAuth');
               // this.showSpinner = false;
             }

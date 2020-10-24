@@ -5,7 +5,7 @@ import { RegistrationValidator } from './registration_validator';
 import { Usuario } from '../models/usuario.model';
 import { environment } from '../../environments/environment'
 import { AuthService } from '../services/auth/auth.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, MenuController } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 
@@ -38,10 +38,12 @@ export class RegisterPage implements OnInit {
     private _authService: AuthService,
     private alertController: AlertController,
     private platform: Platform,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private menu: MenuController
     ) 
     {
-    this.platform.backButton.subscribeWithPriority(0, () => {
+      this.menu.enable(false);
+      this.platform.backButton.subscribeWithPriority(0, () => {
       this.router.navigate(['login']);
     });
     this.idCamposanto = environment.camposanto.idCamposanto;

@@ -24,7 +24,7 @@ export class ModalAudioComponent implements OnInit {
   archivo: File = null;
   url = "";
   file_audio: File = null;
-
+  validarAudio: boolean = true;
   constructor(
     private alertController: AlertController,
     public modalController: ModalController,
@@ -52,6 +52,7 @@ export class ModalAudioComponent implements OnInit {
         path: 'assets/muro_difunto/audio-file.png',
         nombre: event.target.files[0].name
       }]
+      this.validarAudio = false;
     }
     else{
       this.audio = [];
@@ -71,6 +72,7 @@ export class ModalAudioComponent implements OnInit {
   }
 
   eliminarAudio(){
+    this.validarAudio = true;
     this.audio = [];
     this.presentToast("Se ha eliminado el audio...", 'bottom', 'warning')
   }
@@ -99,6 +101,8 @@ export class ModalAudioComponent implements OnInit {
                 homenajePost.append('id_audiocontent', id_audio);
                 this.homenaje.postHomenajeGeneral(homenajePost, token).subscribe(
                   async (resp: any) => {
+                    this.validarAudio = true;
+                    this.audio = [];
                     await this.dismissMensajeLoading('idMensaje');
                     await this.dismiss()
                     await this.presentToast("Se ha subido con éxito...", 'middle', 'success')
@@ -106,6 +110,8 @@ export class ModalAudioComponent implements OnInit {
                     this.cargarMuro();
                   },
                   async (error)=>{
+                    this.validarAudio = true;
+                    this.audio = [];
                     await this.dismissMensajeLoading("idMensaje");
                     await this.dismiss()
                     await this.audioAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
@@ -115,6 +121,8 @@ export class ModalAudioComponent implements OnInit {
             ) 
           },
           async (error)=>{
+            this.validarAudio = true;
+            this.audio = [];
             await this.dismissMensajeLoading("idMensaje");
             await this.dismiss();
             await this.audioAlert('Error al subir la publicación, intente otra vez...', 'Publicación');

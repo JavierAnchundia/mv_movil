@@ -1,25 +1,45 @@
 #fondo{
-    background-color: rgba($color: #EFEFEF, $alpha: 0.3);
     width: 100%;
     height: 100%;
+    #nonePublicacion{
+        text-align: center;
+    }
+    ion-card{
+        margin: 5px 5px;
+        margin-bottom: 20px;
+        ion-card-header{
+            ion-card-subtitle{
+                text-align: end;
+            } 
+            ion-card-title{
+                font-size: 1.4em;
+            }
+        }
+        ion-card-content{
+            video{
+                width: 100%;
+                height: 200px;
+            }
+            audio{
+                width: 100%;
+                // margin-left: 5%;
+            }
+            .imgPublicacion{
+                // margin-left: 5%;
+                width: 100%;
+                height: 200px;
+            }
+            .mensajePublicacion{
+                padding-top: 5%;
+            }
+            .eliminarPublicacion{
+                text-align: end;
+                ion-icon{
+                    color: #acc969;
+                    font-size: 1.5em;
+                    padding-right: 10px;
+                }
+            }
+        }
+    }
 }
-
-.alinear_fecha{
-    text-align: right;
-}
-
-video{
-    width: 100%;
-    height: 200px;
-}
-
-audio{
-    width: 100%;
-}
-ion-card-title{
-    font-size: 150%;
-}
-// ion-img{
-//     width: 100%;
-//     height: 200px;
-// }

@@ -27,4 +27,8 @@ export class HomenajeImagenService {
     return this.http.post<FormData>(url, imagen, httpOptions);
   }
 
+  deleteImagen(id){
+    let url = URL_SERVICIOS.himagen_del + id + "/"
+    return this.http.delete(url, {observe: 'response'});
+  }
 }

@@ -23,4 +23,9 @@ export class HomenajeAudioService {
     }
     return this.http.post<FormData>(url, audio, httpOptions);
   }
+
+  deleteAudio(id){
+    let url = URL_SERVICIOS.haudio_del + id + "/"
+    return this.http.delete(url, {observe: 'response'});
+  }
 }

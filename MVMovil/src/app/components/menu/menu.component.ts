@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -12,6 +13,7 @@ export class MenuComponent implements OnInit {
   constructor(
     private _authService: AuthService,
     private router: Router,
+    private menu: MenuController
   ) { }
 
   ngOnInit() {}
@@ -19,6 +21,7 @@ export class MenuComponent implements OnInit {
   async cerrar(){
     await this._authService.logout().then(
       (resp) => { 
+        this.menu.enable(false);
         this.router.navigate(["/login"]);
       }
     );

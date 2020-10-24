@@ -23,7 +23,7 @@ export class ModalImagenComponent implements OnInit {
 
   imagen: any = [];
   mensajeImagenForm: FormGroup;
-
+  validarImagen: boolean = true;
   constructor(
     private alertController: AlertController,
     private formBuilder: FormBuilder,
@@ -72,8 +72,8 @@ export class ModalImagenComponent implements OnInit {
       resultType: CameraResultType.Base64,
       saveToGallery: true
     }).then(async (resp) => {
+      this.validarImagen = false;
       let imageUrl = await 'data:image/png;base64,'+ resp.base64String;
-      // this.img_path = imageUrl;
       this.imagen = [{
         path: imageUrl,
         nombre: this.crearNombreArchivo()
@@ -84,8 +84,8 @@ export class ModalImagenComponent implements OnInit {
   }
 
   eliminarImagen(){
+    this.validarImagen = true;
     this.imagen = [];
-    
     this.presentToast("Se ha eliminado la imagen...", 'bottom', 'warning')
   }
 
@@ -115,6 +115,8 @@ export class ModalImagenComponent implements OnInit {
                 homenajePost.append('id_imagecontent', id_imagen);
                 this.homenaje.postHomenajeGeneral(homenajePost, token).subscribe(
                   async (resp: any) => {
+                    this.validarImagen = true;
+                    this.imagen = [];
                     await this.dismissMensajeLoading('idMensaje');
                     await this.dismiss()
                     await this.presentToast("Se ha subido con éxito...", 'middle', 'success')
@@ -122,6 +124,8 @@ export class ModalImagenComponent implements OnInit {
                     this.cargarMuro();
                   },
                   async (error)=>{
+                    this.validarImagen = true;
+                    this.imagen = [];
                     await this.dismissMensajeLoading('idMensaje');
                     await this.dismiss()
                     await this.imagenAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
@@ -131,6 +135,8 @@ export class ModalImagenComponent implements OnInit {
             ) 
           },
           async (error)=>{
+            this.validarImagen = true;
+            this.imagen = [];
             await this.dismissMensajeLoading('idMensaje');
             await this.dismiss()
             await this.imagenAlert('Error al subir la publicación, intente otra vez...', 'Publicación');

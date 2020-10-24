@@ -24,4 +24,9 @@ export class HomenajeTextoService {
     }
     return this.http.post<FormData>(url, texto, httpOptions);
   }
+
+  deleteTexto(id){
+    let url = URL_SERVICIOS.hmensaje_del + id + "/"
+    return this.http.delete(url, {observe: 'response'});
+  }
 }

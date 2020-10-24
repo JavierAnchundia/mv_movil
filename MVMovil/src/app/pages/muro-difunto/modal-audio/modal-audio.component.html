@@ -1,24 +1,80 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Publicar Audio</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click) = "dismiss()">Cerrar</ion-button>
+    <ion-buttons slot="start" (click) = "dismiss()">
+      <ion-icon name="arrow-back-outline"></ion-icon>
     </ion-buttons>
+    <ion-title class="ion-text-uppercase">Publicar Audio</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content [fullscreen]="true">
   <form [formGroup]="mensajeAudioForm" (ngSubmit)="submit()">
-    <ion-item>
+    <div id="contenido">
+      <div id="contentDatos">
+        <ion-item lines="none" id="itemArea">
+          <ion-textarea 
+            placeholder="Escriba su mensaje aquí"
+            rows="6" cols="20"
+            formControlName = "mensaje"
+            >
+          </ion-textarea>
+        </ion-item>
+        <div 
+        *ngIf="mensajeAudioForm.controls['mensaje'].invalid && mensajeAudioForm.controls['mensaje'].touched">
+          <span class="advertencia"  *ngIf="mensajeAudioForm.controls['mensaje'].errors.required">
+          <small>Mensaje es requerido!</small>
+          </span>
+          <span class="advertencia"
+            *ngIf="mensajeAudioForm.controls['mensaje'].errors.minlength || mensajeAudioForm.controls['mensaje'].errors.maxlength">
+            <small>Mensaje debe tener entre 10 y 200 carácteres</small>
+          </span>
+        </div>
+        <ion-list>
+          <ion-item *ngFor="let aud of audio; index as pos" text-wrap>
+            <ion-thumbnail slot="start">
+              <ion-img [src]="aud.path"></ion-img>
+            </ion-thumbnail>
+            <ion-label>
+              {{ aud.nombre }}
+            </ion-label>
+            <ion-button slot="end" fill="clear" (click)="eliminarAudio(aud)">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+        <ion-grid *ngIf="this.validarAudio">
+          <ion-row>
+            <ion-col size=4>
+              <ion-row id="alinear_row" class="pr-4">
+                  <label for="file-input">
+                    <ion-img id="img_foto" src="./assets/muro_difunto/audio.png"></ion-img>
+                  </label>
+                  <input id="file-input" type="file" accept="audio/*" (change)="selectFile($event)"/>
+              </ion-row>  
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <small *ngIf="audio.length == 0" text-center class="advertencia">Seleccione algún Audio</small>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <div id="contentAceptar">
+        <ion-button id="publicarButton" type="submit" expand="full" [disabled]="!mensajeAudioForm.valid">
+          Publicar
+          <ion-icon slot="end" name="send"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+    <!-- <ion-item>
       <ion-textarea 
         placeholder="Escriba aquí su mensaje..."
         rows="6" cols="20"
         formControlName = "mensaje"
         >
       </ion-textarea>
-    </ion-item>
+    </ion-item> -->
     
-    <div 
+    <!-- <div 
       *ngIf="mensajeAudioForm.controls['mensaje'].invalid && mensajeAudioForm.controls['mensaje'].touched">
         <span class="advertencia"  *ngIf="mensajeAudioForm.controls['mensaje'].errors.required">
         <small>Mensaje es requerido!</small>
@@ -28,9 +84,9 @@
           <small>Mensaje debe tener entre 10 y 200 carácteres</small>
         </span>
       </div>
-    <br/>
+    <br/> -->
     
-    <ion-list>
+    <!-- <ion-list>
       <ion-item *ngFor="let aud of audio; index as pos" text-wrap>
         <ion-thumbnail slot="start">
           <ion-img [src]="aud.path"></ion-img>
@@ -42,8 +98,8 @@
           <ion-icon slot="icon-only" name="trash"></ion-icon>
         </ion-button>
       </ion-item>
-    </ion-list>
-    <ion-grid>
+    </ion-list> -->
+    <!-- <ion-grid>
       <ion-row>
         <ion-col size=4>
           <ion-row id="alinear_row" class="pr-4">
@@ -65,6 +121,6 @@
       <ion-row>
         <small *ngIf="audio.length == 0" text-center class="advertencia">Seleccione algún Audio!</small>
       </ion-row>
-    </ion-grid>
+    </ion-grid> -->
   </form>
 </ion-content>

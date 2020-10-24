@@ -16,13 +16,13 @@
     </ion-toolbar>
   </div>
 </ion-header>
-<app-menu></app-menu>
-<ion-content id="main">
+<!-- <app-menu></app-menu> -->
+<ion-content>
   <ion-toolbar>
     <ion-grid class="center-grid">
       <ion-row>
         <ion-col>
-          <ion-tab-button routerLink="/search">
+          <ion-tab-button (click)="goSearch()">
             <ion-icon name="search-circle-outline" class="iconInicio"></ion-icon>
             <div>
               <ion-label class="labelInicio ion-text-uppercase">consultar difuntos</ion-label>

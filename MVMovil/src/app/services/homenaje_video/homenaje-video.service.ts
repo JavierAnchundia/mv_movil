@@ -25,4 +25,8 @@ export class HomenajeVideoService {
     return this.http.post<FormData>(url, video, httpOptions);
   }
 
+  deleteVideo(id){
+    let url = URL_SERVICIOS.hvideo_del + id + "/"
+    return this.http.delete(url, {observe: 'response'});
+  }
 }

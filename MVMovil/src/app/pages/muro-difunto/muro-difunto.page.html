@@ -1,37 +1,56 @@
-<app-header titulo="muro" ruta="/search-results" enableIonMenu="false"></app-header>
+<ion-header class="ion-no-border">
+  <div>
+    <div id="ovalo">
+      <!-- <ion-avatar> -->
+        <ion-img src="assets/muro_difunto/avatar_difunto.png"></ion-img>
+      <!-- </ion-avatar> -->
+      
+    </div>
+    <div id="cuadrado"></div>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/search-results" class="botonHeader"></ion-back-button>
+      </ion-buttons>
+      <ion-title></ion-title>
+      <ion-buttons slot="end">
+        <ion-tab-button>
+          <ion-icon name="home" class="botonHeader" (click)="cambiarPageInicio()"></ion-icon>
+        </ion-tab-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </div>
+</ion-header>
+
+<!-- <app-header titulo="muro" ruta="/search-results" enableIonMenu="false"></app-header> -->
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-grid>
-    <ion-row id="detalle-difunto">
-      <ion-col size="9.5">
-        <ion-row class="altura-row">
-          {{difunto.nombre}} {{difunto.apellido}}
-        </ion-row>
-        <ion-row class="altura-row">
-          {{difunto.fecha_nacimiento}} | {{difunto.fecha_difuncion}}
-        </ion-row>
-        <ion-row class="altura-row">
-          <ion-col size=2.5 class="icon_align" (click)="cargar_mapa()">
-            <ion-img src="./assets/muro_difunto/mapa.png" alt=""></ion-img>
-          </ion-col>
-          <ion-col size=2.5 class="icon_align">
-            <ion-img src="./assets/muro_difunto/pin_1.png" alt=""></ion-img>
-          </ion-col>
-          <ion-col size=2.5 class="icon_align" (click)="addRose()">
-            <ion-img src="./assets/muro_difunto/rosa.png" alt=""></ion-img>
-          </ion-col>
-          <ion-col size=4.5 class="icon_align" (click)="modalHistorialRosas()">
-            {{difunto.num_rosas}} Rosas
-          </ion-col>
-        </ion-row>
-      </ion-col>
-      <ion-col size="2.5" >
-        <ion-row id="avatar_difunto">
-          <ion-avatar>
-            <ion-img src="./assets/muro_difunto/avatar_difunto.png"></ion-img>
-          </ion-avatar>
-        </ion-row>
-      </ion-col>
-    </ion-row>
+      <ion-row>
+        {{difunto.nombre}} {{difunto.apellido}}
+      </ion-row>
+      <ion-row>
+          <ion-label>{{difunto.fecha_nacimiento}} - {{difunto.fecha_difuncion}}</ion-label>
+          <ion-img src="./assets/muro_difunto/pin_1.png" alt="" id="pin"></ion-img>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="5.8"  (click)="cargar_mapa()">
+          <ion-row>
+            <ion-img id="imgMapa" src="./assets/muro_difunto/mapa.png" alt=""></ion-img>
+            <ion-label>Mapa</ion-label>
+          </ion-row>
+        </ion-col>
+        <ion-col size="0.4">
+          <div class="vl"></div>
+        </ion-col>
+        <ion-col size="5.8">
+          <ion-row>
+            <ion-img id="imgRose" src="./assets/muro_difunto/rosa.png" alt="" (click)="addRose()"></ion-img>
+            <ion-label (click)="modalHistorialRosas()">{{difunto.num_rosas}} Rosas</ion-label>
+          </ion-row>
+        </ion-col>
+        <hr>
+      </ion-row>
+      
   </ion-grid>
   
   <app-content-publicaciones [difunto_datos]="difunto" >
@@ -39,7 +58,7 @@
   </app-content-publicaciones>
   
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
+    <ion-fab-button id="colorPlus">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">

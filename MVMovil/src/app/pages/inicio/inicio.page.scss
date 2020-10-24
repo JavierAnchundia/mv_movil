@@ -46,15 +46,15 @@ ion-header{
   }
   
 ion-content {
-    
+  --padding-top: 20%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   height: 100vh;
-  ion-toolbar{
-    margin-top: 18%;
-  }
+  // ion-toolbar{
+  //   margin-top: 18%;
+  // }
 
   .iconInicio{
     font-size: 100px;

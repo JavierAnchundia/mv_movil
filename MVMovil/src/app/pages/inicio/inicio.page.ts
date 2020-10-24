@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonButton, IonIcon, IonContent } from '@ionic/angular';
+import { IonButton, IonIcon, IonContent, ToastController, NavController } from '@ionic/angular';
 import { star } from 'ionicons/icons';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
@@ -17,9 +17,13 @@ export class InicioPage implements OnInit {
     private _authService: AuthService,
     private router: Router,
     private platform: Platform,
-    private menu: MenuController
+    private menu: MenuController,
+    public toastController: ToastController,
+    private navCtrl: NavController,
   ) {
+    this.menu.enable(true)
     this.platform.ready().then(() => {
+      
       this.platform.backButton.subscribeWithPriority(9999, () => {
         document.addEventListener('backbutton', function (event) {
           event.preventDefault();
@@ -30,13 +34,35 @@ export class InicioPage implements OnInit {
    }
 
   ngOnInit() {
+    // this.menu.enable(true, 'menu_button');
+  }
+  // ionViewDidEnter(){
+  //   this.menu.enable(true, 'menu_button');
+  // }
+
+  goSearch(){
+    // this.navCtrl.navigateRoot('/search', { animated: true, animationDirection: 'forward' });
+    this.router.navigate(['/search'])
   }
 
-  async cerrar(){
-    await this._authService.logout().then(
-      (resp) => { 
-        this.router.navigate(["/login"]);
-      }
-    );
+
+  // ionViewWillEnter(){
+  //   this.desbloquearIonMenu();
+  // }
+  // ionViewDidEnter(){
+  //   this.desbloquearIonMenu();
+  // }
+  // desbloquearIonMenu(){
+  //   this.menu.enable(true, 'menu_button');
+  //   this.presentToast()
+  // }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Your settings have been saved.',
+      duration: 2000
+    });
+    toast.present();
   }
+
 }

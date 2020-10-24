@@ -1,69 +1,70 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Publicar Video</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click) = "dismiss()">Cerrar</ion-button>
+    <ion-buttons slot="start" (click) = "dismiss()">
+      <ion-icon name="arrow-back-outline"></ion-icon>
     </ion-buttons>
+    <ion-title class="ion-text-uppercase">Publicar Video</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content [fullscreen]="true">
   <form [formGroup]="mensajeVideoForm" (ngSubmit)="submit()">
-    <ion-item>
-      <ion-textarea 
-        placeholder="Escriba aquí su mensaje..."
-        rows="6" cols="20"
-        formControlName = "mensaje"
-        >
-      </ion-textarea>
-    </ion-item>
-    
-    <div 
-      *ngIf="mensajeVideoForm.controls['mensaje'].invalid && mensajeVideoForm.controls['mensaje'].touched">
-        <span class="advertencia"  *ngIf="mensajeVideoForm.controls['mensaje'].errors.required">
-        <small>Mensaje es requerido!</small>
-        </span>
-        <span class="advertencia"
-          *ngIf="mensajeVideoForm.controls['mensaje'].errors.minlength || mensajeVideoForm.controls['mensaje'].errors.maxlength">
-          <small>Mensaje debe tener entre 10 y 200 carácteres</small>
-        </span>
+    <div id="contenido">
+      <div id="contentDatos">
+        <ion-item lines="none" id="itemArea">
+          <ion-textarea 
+            placeholder="Escriba su mensaje aquí"
+            rows="6" cols="20"
+            formControlName = "mensaje"
+            >
+          </ion-textarea>
+        </ion-item>
+        
+        <div 
+          *ngIf="mensajeVideoForm.controls['mensaje'].invalid && mensajeVideoForm.controls['mensaje'].touched">
+            <span class="advertencia"  *ngIf="mensajeVideoForm.controls['mensaje'].errors.required">
+            <small>Mensaje es requerido!</small>
+            </span>
+            <span class="advertencia"
+              *ngIf="mensajeVideoForm.controls['mensaje'].errors.minlength || mensajeVideoForm.controls['mensaje'].errors.maxlength">
+              <small>Mensaje debe tener entre 10 y 200 carácteres</small>
+            </span>
+        </div>
+        <ion-list>
+          <ion-item *ngFor="let vid of video; index as pos" text-wrap>
+            <ion-thumbnail slot="start">
+              <ion-img [src]="vid.path"></ion-img>
+            </ion-thumbnail>
+            <ion-label>
+              {{ vid.nombre }}
+            </ion-label>
+            <ion-button slot="end" fill="clear" (click)="eliminarVideo()">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+        <ion-grid *ngIf="this.validarVideo">
+          <ion-row>
+            <ion-col size=4>
+              <ion-row id="alinear_row" class="pr-4">
+                <label for="file-input">
+                  <ion-img id="img_foto" src="./assets/muro_difunto/video.png"></ion-img>
+                </label>
+                <input id="file-input" type="file" accept="video/*" (change)="selectFile($event)"/>
+              </ion-row>  
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <small *ngIf="video.length == 0" text-center class="advertencia">Seleccione algún Video</small>
+          </ion-row>
+        </ion-grid>
       </div>
-    <br/>
-    
-    <ion-list>
-      <ion-item *ngFor="let vid of video; index as pos" text-wrap>
-        <ion-thumbnail slot="start">
-          <ion-img [src]="vid.path"></ion-img>
-        </ion-thumbnail>
-        <ion-label>
-          {{ vid.nombre }}
-        </ion-label>
-        <ion-button slot="end" fill="clear" (click)="eliminarVideo()">
-          <ion-icon slot="icon-only" name="trash"></ion-icon>
+      <div id="contentAceptar">
+        <ion-button id="publicarButton" type="submit" expand="full" [disabled]="!mensajeVideoForm.valid">
+          Publicar
+          <ion-icon slot="end" name="send"></ion-icon>
         </ion-button>
-      </ion-item>
-    </ion-list>
-    <ion-grid>
-      <ion-row>
-        <ion-col size=4>
-          <ion-row id="alinear_row" class="pr-4">
-            <label for="file-input">
-              <ion-img id="img_foto" src="./assets/muro_difunto/video.png"></ion-img>
-            </label>
-            <input id="file-input" type="file" accept="video/*" (change)="selectFile($event)"/>
-          </ion-row>  
-        </ion-col>
-        <ion-col size=8>
-          <ion-button shape="block" type="submit" [disabled]="!mensajeVideoForm.valid">
-            Publicar
-            <ion-icon slot="end" name="send"></ion-icon>
-          </ion-button>
-        </ion-col>
-      </ion-row>
-      <br/>
-      <ion-row>
-        <small *ngIf="video.length == 0" text-center class="advertencia">Seleccione algún Video!</small>
-      </ion-row>
-    </ion-grid>
+      </div>
+    </div>
   </form>
 </ion-content>

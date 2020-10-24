@@ -1,0 +1,44 @@
+ion-header{
+    height: 20%;
+    ion-toolbar{
+        ion-icon{
+            font-size: 25px;
+            margin-right: 10px;
+        }
+    }
+    div{
+       width: 100%;
+       height: 80%; 
+       ion-grid{
+           #colRose ion-img{
+                width: 65%;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+           }
+           #colNum{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+           }
+       }
+       hr{
+        height: 1.2px;
+        width: 90%;
+        background-color: gray;
+        border-color: gray;
+    }
+    }
+    
+}
+
+ion-content{
+    // --padding-top: 10%;
+    ion-item{
+        padding-bottom: 4%;
+        padding-right: 8%;
+        ion-label{
+            padding: 10px;
+        }
+    }
+}

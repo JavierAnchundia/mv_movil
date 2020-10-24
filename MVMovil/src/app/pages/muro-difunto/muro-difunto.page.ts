@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalTextoComponent } from './modal-texto/modal-texto.component'
 import { ModalImagenComponent } from './modal-imagen/modal-imagen.component'
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, MenuController, ModalController } from '@ionic/angular';
 import { ModalVideoComponent } from './modal-video/modal-video.component'
 import { ModalAudioComponent } from './modal-audio/modal-audio.component'
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
@@ -25,12 +25,13 @@ const TOKEN_KEY = 'access_token';
   styleUrls: ['./muro-difunto.page.scss'],
 })
 export class MuroDifuntoPage implements OnInit {
-  polygon = [ [ 1, 1 ], [ 1, 2 ], [ 2, 2 ], [ 2, 1 ] ];
+  // polygon = [ [ 1, 1 ], [ 1, 2 ], [ 2, 2 ], [ 2, 1 ] ];
   difunto: any = []
   lat: number;
   lng: number;
-  puntos_polygon: any = []
-  historial_rosas: any = []
+  puntos_polygon: any = [];
+  historial_rosas: any = [];
+  
   constructor(
     public modalController: ModalController,
     private route: ActivatedRoute, 
@@ -44,7 +45,8 @@ export class MuroDifuntoPage implements OnInit {
     private toastController: ToastController,
     private loadingController: LoadingController,
     public datepipe: DatePipe,
-    private service_difunto: DifuntoService
+    private service_difunto: DifuntoService,
+    private menu: MenuController,
   )
   {
   }
@@ -60,6 +62,7 @@ export class MuroDifuntoPage implements OnInit {
     this.cargarHistorialRosas();
   }
 
+  
   async cargarPuntosPoligono(){
     await this.service_geo.getListGeolocalizacion(this.difunto.id_camposanto).toPromise().then(
       (resp)=> {
@@ -151,7 +154,11 @@ export class MuroDifuntoPage implements OnInit {
       }
     )
   }
-
+  cambiarPageInicio(){
+    // this.menu.enable(true, 'menu_button');
+    this.router.navigate(["/inicio"]);
+  }
+  
   async modalTexto() {
     let validacion = await this.validarPoligono(this.lat, this.lng);
     if(validacion == false){
@@ -223,9 +230,10 @@ export class MuroDifuntoPage implements OnInit {
   async modalHistorialRosas() {
     const modal = await this.modalController.create({
       component: ModalRosaComponent,
-      cssClass: 'my-custom-class',
+      cssClass: 'modalRosas',
       componentProps: {
-        'historial': this.historial_rosas
+        'historial': this.historial_rosas,
+        'numRose' : this.difunto.num_rosas
       }
     });
     return await modal.present();
@@ -243,7 +251,7 @@ export class MuroDifuntoPage implements OnInit {
 
   getFechaPublicacion() {
     let date = new Date();
-    let latest_date = this.datepipe.transform(date, 'yyyy-MM-dd');
+    let latest_date = this.datepipe.transform(date, 'yyyy-MM-dd HH:mm');
     return latest_date;
   }
 

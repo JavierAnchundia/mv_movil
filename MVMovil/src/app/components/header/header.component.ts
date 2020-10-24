@@ -19,9 +19,9 @@ export class HeaderComponent implements OnInit {
     
   }
   validateIonMenu(){
-    if(this.enableIonMenu == "true"){
-      this.habilitarIonMenu();
-    }
+    // if(this.enableIonMenu == "true"){
+    //   this.habilitarIonMenu();
+    // }
   }
   habilitarIonMenu(){
     this.menu.enable(true, 'menu_button');

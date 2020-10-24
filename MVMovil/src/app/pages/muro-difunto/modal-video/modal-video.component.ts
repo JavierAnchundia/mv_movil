@@ -18,7 +18,7 @@ const TOKEN_KEY = 'access_token';
 })
 export class ModalVideoComponent implements OnInit {
   @Input() difunto: any;
-
+  validarVideo: boolean = true;
   safeUrl: SafeUrl;
   video = [];
   mensajeVideoForm: FormGroup;
@@ -52,7 +52,8 @@ export class ModalVideoComponent implements OnInit {
       this.video = [{
         path: 'assets/muro_difunto/video-file.png',
         nombre: event.target.files[0].name
-      }]
+      }];
+      this.validarVideo = false;
     }
     else{
       this.video = [];
@@ -61,6 +62,7 @@ export class ModalVideoComponent implements OnInit {
   }
   
   eliminarVideo(){
+    this.validarVideo = true;
     this.video = [];
     this.presentToast("Se ha eliminado el video...", 'bottom', "warning")
   }
@@ -99,6 +101,8 @@ export class ModalVideoComponent implements OnInit {
                 homenajePost.append('id_videocontent', id_video);
                 this.homenaje.postHomenajeGeneral(homenajePost, token).subscribe(
                   async (resp: any) => {
+                    this.validarVideo = true;
+                    this.video = [];
                     await this.dismissMensajeLoading('idMensaje');
                     await this.dismiss()
                     await this.presentToast("Se ha subido con éxito...", 'middle', "success")
@@ -106,6 +110,8 @@ export class ModalVideoComponent implements OnInit {
                     this.cargarMuro();
                   },
                   async (error)=>{
+                    this.validarVideo = true;
+                    this.video = [];
                     await this.dismissMensajeLoading('idMensaje');
                     await this.dismiss()
                     await this.videoAlert('Error al subir la publicación, intente otra vez...', 'Publicación');
@@ -115,6 +121,8 @@ export class ModalVideoComponent implements OnInit {
             ) 
           },
           async (error)=>{
+            this.validarVideo = true;
+            this.video = [];
             await this.dismissMensajeLoading('idMensaje');
             await this.dismiss()
             await this.videoAlert('Error al subir la publicación, intente otra vez...', 'Publicación');

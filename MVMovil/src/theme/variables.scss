@@ -230,3 +230,29 @@
     --ion-card-background: #1e1e1e;
   }
 }
+
+.alertControllerSearch{
+  .alertImg{
+    width: 60px;
+    margin: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .alertImg img{
+    width: 60px;
+  }
+  .alertLabel {
+    text-align: center;
+  }
+  .alertLabel ion-label{
+    font-weight: 600;
+  }
+  .alert-button-group{
+    justify-content: center;
+  }
+  .colorTextButton{
+    color: #acc969;
+  }
+}
+

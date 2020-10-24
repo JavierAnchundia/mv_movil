@@ -1,24 +1,77 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Publicar Imagen</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click) = "dismiss()">Cerrar</ion-button>
+    <ion-buttons slot="start" (click) = "dismiss()">
+      <ion-icon name="arrow-back-outline"></ion-icon>
     </ion-buttons>
+    <ion-title class="ion-text-uppercase">Publicar Imagen</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content [fullscreen]="true">
   <form [formGroup]="mensajeImagenForm" (ngSubmit)="submit()">
-    <ion-item>
+    <div id="contenido">
+      <div id="contentDatos">
+        <ion-item lines="none" id="itemArea">
+          <ion-textarea 
+            placeholder="Escriba aquí su mensaje..."
+            rows="6" cols="20"
+            formControlName = "mensaje"
+            >
+          </ion-textarea>
+        </ion-item>
+        <div 
+        *ngIf="mensajeImagenForm.controls['mensaje'].invalid && mensajeImagenForm.controls['mensaje'].touched">
+          <span class="advertencia"  *ngIf="mensajeImagenForm.controls['mensaje'].errors.required">
+          <small>Mensaje es requerido!</small>
+          </span>
+          <span class="advertencia"
+            *ngIf="mensajeImagenForm.controls['mensaje'].errors.minlength || mensajeImagenForm.controls['mensaje'].errors.maxlength">
+            <small>Mensaje debe tener entre 10 y 200 carácteres</small>
+          </span>
+        </div>
+        <ion-list>
+          <ion-item *ngFor="let img of imagen; index as pos" text-wrap>
+            <ion-thumbnail slot="start">
+              <ion-img [src]="img.path"></ion-img>
+            </ion-thumbnail>
+            <ion-label>{{img.nombre}}</ion-label>
+            <ion-button slot="end" fill="clear" (click)="eliminarImagen()">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <label for="">{{base}}</label>
+        </ion-list>
+        <ion-grid *ngIf="this.validarImagen">
+          <ion-row>
+            <ion-col size=4>
+              <ion-row id="alinear_row" (click)="seleccionarImagen()">
+                <ion-img id="img_foto" src="./assets/muro_difunto/foto.png"></ion-img>
+              </ion-row>  
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <small *ngIf="imagen.length == 0" text-center class="advertencia">Seleccione alguna Imagen</small>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <div id="contentAceptar">
+        <ion-button  id="publicarButton" type="submit" expand="full" [disabled]="!mensajeImagenForm.valid">
+          Publicar
+          <ion-icon slot="end" name="send"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- <ion-item>
       <ion-textarea 
         placeholder="Escriba aquí su mensaje..."
         rows="6" cols="20"
         formControlName = "mensaje"
         >
       </ion-textarea>
-    </ion-item>
+    </ion-item> -->
     
-    <div 
+    <!-- <div 
       *ngIf="mensajeImagenForm.controls['mensaje'].invalid && mensajeImagenForm.controls['mensaje'].touched">
         <span class="advertencia"  *ngIf="mensajeImagenForm.controls['mensaje'].errors.required">
         <small>Mensaje es requerido!</small>
@@ -28,9 +81,9 @@
           <small>Mensaje debe tener entre 10 y 200 carácteres</small>
         </span>
       </div>
-    <br/>
+    <br/> -->
     
-    <ion-list>
+    <!-- <ion-list>
       <ion-item *ngFor="let img of imagen; index as pos" text-wrap>
         <ion-thumbnail slot="start">
           <ion-img [src]="img.path"></ion-img>
@@ -41,8 +94,8 @@
         </ion-button>
       </ion-item>
       <label for="">{{base}}</label>
-    </ion-list>
-    <ion-grid>
+    </ion-list> -->
+    <!-- <ion-grid>
       <ion-row>
         <ion-col size=4>
           <ion-row id="alinear_row" (click)="seleccionarImagen()">
@@ -60,6 +113,6 @@
       <ion-row>
         <small *ngIf="imagen.length == 0" text-center class="advertencia">Seleccione alguna Imagen!</small>
       </ion-row>
-    </ion-grid>
+    </ion-grid> -->
   </form>
 </ion-content>

@@ -1,24 +1,54 @@
-<ion-header>
+
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Publicar Mensaje</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click) = "dismiss()">Cerrar</ion-button>
+    <ion-buttons slot="start" (click) = "dismiss()">
+      <ion-icon name="arrow-back-outline"></ion-icon>
     </ion-buttons>
+    <ion-title class="ion-text-uppercase">Publicar Mensaje</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content [fullscreen]="true">
   <form [formGroup]="mensajeTextoForm" (ngSubmit)="submit()">
-    <ion-item>
+    <div id="contenido">
+      <div id="contentDatos">
+        <ion-item lines="none" id="itemArea">
+          <ion-textarea 
+            placeholder="Escriba aquí su mensaje..."
+            rows="6" cols="20"
+            formControlName = "mensaje"
+            >
+          </ion-textarea>
+        </ion-item>
+        <div 
+          *ngIf="mensajeTextoForm.controls['mensaje'].invalid && mensajeTextoForm.controls['mensaje'].touched">
+            <span class="advertencia"  *ngIf="mensajeTextoForm.controls['mensaje'].errors.required">
+            <small>Mensaje es requerido!</small>
+            </span>
+            <span class="advertencia"
+              *ngIf="mensajeTextoForm.controls['mensaje'].errors.minlength || mensajeTextoForm.controls['mensaje'].errors.maxlength">
+              <small>Mensaje debe tener entre 10 y 200 carácteres</small>
+            </span>
+        </div>
+      </div>
+      <div id="contentAceptar">
+        <ion-button id="publicarButton" type="submit" expand="full" [disabled]="!mensajeTextoForm.valid">
+          Publicar
+          <ion-icon slot="end" name="send"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- <ion-item>
       <ion-textarea 
         placeholder="Escriba aquí su mensaje..."
         rows="6" cols="20"
         formControlName = "mensaje"
         >
       </ion-textarea>
-    </ion-item>
+    </ion-item> -->
     
-    <div 
+    <!-- <div 
       *ngIf="mensajeTextoForm.controls['mensaje'].invalid && mensajeTextoForm.controls['mensaje'].touched">
         <span class="advertencia"  *ngIf="mensajeTextoForm.controls['mensaje'].errors.required">
         <small>Mensaje es requerido!</small>
@@ -28,10 +58,10 @@
           <small>Mensaje debe tener entre 10 y 200 carácteres</small>
         </span>
     </div>
-    <br />
-    <ion-button  shape="block" type="submit" [disabled]="!mensajeTextoForm.valid">
+    <br /> -->
+    <!-- <ion-button  shape="block" type="submit" [disabled]="!mensajeTextoForm.valid">
       Publicar
       <ion-icon slot="end" name="send"></ion-icon>
-    </ion-button>
+    </ion-button> -->
   </form>
 </ion-content>

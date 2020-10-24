@@ -8,6 +8,7 @@ import { ModalController } from '@ionic/angular';
 })
 export class ModalRosaComponent implements OnInit {
   @Input() historial: any;
+  @Input() numRose: number;
   constructor(
     public modalController: ModalController
   ) { }

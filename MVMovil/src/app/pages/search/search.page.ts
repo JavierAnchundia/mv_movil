@@ -62,7 +62,7 @@ export class SearchPage implements OnInit {
   }
 
   bloquearIonMenu(){
-    this.menu.enable(false, 'menu_button');
+    // this.menu.enable(false, 'menu_button');
   }
 
   async onSubmit(value) {
@@ -72,6 +72,12 @@ export class SearchPage implements OnInit {
   }
 
   async cargarResultados(value) {
+    if(value.nombres == ''){
+      value.nombres= null;
+    }
+    if(value.apellidos == ''){
+      value.apellidos = null;
+    }
     await this._difunto.getDifuntos(this.id_camposanto, value.nombres, value.apellidos).toPromise()
       .then((resp: any) =>{
         // this.showSpinner = false;
@@ -112,10 +118,10 @@ export class SearchPage implements OnInit {
 
   async noFoundAlert() {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Resultado Busqueda',
-      message: 'No se ha encontrado coicidencias con los parámetros solicitados',
-      buttons: ['OK']
+      cssClass: 'alertControllerSearch',
+      // header: 'Resultado Busqueda',
+      message: '<div class="alertImg"><img src="assets/bad-search.png"></div><div class="alertLabel"><ion-label>No se encontraron coicidencias</ion-label></div>',
+      buttons: [{text: 'X', cssClass: 'colorTextButton'}]
     });
     await alert.present();
   }
