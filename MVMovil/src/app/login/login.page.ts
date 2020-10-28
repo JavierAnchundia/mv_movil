@@ -8,6 +8,8 @@ import { Plugins } from '@capacitor/core';
 const { App } = Plugins;
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { LoadingController } from '@ionic/angular';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { HomenajesService } from '../services/homenajes/homenajes.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +24,7 @@ export class LoginPage implements OnInit {
   credentialsForm: FormGroup;
   showPassword: boolean = false;
   passwordToggle: String = 'eye';
-
+  difunto: any = null;
   constructor(
     private formBuilder: FormBuilder,
     private _authService: AuthService,
@@ -32,15 +34,26 @@ export class LoginPage implements OnInit {
     private routerOutlet: IonRouterOutlet,
     private keyboard: Keyboard,
     private loadingController: LoadingController,
-    private menu: MenuController
+    private menu: MenuController,
+    private route: ActivatedRoute,
+    private router: Router,
+    private homenaje: HomenajesService
   ) {
     this.menu.enable(false);
-    this.platform.backButton.subscribeWithPriority(-1, () => {
-      if (!this.routerOutlet.canGoBack()) {
-        App.exitApp();
-      }
+    // this.platform.backButton.subscribeWithPriority(-1, () => {
+    //   if (!this.routerOutlet.canGoBack()) {
+    //     App.exitApp();
+    //   }
       
-    this.keyboard.disableScroll(true);
+    // this.keyboard.disableScroll(true);
+    // });
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.difunto = this.router.getCurrentNavigation().extras.state.difunto
+      }
+      else{
+        this.difunto = null;
+      }
     });
    }
 
@@ -70,6 +83,13 @@ export class LoginPage implements OnInit {
         if(resp){
           this.menu.enable(true)
           this.dismissAuthLoading('idAuth');
+          if(this.difunto != null){
+            let navigationExtras: NavigationExtras = { state: { difunto: this.difunto} };
+            this.router.navigate(['muro-difunto'], navigationExtras);
+          }
+          else{
+            this.router.navigate(['/inicio'])
+          }
           // this.showSpinner = false;
         }
       },
@@ -82,7 +102,15 @@ export class LoginPage implements OnInit {
     );
   }
 
-  
+  register(){
+    if(this.difunto){
+      let navigationExtras: NavigationExtras = { state: { difunto: this.difunto} };
+      this.router.navigate(['/register'], navigationExtras);
+    }
+    else{
+      this.router.navigate(['/register'])
+    }
+  }
 
 
   async signIn(): Promise<void> {
@@ -97,6 +125,13 @@ export class LoginPage implements OnInit {
             if(resp){
               this.menu.enable(true)
               this.dismissAuthLoading('idAuth');
+              if(this.difunto != null){
+                let navigationExtras: NavigationExtras = { state: { difunto: this.difunto} };
+                this.router.navigate(['muro-difunto'], navigationExtras);
+              }
+              else{
+                this.router.navigate(['/inicio'])
+              }
               // this.showSpinner = false;
             }
           },

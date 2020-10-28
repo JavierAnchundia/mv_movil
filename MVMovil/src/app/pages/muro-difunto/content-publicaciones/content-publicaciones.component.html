@@ -1,66 +1,64 @@
-<!-- <ion-content class="ion-padding-top"> -->
-  <div id="fondo">
-    <div *ngIf="this.lista_publicaciones.length == 0" id="nonePublicacion">
-      <p>No hay publicaciones en este perfil</p>
-    </div>
-    <ion-card *ngFor="let publicacion of this.lista_publicaciones; index as pos">
-      <ion-card-header>
-        <ion-card-subtitle class="alinear_fecha">
-          <small>{{publicacion.fecha_publicacion| date:'MMM d, y h:mm a'}}</small>
-        </ion-card-subtitle>
-        <ion-card-title>{{publicacion.id_usuario.first_name}} {{publicacion.id_usuario.last_name}}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content *ngIf="publicacion.id_videocontent != null">
-        <div class="eliminarPublicacion" *ngIf="this.idUser == publicacion.id_usuario.id">
-          <ion-icon name="trash-bin" (click)="deleteVideo(publicacion.id_videocontent)"></ion-icon>
-        </div>
-        <video controls>
-          <source 
-            src="{{this.url_backend}}{{publicacion.id_videocontent.video}}"
-            type="video/mp4"
-          >
-        </video>
-        <p class="ion-text-justify ion-padding-bottom mensajePublicacion" *ngIf="publicacion.id_videocontent.mensaje != null">
-          {{publicacion.id_videocontent.mensaje}}
-        </p>
-      </ion-card-content>
-
-      <ion-card-content *ngIf="publicacion.id_audiocontent != null">
-        <div class="eliminarPublicacion" *ngIf="this.idUser == publicacion.id_usuario.id">
-          <ion-icon name="trash-bin" (click)="deleteAudio(publicacion.id_audiocontent)"></ion-icon>
-        </div>
-        <audio controls>
-          <source 
-            src="{{this.url_backend}}{{publicacion.id_audiocontent.audio}}"
-            type="audio/mpeg"
-          >
-        </audio>
-        <p class="ion-text-justify ion-padding-bottom mensajePublicacion" *ngIf="publicacion.id_audiocontent.mensaje != null">
-          {{publicacion.id_audiocontent.mensaje}}
-        </p>
-      </ion-card-content>
-
-      <ion-card-content *ngIf="publicacion.id_imagecontent != null">
-        <div class="eliminarPublicacion" *ngIf="this.idUser == publicacion.id_usuario.id">
-          <ion-icon name="trash-bin" (click)="deleteImage(publicacion.id_imagecontent)"></ion-icon>
-        </div>
-        <ion-img
-          class="pt-4 imgPublicacion"
-          src="{{this.url_backend}}{{publicacion.id_imagecontent.imagen}}"
-        ></ion-img>
-        <p class="ion-text-justify ion-padding-bottom mensajePublicacion" *ngIf="publicacion.id_imagecontent.mensaje != null">
-          {{publicacion.id_imagecontent.mensaje}}
-        </p>
-      </ion-card-content>
-
-      <ion-card-content *ngIf="publicacion.id_textcontent != null">
-        <div class="eliminarPublicacion" *ngIf="this.idUser == publicacion.id_usuario.id">
-          <ion-icon name="trash-bin" (click)="deleteTexto(publicacion.id_textcontent)"></ion-icon>
-        </div>
-        <p class="ion-text-justify ion-padding-bottom mensajePublicacion" *ngIf="publicacion.id_textcontent.mensaje != null">
-          {{publicacion.id_textcontent.mensaje}}
-        </p>
-      </ion-card-content>
-    </ion-card>
+<div id="fondo">
+  <div *ngIf="this.lista_publicaciones.length == 0" id="nonePublicacion">
+    <p>No hay publicaciones en este perfil</p>
   </div>
-<!-- </ion-content> -->
+  <ion-card *ngFor="let publicacion of this.lista_publicaciones; index as pos">
+    <ion-card-header>
+      <ion-card-subtitle class="alinear_fecha">
+        <small>{{publicacion.fecha_publicacion| date:'MMM d, y h:mm a'}}</small>
+      </ion-card-subtitle>
+      <ion-card-title>{{publicacion.id_usuario.first_name}} {{publicacion.id_usuario.last_name}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content *ngIf="publicacion.id_videocontent != null">
+      <div class="eliminarPublicacion" *ngIf="this.idUser == publicacion.id_usuario.id">
+        <ion-icon name="trash-bin" (click)="deleteVideo(publicacion.id_videocontent)"></ion-icon>
+      </div>
+      <video controls>
+        <source 
+          src="{{this.url_backend}}{{publicacion.id_videocontent.video}}"
+          type="video/mp4"
+        >
+      </video>
+      <p class="ion-text-justify ion-padding-bottom mensajePublicacion" *ngIf="publicacion.id_videocontent.mensaje != null">
+        {{publicacion.id_videocontent.mensaje}}
+      </p>
+    </ion-card-content>
+
+    <ion-card-content *ngIf="publicacion.id_audiocontent != null">
+      <div class="eliminarPublicacion" *ngIf="this.idUser == publicacion.id_usuario.id">
+        <ion-icon name="trash-bin" (click)="deleteAudio(publicacion.id_audiocontent)"></ion-icon>
+      </div>
+      <audio controls>
+        <source 
+          src="{{this.url_backend}}{{publicacion.id_audiocontent.audio}}"
+          type="audio/mpeg"
+        >
+      </audio>
+      <p class="ion-text-justify ion-padding-bottom mensajePublicacion" *ngIf="publicacion.id_audiocontent.mensaje != null">
+        {{publicacion.id_audiocontent.mensaje}}
+      </p>
+    </ion-card-content>
+
+    <ion-card-content *ngIf="publicacion.id_imagecontent != null">
+      <div class="eliminarPublicacion" *ngIf="this.idUser == publicacion.id_usuario.id">
+        <ion-icon name="trash-bin" (click)="deleteImage(publicacion.id_imagecontent)"></ion-icon>
+      </div>
+      <ion-img
+        class="pt-4 imgPublicacion"
+        src="{{this.url_backend}}{{publicacion.id_imagecontent.imagen}}"
+      ></ion-img>
+      <p class="ion-text-justify ion-padding-bottom mensajePublicacion" *ngIf="publicacion.id_imagecontent.mensaje != null">
+        {{publicacion.id_imagecontent.mensaje}}
+      </p>
+    </ion-card-content>
+
+    <ion-card-content *ngIf="publicacion.id_textcontent != null">
+      <div class="eliminarPublicacion" *ngIf="this.idUser == publicacion.id_usuario.id">
+        <ion-icon name="trash-bin" (click)="deleteTexto(publicacion.id_textcontent)"></ion-icon>
+      </div>
+      <p class="ion-text-justify ion-padding-bottom mensajePublicacion" *ngIf="publicacion.id_textcontent.mensaje != null">
+        {{publicacion.id_textcontent.mensaje}}
+      </p>
+    </ion-card-content>
+  </ion-card>
+</div>

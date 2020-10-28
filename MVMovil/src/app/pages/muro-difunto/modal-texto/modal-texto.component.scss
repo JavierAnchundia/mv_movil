@@ -3,11 +3,11 @@ ion-header{
         ion-icon{
             font-size: 25px;
             margin-left: 10px;
-            color:  #acc969;
+            color: #a3c442;
         }
         ion-title{
             font-size: 0.85em;
-            color:  #acc969;
+            color: #a3c442;
         
         }
     }
@@ -17,8 +17,10 @@ ion-content{
     width: 100%;
     height: 100%;
     #itemArea{
-        --ion-background-color: #e9e8e877;
-        --border-radius: 20px;
+        --ion-background-color: #edeef0;
+        color: #87868a;
+        font-size: 0.8em;
+        --border-radius: 15px;
         padding-top: 20px;
     }
     form{
@@ -39,7 +41,7 @@ ion-content{
         height: 100%;
     }
     #publicarButton{
-        --background: #acc969;
+        --background: #a3c442;
         --background-activated: #acc969;
         --background-focused: #acc969;
         --background-hover: #acc969;
@@ -48,7 +50,7 @@ ion-content{
         margin: 0;
     }
     .advertencia{
-        color:  #acc969;
+        color:   #a3c442;
     }
 }
 

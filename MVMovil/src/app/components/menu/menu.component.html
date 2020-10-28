@@ -13,12 +13,13 @@
     <ion-list>
       <ion-item lines="none" class="seleccionItem">Sugerencias</ion-item>
       <ion-item lines="none" class="seleccionItem">Acerca de Nosotros</ion-item>
+      <ion-item lines="none" class="seleccionItem" (click)="login()" *ngIf="!ocultarFooter"><b>Iniciar Sesión</b></ion-item>
     </ion-list>
   </ion-content>
   
-  <ion-footer class="ion-no-border">
+  <ion-footer class="ion-no-border" *ngIf="ocultarFooter">
     <hr>
-    <label id="labelCSesion" (click)="cerrar()">
+    <label id="labelCSesion" (click)="logoutSesion()">
       Cerrar Sesión
     </label>
   </ion-footer>

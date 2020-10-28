@@ -11,7 +11,9 @@
     <form [formGroup]="registrationFormGroup" (ngSubmit)="onSubmitRegisterDetails()">
       <div id="contenido">
         <div id="contentDatos">
-          <div id="cuadro"></div>
+          <div id="cuadro">
+            <ion-img src="assets/AGREGAR_FOTO_PERFIL.png"></ion-img>
+          </div>
           <ion-item lines="none">
             <ion-input type="text" placeholder="Nombres" formControlName="nombres" required></ion-input>
           </ion-item>

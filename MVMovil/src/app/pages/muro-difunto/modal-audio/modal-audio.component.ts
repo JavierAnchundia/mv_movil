@@ -49,7 +49,7 @@ export class ModalAudioComponent implements OnInit {
       let data = new FormData()
       data.append("audio", this.file_audio)
       this.audio = [{
-        path: 'assets/muro_difunto/audio-file.png',
+        path: 'assets/page-muro/modal/AUDIO.png',
         nombre: event.target.files[0].name
       }]
       this.validarAudio = false;

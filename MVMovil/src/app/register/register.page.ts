@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { RegistrationValidator } from './registration_validator';
 import { Usuario } from '../models/usuario.model';
@@ -8,6 +8,7 @@ import { AuthService } from '../services/auth/auth.service';
 import { AlertController, MenuController } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
+import { HomenajesService } from '../services/homenajes/homenajes.service';
 
 @Component({
   selector: 'app-register',
@@ -32,6 +33,7 @@ export class RegisterPage implements OnInit {
   emailLista: any = [];
   lista_usuarios: any = [];
   id: any;
+  difunto: any = null;
   constructor(
     public formBuilder: FormBuilder,
     private  router:  Router,
@@ -39,13 +41,15 @@ export class RegisterPage implements OnInit {
     private alertController: AlertController,
     private platform: Platform,
     private loadingController: LoadingController,
-    private menu: MenuController
+    private menu: MenuController,
+    private route: ActivatedRoute,
+    private homenaje: HomenajesService
     ) 
     {
       this.menu.enable(false);
-      this.platform.backButton.subscribeWithPriority(0, () => {
-      this.router.navigate(['login']);
-    });
+    //   this.platform.backButton.subscribeWithPriority(0, () => {
+    //   this.router.navigate(['login']);
+    // });
     this.idCamposanto = environment.camposanto.idCamposanto;
     this.formValidator();
     }
@@ -53,6 +57,14 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
     this.id = environment.camposanto.idCamposanto;
     this.obtenerUsuarios();
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.difunto = this.router.getCurrentNavigation().extras.state.difunto
+      }
+      else{
+        this.difunto = null;
+      }
+    });
   }
 
   formValidator() {
@@ -156,6 +168,13 @@ export class RegisterPage implements OnInit {
                   this._authService.login(userLogin).subscribe(
                     ()=>{
                       this.dismissRegisterLoading('register_load');
+                      if(this.difunto != null){
+                        let navigationExtras: NavigationExtras = { state: { difunto: this.difunto} };
+                        this.router.navigate(['muro-difunto'], navigationExtras);
+                      }
+                      else{
+                        this.router.navigate(['/inicio'])
+                      }
                     }
                   );
                 }

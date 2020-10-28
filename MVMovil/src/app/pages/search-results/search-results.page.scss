@@ -6,20 +6,34 @@ ion-content{
         ion-card-content{
             padding: 0;
             ion-grid{
-                padding: 0;
-                ion-avatar{
+                ion-col{
+                    padding: 0
+                }
+                ion-row ion-col:nth-child(1){
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
-                    ion-icon{
-                        width: 100%;
-                        height: 80%;
+                }
+                ion-row ion-col:nth-child(2){
+                    ion-row{
+                        margin: 10px 0 10px;
+                        ion-col{
+                            padding: 0
+                        }
                     }
                 }
                 #labelNombre{
-                    font-size: 1.16em;
+                    font-size: 0.9em;
                     font-weight: 600;
                 }
+            }
+            #imgDifunto{
+                width: 15%;
+            }
+            #labelFecha{
+                font-size: 0.7em;
+                padding-left: 10px;
+                color: gray;
             }
         }
     }

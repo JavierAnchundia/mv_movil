@@ -39,6 +39,7 @@ export class ContentPublicacionesComponent implements OnInit {
       message => {
         if(message == "cargar"){
           this.getHomenajes();
+          this.cargarIdUser();
         }
       }
     )

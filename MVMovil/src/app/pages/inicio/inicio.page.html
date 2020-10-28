@@ -1,13 +1,14 @@
 <ion-header class="ion-no-border">
   <div>
     <div id="ovalo">
+      <img src="assets/LOGO.png" alt="" id="logoI">
     </div>
     <div id="cuadrado"></div>
     <ion-toolbar>
       <ion-buttons slot="start">
         <ion-menu-button autoHide="false" class="botonHeader"></ion-menu-button>
       </ion-buttons>
-      <ion-title class="ion-text-uppercase">Camposanto</ion-title>
+      <!-- <ion-title class="ion-text-uppercase"></ion-title> -->
       <ion-buttons slot="end">
         <ion-tab-button>
           <ion-icon name="notifications" class="botonHeader"></ion-icon>
@@ -23,7 +24,7 @@
       <ion-row>
         <ion-col>
           <ion-tab-button (click)="goSearch()">
-            <ion-icon name="search-circle-outline" class="iconInicio"></ion-icon>
+            <ion-img src="assets/page-inicio/CONSULTAR_DIFUNTOS.png"></ion-img>
             <div>
               <ion-label class="labelInicio ion-text-uppercase">consultar difuntos</ion-label>
             </div>
@@ -33,7 +34,7 @@
       <ion-row>
         <ion-col>
           <ion-tab-button>
-            <ion-icon name="people-circle-outline" class="iconInicio"></ion-icon>
+            <ion-img src="assets/page-inicio/DIFUNTOS_GUARDADOS.png"></ion-img>
             <div>
               <ion-label class="labelInicio ion-text-uppercase">difuntos guardados</ion-label>
             </div>

@@ -50,7 +50,7 @@ export class ModalVideoComponent implements OnInit {
       let data = new FormData()
       data.append("audio", this.file_video)
       this.video = [{
-        path: 'assets/muro_difunto/video-file.png',
+        path: 'assets/page-muro/modal/VIDEO.png',
         nombre: event.target.files[0].name
       }];
       this.validarVideo = false;

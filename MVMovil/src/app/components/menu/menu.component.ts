@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { HomenajesService } from 'src/app/services/homenajes/homenajes.service';
 
 @Component({
   selector: 'app-menu',
@@ -9,20 +10,38 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
-
+  ocultarFooter: boolean = false;
   constructor(
     private _authService: AuthService,
     private router: Router,
-    private menu: MenuController
+    private menu: MenuController,
+    private homenaje: HomenajesService,
+    private auth: AuthService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.auth.authenticationState.subscribe(
+      state => {
+        if(state){
+          this.ocultarFooter = true;
+        }
+        else{
+          this.ocultarFooter = false;
+        }
+      }
+    )
+  }
 
-  async cerrar(){
-    await this._authService.logout().then(
+  login(){
+    this.router.navigate(['/login'])
+  }
+  logoutSesion(){
+    this._authService.logout().then(
       (resp) => { 
-        this.menu.enable(false);
-        this.router.navigate(["/login"]);
+        this.menu.close()
+        this.homenaje.sendMessage('null');
+        // this.menu.enable(false);
+        this.router.navigate(["/inicio"]);
       }
     );
   }

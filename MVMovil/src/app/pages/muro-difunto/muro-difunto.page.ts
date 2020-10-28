@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalTextoComponent } from './modal-texto/modal-texto.component'
 import { ModalImagenComponent } from './modal-imagen/modal-imagen.component'
 import { AlertController, MenuController, ModalController } from '@ionic/angular';
@@ -15,6 +15,7 @@ import { Storage } from '@ionic/storage';
 import { DatePipe } from '@angular/common';
 import { DifuntoService } from 'src/app/services/difunto/difunto.service';
 import { ModalRosaComponent } from './modal-rosa/modal-rosa.component';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 const IDUSER = 'id_usuario';
 const TOKEN_KEY = 'access_token';
@@ -25,13 +26,15 @@ const TOKEN_KEY = 'access_token';
   styleUrls: ['./muro-difunto.page.scss'],
 })
 export class MuroDifuntoPage implements OnInit {
+  @ViewChild("fab") fab;
   // polygon = [ [ 1, 1 ], [ 1, 2 ], [ 2, 2 ], [ 2, 1 ] ];
   difunto: any = []
   lat: number;
   lng: number;
   puntos_polygon: any = [];
   historial_rosas: any = [];
-  
+  // booleanSesionUser: boolean = true;
+
   constructor(
     public modalController: ModalController,
     private route: ActivatedRoute, 
@@ -47,6 +50,7 @@ export class MuroDifuntoPage implements OnInit {
     public datepipe: DatePipe,
     private service_difunto: DifuntoService,
     private menu: MenuController,
+    private _serviceAuth: AuthService
   )
   {
   }
@@ -54,7 +58,9 @@ export class MuroDifuntoPage implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
-        this.difunto = this.router.getCurrentNavigation().extras.state.difunto
+        this.difunto = this.router.getCurrentNavigation().extras.state.difunto;
+        this.checkUserLogin();
+        this.menu.enable(true);
       }
     });
     this.setCurrentPosition();
@@ -62,7 +68,30 @@ export class MuroDifuntoPage implements OnInit {
     this.cargarHistorialRosas();
   }
 
-  
+  checkUserLogin(){
+    this.storage.get(TOKEN_KEY).then(
+      (token)=>{
+        if(token){
+          this.homenaje.sendMessage('cargar');
+        }
+      }
+    )
+  }
+  validateSesionMuro(){
+    this.storage.get(TOKEN_KEY).then(
+      (token)=>{
+        if(!token){
+          this.fab.close();
+          // this.booleanSesionUser = false;
+          this.loginMessageAlertMuro();
+        }
+        // else{
+        //   this.booleanSesionUser = true;
+        // }
+      }
+    )
+  }
+
   async cargarPuntosPoligono(){
     await this.service_geo.getListGeolocalizacion(this.difunto.id_camposanto).toPromise().then(
       (resp)=> {
@@ -161,10 +190,10 @@ export class MuroDifuntoPage implements OnInit {
   
   async modalTexto() {
     let validacion = await this.validarPoligono(this.lat, this.lng);
-    if(validacion == false){
-      await this.ubicacionAlert();
-    }
-    else{
+    // if(validacion == false){
+    //   await this.ubicacionAlert();
+    // }
+    // else{
       const modal = await this.modalController.create({
         component: ModalTextoComponent,
         cssClass: 'my-custom-class',
@@ -173,15 +202,15 @@ export class MuroDifuntoPage implements OnInit {
         }
       });
       return await modal.present();
-    }
+    // }
   }
 
   async modalImagen() {
     let validacion = await this.validarPoligono(this.lat, this.lng);
-    if(validacion == false){
-      await this.ubicacionAlert();
-    }
-    else{
+    // if(validacion == false){
+    //   await this.ubicacionAlert();
+    // }
+    // else{
       const modal = await this.modalController.create({
         component: ModalImagenComponent,
         cssClass: 'my-custom-class',
@@ -190,15 +219,15 @@ export class MuroDifuntoPage implements OnInit {
         }
       });
       return await modal.present();
-    }
+    // }
   }
 
   async modalVideo() {
     let validacion = await this.validarPoligono(this.lat, this.lng);
-    if(validacion == false){
-      await this.ubicacionAlert();
-    }
-    else{
+    // if(validacion == false){
+    //   await this.ubicacionAlert();
+    // }
+    // else{
       const modal = await this.modalController.create({
         component: ModalVideoComponent,
         cssClass: 'my-custom-class',
@@ -207,15 +236,15 @@ export class MuroDifuntoPage implements OnInit {
         }
       });
       return await modal.present();
-    }
+    // }
   }
 
   async modalAudio() {
     let validacion = await this.validarPoligono(this.lat, this.lng);
-    if(validacion == false){
-      await this.ubicacionAlert();
-    }
-    else{
+    // if(validacion == false){
+    //   await this.ubicacionAlert();
+    // }
+    // else{
       const modal = await this.modalController.create({
         component: ModalAudioComponent,
         cssClass: 'my-custom-class',
@@ -224,7 +253,7 @@ export class MuroDifuntoPage implements OnInit {
         }
       });
       return await modal.present();
-    }
+    // }
   }
 
   async modalHistorialRosas() {
@@ -237,6 +266,33 @@ export class MuroDifuntoPage implements OnInit {
       }
     });
     return await modal.present();
+  }
+
+  async loginMessageAlertMuro() {
+    const alert = await this.alertController.create({
+      cssClass: 'loginMAlert',
+      // header: 'Confirm!',
+      message: '<strong>Por favor inicie sesión o registrese para poder publicar</strong>',
+      buttons: [
+        {
+          text: 'Login',
+          handler: () => {
+            let navigationExtras: NavigationExtras = { state: { difunto: this.difunto} };
+            this.router.navigate(['login'], navigationExtras);
+          }
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   async ubicacionAlert() {
@@ -265,6 +321,7 @@ export class MuroDifuntoPage implements OnInit {
     });
     await toast.present();
   }
+
 
   // mostrar subir imagen controller
   async showMensajeLoading(idLoading) {

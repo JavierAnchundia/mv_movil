@@ -27,17 +27,17 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.auth.authenticationState.subscribe(
-        state => {
-          if(state){
-            // this.menu.enable(true)
-            this.router.navigate(['inicio'])
-          }
-          // else{
-          //   this.router.navigate(['login'])
-          // }
-        }
-      );
+      // this.auth.authenticationState.subscribe(
+      //   state => {
+      //     if(state){
+      //       this.menu.enable(true)
+      //       this.router.navigate(['inicio'])
+      //     }
+      //     else{
+      //       this.router.navigate(['login'])
+      //     }
+      //   }
+      // );
     });
   }
 }

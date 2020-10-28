@@ -15,7 +15,7 @@
         <ion-item lines="none" id="itemArea">
           <ion-textarea 
             placeholder="Escriba aquí su mensaje..."
-            rows="6" cols="20"
+            rows="14" cols="20"
             formControlName = "mensaje"
             >
           </ion-textarea>
@@ -38,30 +38,5 @@
         </ion-button>
       </div>
     </div>
-
-    <!-- <ion-item>
-      <ion-textarea 
-        placeholder="Escriba aquí su mensaje..."
-        rows="6" cols="20"
-        formControlName = "mensaje"
-        >
-      </ion-textarea>
-    </ion-item> -->
-    
-    <!-- <div 
-      *ngIf="mensajeTextoForm.controls['mensaje'].invalid && mensajeTextoForm.controls['mensaje'].touched">
-        <span class="advertencia"  *ngIf="mensajeTextoForm.controls['mensaje'].errors.required">
-        <small>Mensaje es requerido!</small>
-        </span>
-        <span class="advertencia"
-          *ngIf="mensajeTextoForm.controls['mensaje'].errors.minlength || mensajeTextoForm.controls['mensaje'].errors.maxlength">
-          <small>Mensaje debe tener entre 10 y 200 carácteres</small>
-        </span>
-    </div>
-    <br /> -->
-    <!-- <ion-button  shape="block" type="submit" [disabled]="!mensajeTextoForm.valid">
-      Publicar
-      <ion-icon slot="end" name="send"></ion-icon>
-    </ion-button> -->
   </form>
 </ion-content>

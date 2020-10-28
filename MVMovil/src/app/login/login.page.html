@@ -4,7 +4,10 @@
 
 <ion-content [fullscreen]="true" id="seccionLogin">
   <div id="circuloCamposanto">
-    <div id="ovalo"></div>
+    <div id="ovalo">
+      <img src="assets/LOGO.png" alt="" id="logoI">
+      <img src="assets/FONDO.png" alt="" id="fondoI">
+    </div>
     <div id="cuadrado"></div>
   </div>
   <form [formGroup] = "credentialsForm" (ngSubmit) = "onSubmit()">
@@ -46,9 +49,9 @@
         </div>
         <div id="registerDiv">
           <ion-text><small>¿Eres nuevo? </small> 
-            <ion-router-link href="/register" class="underline">
-              <small><b> Regístrate aquí</b></small>
-            </ion-router-link>
+            <!-- <ion-router-link href="/register" class="underline"> -->
+              <small (click)="register()"><b> Regístrate aquí</b></small>
+            <!-- </ion-router-link> -->
           </ion-text>
         </div>
       </div>
