@@ -25,7 +25,7 @@
       <ion-item *ngFor="let hist of historial; index as pos" text-wrap>
           <ion-label class="ion-margin-start">{{hist.id_usuario.first_name}} {{hist.id_usuario.last_name}}</ion-label>
           <div>
-            <small>{{hist.fecha_publicacion | date:'d/M/yy, y h:mm a'}}</small>
+            <small>{{hist.fecha_publicacion | date:'dd/MM/yyyy, h:mm a'}}</small>
           </div>
       </ion-item>
     </ion-list>

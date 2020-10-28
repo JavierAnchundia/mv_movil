@@ -38,12 +38,12 @@ ion-content{
     // --padding-top: 10%;
     ion-item{
         padding-bottom: 4%;
-        padding-right: 8%;
+        padding-right: 4%;
         --border-color: #c2c3c9;
         ion-label{
             font-size: 0.75em;
             font-weight: 600;
-            padding: 10px;
+            padding: 10px 0 10px;
         }
         small {
             font-size: 65%;
