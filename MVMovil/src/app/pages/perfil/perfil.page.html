@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title class="ion-text-uppercase">crear cuenta</ion-title>
+    <ion-title class="ion-text-uppercase">Actualizar Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,19 +14,25 @@
           <div id="cuadro">
             <ion-img [src]="imagePerfil" (click)="capturarFoto()"></ion-img>
           </div>
+          <div id="nonePublicacion">
+            <p>Campos con <b>*</b> son obligatorios llenar</p>
+          </div>
           <ion-item lines="none">
+            <label>*</label>
             <ion-input type="text" placeholder="Nombres" formControlName="nombres" required></ion-input>
           </ion-item>
           <p class="text_danger"
             *ngIf="registrationFormGroup.controls.nombres.errors?.required && registrationFormGroup.controls.nombres.touched">
             Este campo es obligatorio</p>
           <ion-item lines="none">
+            <label>*</label>
             <ion-input type="text" placeholder="Apellidos" formControlName="apellidos" required></ion-input>
           </ion-item>
           <p class="text_danger"
             *ngIf="registrationFormGroup.controls.apellidos.errors?.required && registrationFormGroup.controls.apellidos.touched">
             Este campo es obligatorio</p>
-          <ion-item lines="none">
+          <ion-item lines="none" *ngIf="!isFacebook">
+            <label>*</label>
             <ion-input type="text" placeholder="username" formControlName="username" required
               [ngClass]="{ 'is-invalid': submitted && registrationFormGroup.controls.username.errors }"  
             ></ion-input>
@@ -36,6 +42,7 @@
               <div *ngIf="registrationFormGroup.controls.username.errors.usernameMatch" class="text_danger">Nombre de usuario ya registrado</div>
             </div>
           <ion-item lines="none">
+            <label>*</label>
             <ion-input type="email" placeholder="correo@email.com" formControlName="email" 
             [ngClass]="{ 'is-invalid': submitted && registrationFormGroup.controls.email.errors }" required
             ></ion-input>
@@ -45,10 +52,46 @@
               <div *ngIf="registrationFormGroup.controls.email.errors?.pattern" class="text_danger">Ingresar un correo electrónico válido</div>
               <div *ngIf="registrationFormGroup.controls.email.errors.correoMatch" class="text_danger">Este correo ya ha sido registrado</div> 
             </div>
-          
-          <div [formGroup]="passwordFormGroup">
+          <ion-item lines="none">
+            <ion-label>Género</ion-label>
+            <ion-select placeholder="escoja uno" interface="popover" formControlName="genero">
+              <ion-select-option value="femenino">Femenino</ion-select-option>
+              <ion-select-option value="masculino">Masculino</ion-select-option>
+            </ion-select>
+          </ion-item>
+            
+          <ion-item lines="none">
+            <label></label>
+            <ion-input type="texto" placeholder="dirección" formControlName="direccion"
+            ></ion-input> 
+          </ion-item>
+          <div *ngIf=" registrationFormGroup.controls.direccion.invalid && (registrationFormGroup.controls.direccion.dirty || registrationFormGroup.controls.direccion.touched ) " class="text_danger">
+            <div 
+            *ngIf="registrationFormGroup.controls.direccion.errors.minlength">
+              El campo debe ser aún largo
+            </div>
+          </div>
+
+          <ion-item lines="none">
+            <label></label>
+            <ion-input type="texto" placeholder="teléfono" formControlName="telefono"
+            ></ion-input> 
+          </ion-item>
+          <div
+            *ngIf="registrationFormGroup.controls['telefono'].invalid && (registrationFormGroup.controls['telefono'].dirty || registrationFormGroup.controls['telefono'].touched)">
+            <div class="text_danger"
+              *ngIf="registrationFormGroup.controls['telefono'].errors.minlength || registrationFormGroup.controls['telefono'].errors.maxlength">
+              La longitud del campo debe ser 9 o 10
+            </div>
+            <div class="text_danger" *ngIf="registrationFormGroup.controls['telefono'].errors.pattern">
+              Ingrese un valor válido
+            </div>
+          </div>
+
+          <div [formGroup]="passwordFormGroup" *ngIf="!isFacebook">
             <ion-item lines="none">
-              <ion-input [type]="showPassword ? 'text' : 'password'" placeholder="Contraseña" formControlName="password" required></ion-input>
+              <label></label>
+              <ion-input [type]="showPassword ? 'text' : 'password'" placeholder="Contraseña" formControlName="password"></ion-input>
               <ion-icon
                 class="eyeIcon"
                 slot="end"
@@ -56,11 +99,12 @@
                 (click) = "togglePassword()"
               ></ion-icon>
             </ion-item>
-            <p class="text_danger"
+            <!-- <p class="text_danger"
             *ngIf="passwordFormGroup.controls.password.errors?.required && passwordFormGroup.controls.password.touched">
-            La contraseña no es válida</p>
+            La contraseña no es válida</p> -->
             <ion-item lines="none">
-              <ion-input [type]="showConfiPassword ? 'text' : 'password'" placeholder="Confirmar contraseña" formControlName="repeatPassword" required></ion-input>
+              <label></label>
+              <ion-input [type]="showConfiPassword ? 'text' : 'password'" placeholder="Confirmar contraseña" formControlName="repeatPassword"></ion-input>
               <ion-icon
                 class="eyeIcon"
                 slot="end"
@@ -68,9 +112,9 @@
                 (click) = "toggleConfiPassword()"
               ></ion-icon>
             </ion-item>
-            <p class="text_danger"
+            <!-- <p class="text_danger"
               *ngIf="passwordFormGroup.controls.repeatPassword.errors?.required && passwordFormGroup.controls.repeatPassword.touched">
-              La contraseña no es válida</p>
+              La contraseña no es válida</p> -->
             <p class="text_danger" *ngIf="passwordFormGroup.errors?.doesMatchPassword">Las contraseñas no coinciden.</p>  
           </div>
         </div>

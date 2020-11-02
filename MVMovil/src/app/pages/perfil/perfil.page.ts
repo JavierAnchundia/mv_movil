@@ -2,41 +2,46 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { RegistrationValidator } from './registration_validator';
-import { Usuario } from '../models/usuario.model';
-import { environment } from '../../environments/environment'
-import { AuthService } from '../services/auth/auth.service';
+import { Usuario } from 'src/app/models/usuario.model';
+import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { AlertController, MenuController } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
-import { HomenajesService } from '../services/homenajes/homenajes.service';
+import { HomenajesService } from 'src/app/services/homenajes/homenajes.service';
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { Storage } from '@ionic/storage';
-import { ComponentsModule } from '../components/components.module';
+import URL_SERVICIOS from 'src/app/config/config';
 
 const { Camera } = Plugins;
 
 const IDUSER = 'id_usuario';
 const TOKEN_KEY = 'access_token';
 const IMAGE_USER = "image_user";
+const USERNAME = 'username';
+const PASSWORD = 'password';
+const FIRST_NAME = "first_name";
+const LAST_NAME = "last_name";
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.page.html',
-  styleUrls: ['./register.page.scss'],
+  selector: 'app-perfil',
+  templateUrl: './perfil.page.html',
+  styleUrls: ['./perfil.page.scss'],
 })
-export class RegisterPage implements OnInit {
-
+export class PerfilPage implements OnInit {
+  urlBackend: String = URL_SERVICIOS.url_backend;
+  
   usuarioRegistro: Usuario;
   registrationFormGroup: FormGroup;
   passwordFormGroup: FormGroup;
   idCamposanto: number;
   showSpinner: Boolean = false;
-
+  isFacebook: boolean = false;
   showPassword: boolean = false;
   passwordToggle: String = 'eye';
   showConfiPassword: boolean = false;
   passwordConfiToggle: String = 'eye';
-
+  userDetalle: any = [];
   submitted = false;
   usernameLista: any = [];
   emailLista: any = [];
@@ -47,7 +52,8 @@ export class RegisterPage implements OnInit {
   imagePerfil: String = "assets/AGREGAR_FOTO_PERFIL.png";
   imageUpload: String = "";
   nameFile: String = "";
-
+  numericNumberReg = '[0-9]*';
+  
   constructor(
     public formBuilder: FormBuilder,
     private  router:  Router,
@@ -61,7 +67,6 @@ export class RegisterPage implements OnInit {
     private storage: Storage,
     ) 
     {
-      this.menu.enable(false);
     //   this.platform.backButton.subscribeWithPriority(0, () => {
     //   this.router.navigate(['login']);
     // });
@@ -70,8 +75,8 @@ export class RegisterPage implements OnInit {
     }
 
   ngOnInit() {
+    this.recargarPerfil();
     this.id = environment.camposanto.idCamposanto;
-    this.obtenerUsuarios();
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.difunto = this.router.getCurrentNavigation().extras.state.difunto
@@ -84,14 +89,17 @@ export class RegisterPage implements OnInit {
 
   formValidator() {
     this.passwordFormGroup = this.formBuilder.group({
-      password: ['', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(30)])],
-      repeatPassword: ['', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(30)])],
+      password: ['', Validators.compose([Validators.minLength(0), Validators.maxLength(30)])],
+      repeatPassword: ['', Validators.compose([Validators.minLength(0), Validators.maxLength(30)])],
     }, { validator: RegistrationValidator.validate.bind(this) })
 
     this.registrationFormGroup = this.formBuilder.group({
       nombres: new FormControl('', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(30)])),
       apellidos: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       username: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      genero: new FormControl('', ),
+      direccion: new FormControl('', Validators.compose([Validators.minLength(5)])),
+      telefono: new FormControl('', Validators.compose([Validators.maxLength(10), Validators.minLength(9), Validators.pattern(this.numericNumberReg)])),
       email: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'),
@@ -107,6 +115,47 @@ export class RegisterPage implements OnInit {
     );
   }
 
+  recargarPerfil(){
+    this.storage.get(IMAGE_USER).then(
+      imagen => {
+        if(imagen){
+          this.imagePerfil = this.urlBackend+imagen;
+        }
+      }
+    )
+    this.storage.get(TOKEN_KEY).then(
+      token => {
+        if(token){
+          this.storage.get(IDUSER).then(
+            id => {
+              if(id){
+                this._authService.getInfoUser(id, token).toPromise().then(
+                  (resp)=>{
+                    console.log(resp);
+                    this.userDetalle = resp;
+                    this.registrationFormGroup.controls['nombres'].setValue(resp['first_name']);
+                    this.registrationFormGroup.controls['apellidos'].setValue(resp['last_name']);
+                    this.registrationFormGroup.controls['username'].setValue(resp['username']);
+                    this.registrationFormGroup.controls['email'].setValue(resp['email']);
+                    if(resp['direccion'] != null){
+                      this.registrationFormGroup.controls['direccion'].setValue(resp['direccion']);
+                    }
+                    if(resp['telefono'] != null){
+                      this.registrationFormGroup.controls['telefono'].setValue(resp['telefono']);
+                    }
+                    if(resp['is_facebook']){
+                      this.isFacebook = true;
+                    }
+                    this.obtenerUsuarios();
+                  }
+                )
+              }
+            }
+          )
+        }
+      }
+    )
+  }
   async capturarFoto() {
     const image = await Camera.getPhoto({
       quality: 90,
@@ -141,9 +190,9 @@ export class RegisterPage implements OnInit {
       email: datosForm['email'],
       username: datosForm['username'],
       password: datosForm['passwordFormGroup'].password,
-      telefono: '',
-      direccion: '',
-      genero: '',
+      telefono: datosForm['telefono'],
+      direccion: datosForm['direccion'],
+      genero: datosForm['genero'],
       tipo_usuario: 'uf',
       idcamposanto: this.idCamposanto
     }
@@ -181,7 +230,7 @@ export class RegisterPage implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Confirm!',
-      message: 'Desea continuar con el registro?',
+      message: 'Desea continuar con la actualización de los datos?',
       buttons: [
         {
           text: 'Cancelar',
@@ -193,39 +242,90 @@ export class RegisterPage implements OnInit {
         }, {
           text: 'Aceptar',
           handler: () => {
-            this.showRegisterLoading('register_load');
-            this._authService.register(usuario).subscribe( 
-              async (resp) => {
-                if(resp.status == 201){
-                  if(!this.defaultImage){
-                    await this.uploadImage(resp.body['id']);
-                  }
-                  let userLogin = {
-                    username: usuario['username'],
-                    password: usuario['password']
-                  }
-                  this._authService.login(userLogin).subscribe(
-                    ()=>{
-                      this.dismissRegisterLoading('register_load');
-                      if(this.difunto != null){
-                        let navigationExtras: NavigationExtras = { state: { difunto: this.difunto} };
-                        this.router.navigate(['muro-difunto'], navigationExtras);
-                      }
-                      else{
-                        this.router.navigate(['/inicio'])
+            // this.showRegisterLoading('register_load');
+            delete this.userDetalle['image_perfil'];
+            if(usuario['genero'] == ''){
+              console.log(true)
+              delete this.userDetalle['genero'];
+            }
+            else{
+              this.userDetalle['genero'] = usuario['genero']
+            }
+            if(usuario['direccion'] ==''){
+              delete this.userDetalle['direccion'];
+            }
+            else{
+              this.userDetalle['direccion'] = usuario['direccion'];
+            }
+            if(usuario['telefono'] == ''){
+              delete this.userDetalle['telefono'];
+            }
+            else{
+              this.userDetalle['telefono'] = usuario['telefono'];
+            }
+            if(usuario['password'] == ''){
+              delete this.userDetalle['password'];
+            }
+            else{
+              this.userDetalle['password'] = usuario['password'];
+            }
+            console.log(this.userDetalle)
+            this.userDetalle['first_name'] = usuario['first_name'];
+            this.userDetalle['last_name'] = usuario['last_name'];
+            this.userDetalle['username'] = usuario['username'];
+            this.userDetalle['email'] = usuario['email'];
+            console.log(this.userDetalle)
+            this.storage.get(TOKEN_KEY).then(
+              token => {
+                if(token){
+                  this.storage.get(USERNAME).then(
+                    username => {
+                      if(username){
+                        this._authService.putInfoUser(token, username, this.userDetalle).subscribe( 
+                          async (resp) => {
+                              this.storage.set(FIRST_NAME, resp['first_name']).then(
+                                (fname)=>{
+                                  this.storage.set(LAST_NAME, resp['last_name']).then(
+                                    (lname)=>{
+                                      this._authService.recarga_Info('recargar');
+                                    }
+                                  )
+                                }
+                              );
+                              if(!this.defaultImage){
+                                await this.uploadImage(resp['id'], resp['image_perfil']);
+                              }
+                              if(!resp['is_facebook']){
+                                this.storage.get(PASSWORD).then(
+                                  password => {
+                                    if(password){
+                                      if(resp['username'] !== username || resp['password'] !== password){
+                                        this.storage.set(USERNAME, resp['username']);
+                                        this.storage.set(PASSWORD, resp['password']);
+                                      }
+                                    }
+                                  }
+                                )
+                              }
+                              else{
+                                this.storage.set(USERNAME, resp['username']);
+                              }
+                              this.router.navigate(['/inicio']);
+                          },
+                          (error) =>{
+                            console.log(error.status)
+                            this.dismissRegisterLoading('register_load');
+                            this.registerAlert();
+                          }
+                          
+                        );
                       }
                     }
-                  );
+                  )
                 }
-              },
-              (error) =>{
-                console.log(error.status)
-                this.dismissRegisterLoading('register_load');
-                this.registerAlert();
-                // this.showSpinner = false;
               }
-              
-            );
+            )
+            
           }
         }
       ]
@@ -233,11 +333,24 @@ export class RegisterPage implements OnInit {
     await alert.present();
   }
 
-  uploadImage(id){
+  uploadImage(id, imgDelete){
     let data = new FormData();
     data.append('img_base64', this.imageUpload as string);
     data.append('nombre_file', this.nameFile as string);
-    this._authService.uploadImageProfile(id, data).toPromise().then();        
+    data.append('is_active', 'true');
+    if(imgDelete !== null){
+      data.append('delete_img', imgDelete);
+    }
+    this._authService.uploadImageProfile(id, data).toPromise().then(
+      (resp)=>{
+        console.log(resp)
+        this.storage.set(IMAGE_USER, resp['image_perfil']).then(
+          (imag)=>{
+            this._authService.recarga_Info('recargar');
+          }
+        );
+      }
+    );        
   }
 
   togglePassword(): void {
@@ -268,8 +381,10 @@ export class RegisterPage implements OnInit {
       });
     for (let i = 0; i < this.lista_usuarios.length; i++) {
       // console.log(this.lista_usuarios[i]['username'])
-      this.usernameLista.push(this.lista_usuarios[i]['username']);
-      if (this.lista_usuarios[i]['id_camposanto'] == this.id) {
+      if(this.lista_usuarios[i]['username'] != this.userDetalle['username']){
+        this.usernameLista.push(this.lista_usuarios[i]['username']);
+      }
+      if (this.lista_usuarios[i]['id_camposanto'] == this.id && this.lista_usuarios[i]['id_camposanto'] != this.userDetalle['email']) {
         this.emailLista.push(this.lista_usuarios[i]['email']);
       }
     }

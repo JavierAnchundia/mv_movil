@@ -41,6 +41,10 @@ const routes: Routes = [
     path: 'muro-difunto',
     loadChildren: () => import('./pages/muro-difunto/muro-difunto.module').then( m => m.MuroDifuntoPageModule)
   },
+  {
+    path: 'perfil',
+    loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
+  },
 ];
 
 @NgModule({

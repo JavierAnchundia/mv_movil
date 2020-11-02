@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
 import { Platform, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import URL_SERVICIOS from 'src/app/config/config';
 
@@ -13,6 +13,10 @@ const REFRESH_TOKEN = 'refresh_token';
 const USERNAME = 'username';
 const PASSWORD = 'password';
 const IDUSER = 'id_usuario';
+const IMAGE_USER = "image_user";
+const FIRST_NAME = "first_name";
+const LAST_NAME = "last_name";
+const IS_FACEBOOK = "is_facebook";
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +40,15 @@ export class AuthService {
     )
   }
 
+  private _recargarInfo = new Subject<string>();
+  updateInfo$ = this._recargarInfo.asObservable();
+
+  recarga_Info(message: string){
+    this._recargarInfo.next(message);
+  }
+
   checkToken(){
+    
     this.storage.get(TOKEN_KEY).then(
       token => {
         if(token){
@@ -47,17 +59,26 @@ export class AuthService {
             this.authenticationState.next(true);
           }
           else{
-            this.storage.get(USERNAME).then(
-              username => {
-                if(username){
-                  this.storage.get(PASSWORD).then(
-                    password => {
-                      if(password){
-                        let credential = {
-                          "username" : username,
-                          "password" : password 
-                        }
-                        this.login(credential).subscribe()
+            this.storage.get(IS_FACEBOOK).then(
+              (is_facebook)=>{
+                if(is_facebook){
+                  this.logout();
+                }
+                else{
+                  this.storage.get(USERNAME).then(
+                    username => {
+                      if(username){
+                        this.storage.get(PASSWORD).then(
+                          password => {
+                            if(password){
+                              let credential = {
+                                "username" : username,
+                                "password" : password 
+                              }
+                              this.login(credential).subscribe()
+                            }
+                          }
+                        )
                       }
                     }
                   )
@@ -97,7 +118,18 @@ export class AuthService {
             this.storage.set(TOKEN_KEY, resp['access'])
             this.storage.set(REFRESH_TOKEN, resp['refresh'])
             let user_id = this.helper.decodeToken(resp['access'])
-            this.storage.set(IDUSER, user_id.user_id)
+            this.storage.set(IDUSER, user_id.user_id);
+            this.getInfoUser(user_id.user_id, resp['access']).toPromise().then(
+              (resp)=>{
+                this.storage.set(FIRST_NAME, resp['first_name']);
+                this.storage.set(LAST_NAME, resp['last_name']);
+                this.storage.set(IS_FACEBOOK, false);
+                if(resp['image_perfil'] != null){
+                  this.storage.set(IMAGE_USER, resp['image_perfil']);
+                }
+              }
+            );
+            this.delay(2000);
             this.authenticationState.next(true);
           }
         }
@@ -122,6 +154,25 @@ export class AuthService {
     );
   }
 
+  getInfoUser(id, token){
+    let url = URL_SERVICIOS.get_user_by_id + id +'/'
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer '+ token,
+      })
+    };
+    return this.http.get(url, httpOptions);      
+  }
+
+  putInfoUser(token, username, datosUser){
+    let url = URL_SERVICIOS.datosUsuario + username + "/";
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer '+ token,
+      })
+    };
+    return this.http.put(url, datosUser, httpOptions);
+  }
   async logout(){
     await this.storage.remove(TOKEN_KEY).then(
       () => {
@@ -131,6 +182,8 @@ export class AuthService {
         this.storage.remove(USERNAME).then();
         this.storage.remove(PASSWORD).then();
         this.storage.remove(IDUSER).then();
+        this.storage.remove(IMAGE_USER).then();
+        this.storage.remove(IS_FACEBOOK).then();
       }
     )
   };
@@ -146,8 +199,27 @@ export class AuthService {
         resp => {
           this.storage.set(TOKEN_KEY, resp['access'])
           this.storage.set(REFRESH_TOKEN, resp['refresh'])
+          this.storage.set(IS_FACEBOOK, true);
           let user_id = this.helper.decodeToken(resp['access'])
           this.storage.set(IDUSER, user_id.user_id)
+          this.getInfoUser(user_id.user_id, resp['access']).toPromise().then(
+            (resp)=>{
+              if(resp['username'] != null){
+                this.storage.set(USERNAME,resp['username']).then()
+              }
+              if(resp['first_name'] != null){
+                this.storage.set(FIRST_NAME, resp['first_name']).then();
+              }
+              if(resp['last_name'] != null){
+                this.storage.set(LAST_NAME, resp['last_name']).then();
+              }
+              this.storage.set(IS_FACEBOOK, false).then();
+              if(resp['image_perfil'] != null){
+                this.storage.set(IMAGE_USER, resp['image_perfil']).then();
+              }
+            }
+          );
+          this.delay(2000);
           this.authenticationState.next(true);
         }
       )
@@ -164,4 +236,17 @@ export class AuthService {
     return this.http.get(url);
   }
   
+  uploadImageProfile(id, data){
+    let url = URL_SERVICIOS.update_image_profile + id +"/";
+    return this.http.put(url, data);
+  }
+
+  delay(ms: number) {
+    return new Promise( 
+      resolve => setTimeout((resolve)=>{
+        this.recarga_Info("recargar");
+      }, ms) 
+    );
+  }
+
 }

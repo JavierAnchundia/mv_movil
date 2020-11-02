@@ -10,6 +10,11 @@ import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { LoadingController } from '@ionic/angular';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { HomenajesService } from '../services/homenajes/homenajes.service';
+import { Storage } from '@ionic/storage';
+
+const IDUSER = 'id_usuario';
+const TOKEN_KEY = 'access_token';
+const USERNAME = 'username';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +42,8 @@ export class LoginPage implements OnInit {
     private menu: MenuController,
     private route: ActivatedRoute,
     private router: Router,
-    private homenaje: HomenajesService
+    private homenaje: HomenajesService,
+    private storage: Storage,
   ) {
     this.menu.enable(false);
     // this.platform.backButton.subscribeWithPriority(-1, () => {
@@ -123,6 +129,8 @@ export class LoginPage implements OnInit {
         this._authService.crearUsuarioFB(access_token).subscribe(
           (resp) => {
             if(resp){
+              this._authService.recarga_Info("recargar");
+              // this._authService.getInfoUser()
               this.menu.enable(true)
               this.dismissAuthLoading('idAuth');
               if(this.difunto != null){

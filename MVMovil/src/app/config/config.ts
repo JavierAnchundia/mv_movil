@@ -41,6 +41,8 @@ const URL_SERVICIOS = {
     himagen_del: URL_ROOT+ "/himagen_del/",
     haudio_del: URL_ROOT+ "/haudio_del/",
     hvideo_del: URL_ROOT+ "/hvideo_del/",
+    update_image_profile: URL_ROOT + "/update_image_profile/",
+    get_user_by_id: URL_ROOT + "/get_user_by_id/",
 }
 
 export default URL_SERVICIOS

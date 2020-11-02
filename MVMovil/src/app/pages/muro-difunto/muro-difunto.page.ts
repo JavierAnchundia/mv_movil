@@ -74,6 +74,9 @@ export class MuroDifuntoPage implements OnInit {
         if(token){
           this.homenaje.sendMessage('cargar');
         }
+        else{
+          this.publicarToast("Para publicar contenido en el muro y dejar rosa es necesario que inicie sesión", 2500, "top", "warning");
+        }
       }
     )
   }
@@ -133,7 +136,6 @@ export class MuroDifuntoPage implements OnInit {
     this.router.navigate(['ubicacion-fallecido'], navigationExtras);
   }
   async addRose(){
-    await this.presentToast("Dejando Rosa!!!", 500, 'top', 'secondary');
     await this.postRegistroUserRose();
   }
 
@@ -154,24 +156,30 @@ export class MuroDifuntoPage implements OnInit {
   async postRegistroUserRose(){
     await this.storage.get(TOKEN_KEY).then(
       (token)=>{
-        this.storage.get(IDUSER).then(
-          (id) => { 
-            const log = new FormData();
-            let fecha = this.getFechaPublicacion();
-            let id_usuario = id;
-            log.append('id_difunto', this.difunto.id_difunto);
-            log.append('id_usuario', id_usuario);
-            log.append('fecha_publicacion', fecha);
-            this.homenaje.postRegistroRosa(log, token).toPromise().then(
-              (resp)=>{
-                this.postContRose();
-              },
-              (error) =>{
-                this.presentToast("No se ha podido dejar la rosa...", 500, 'bottom', 'danger');
-              }
-            )
-          }
-        ) 
+        if(token){
+          this.presentToast("Dejando Rosa!!!", 500, 'top', 'secondary');
+          this.storage.get(IDUSER).then(
+            (id) => { 
+              const log = new FormData();
+              let fecha = this.getFechaPublicacion();
+              let id_usuario = id;
+              log.append('id_difunto', this.difunto.id_difunto);
+              log.append('id_usuario', id_usuario);
+              log.append('fecha_publicacion', fecha);
+              this.homenaje.postRegistroRosa(log, token).toPromise().then(
+                (resp)=>{
+                  this.postContRose();
+                },
+                (error) =>{
+                  this.presentToast("No se ha podido dejar la rosa...", 500, 'bottom', 'danger');
+                }
+              )
+            }
+          )
+        } 
+        else{
+          this.loginMessageAlertMuro();
+        }
       }
     )
   }
@@ -322,6 +330,21 @@ export class MuroDifuntoPage implements OnInit {
     await toast.present();
   }
 
+  async publicarToast(text, tiempo, position, color) {
+    const toast = await this.toastController.create({
+      message: text,
+      position: position,
+      duration: tiempo,
+      color: color,
+      buttons: [{
+          text: 'ok',
+          role: 'cancel',
+          handler: () => {}
+        }
+      ]
+    });
+    await toast.present();
+  }
 
   // mostrar subir imagen controller
   async showMensajeLoading(idLoading) {

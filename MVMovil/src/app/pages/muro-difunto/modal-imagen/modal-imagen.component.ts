@@ -78,7 +78,7 @@ export class ModalImagenComponent implements OnInit {
         path: imageUrl,
         nombre: this.crearNombreArchivo()
       }]
-      this.presentToast("Se ha cargado la imagen...", 'bottom', 'primary')
+      // this.presentToast("Se ha cargado la imagen...", 'bottom', 'primary')
     });
     
   }
