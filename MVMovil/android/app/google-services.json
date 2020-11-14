@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "942879808145",
+    "firebase_url": "https://mapa-virtual-fcm.firebaseio.com",
+    "project_id": "mapa-virtual-fcm",
+    "storage_bucket": "mapa-virtual-fcm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942879808145:android:80b0991922d5adee82bd30",
+        "android_client_info": {
+          "package_name": "com.mapavirtual.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "942879808145-o2gkg4ep0rr7lorbamfrkua6j9hmvacg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mapavirtual.app",
+            "certificate_hash": "b765c2ccda275c6ef90395d4fb81e3d37fa39b1e"
+          }
+        },
+        {
+          "client_id": "942879808145-3otrachmoo379kiuc9tdn7dka9aooj1e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCT3xe2GXT3590kcNSUnuW_y7PYz_tx7Ck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "942879808145-3otrachmoo379kiuc9tdn7dka9aooj1e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -197,15 +197,15 @@ export class AuthService {
     return this.http.post(url, access_token).pipe(
       tap(
         resp => {
-          this.storage.set(TOKEN_KEY, resp['access'])
-          this.storage.set(REFRESH_TOKEN, resp['refresh'])
-          this.storage.set(IS_FACEBOOK, true);
+          this.storage.set(TOKEN_KEY, resp['access']).then();
+          this.storage.set(REFRESH_TOKEN, resp['refresh']).then();
+          this.storage.set(IS_FACEBOOK, true).then();
           let user_id = this.helper.decodeToken(resp['access'])
           this.storage.set(IDUSER, user_id.user_id)
           this.getInfoUser(user_id.user_id, resp['access']).toPromise().then(
             (resp)=>{
               if(resp['username'] != null){
-                this.storage.set(USERNAME,resp['username']).then()
+                this.storage.set(USERNAME,resp['username']).then();
               }
               if(resp['first_name'] != null){
                 this.storage.set(FIRST_NAME, resp['first_name']).then();
@@ -213,7 +213,6 @@ export class AuthService {
               if(resp['last_name'] != null){
                 this.storage.set(LAST_NAME, resp['last_name']).then();
               }
-              this.storage.set(IS_FACEBOOK, false).then();
               if(resp['image_perfil'] != null){
                 this.storage.set(IMAGE_USER, resp['image_perfil']).then();
               }

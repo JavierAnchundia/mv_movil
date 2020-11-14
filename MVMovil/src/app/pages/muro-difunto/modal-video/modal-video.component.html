@@ -43,7 +43,14 @@
             </ion-button>
           </ion-item>
         </ion-list>
-        <ion-grid *ngIf="this.validarVideo">
+        <ion-list lines="none" *ngIf="this.validarVideo">
+          <label for="file-input">
+            <img id="img_foto" src="assets/page-muro/modal/VIDEO2.png">
+          </label>
+          <input id="file-input" type="file" accept="video/*" (change)="selectFile($event)"/>
+        </ion-list>
+        <small *ngIf="video.length == 0" text-center class="advertencia">Seleccione algún Video</small>
+        <!-- <ion-grid *ngIf="this.validarVideo">
           <ion-row>
             <ion-col size=4>
               <ion-row id="alinear_row" class="pr-4">
@@ -57,7 +64,7 @@
           <ion-row>
             <small *ngIf="video.length == 0" text-center class="advertencia">Seleccione algún Video</small>
           </ion-row>
-        </ion-grid>
+        </ion-grid> -->
       </div>
       <div id="contentAceptar">
         <ion-button id="publicarButton" type="submit" expand="full" [disabled]="!mensajeVideoForm.valid">

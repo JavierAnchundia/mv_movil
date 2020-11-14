@@ -1,8 +1,8 @@
 const URL_ROOT = 'https://carmsanc.pythonanywhere.com/api'
 const URL_ROOT_AUTH = 'https://carmsanc.pythonanywhere.com'
 
-// const URL_ROOT = 'http://192.168.0.112:8100/api'
-// const URL_ROOT_AUTH = 'http://192.168.0.112:8100'
+// const URL_ROOT = 'http://192.168.0.107:8000/api'
+// const URL_ROOT_AUTH = 'http://192.168.0.107:8000'
 
 const URL_SERVICIOS = {
     url_backend: URL_ROOT_AUTH,
@@ -43,6 +43,7 @@ const URL_SERVICIOS = {
     hvideo_del: URL_ROOT+ "/hvideo_del/",
     update_image_profile: URL_ROOT + "/update_image_profile/",
     get_user_by_id: URL_ROOT + "/get_user_by_id/",
+    post_token_device: URL_ROOT + "/post_token_device/",
 }
 
 export default URL_SERVICIOS

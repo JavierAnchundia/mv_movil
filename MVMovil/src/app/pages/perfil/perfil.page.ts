@@ -89,8 +89,8 @@ export class PerfilPage implements OnInit {
 
   formValidator() {
     this.passwordFormGroup = this.formBuilder.group({
-      password: ['', Validators.compose([Validators.minLength(0), Validators.maxLength(30)])],
-      repeatPassword: ['', Validators.compose([Validators.minLength(0), Validators.maxLength(30)])],
+      password: ['', Validators.compose([Validators.minLength(4), Validators.maxLength(30)])],
+      repeatPassword: ['', Validators.compose([Validators.minLength(4), Validators.maxLength(30)])],
     }, { validator: RegistrationValidator.validate.bind(this) })
 
     this.registrationFormGroup = this.formBuilder.group({
@@ -204,7 +204,7 @@ export class PerfilPage implements OnInit {
     const loading = await this.loadingController.create({
       id: idLoading,
       cssClass: 'my-custom-class',
-      message: 'Registrando datos...'
+      message: 'Actualizando datos...'
     });
     
     return await loading.present();
@@ -229,7 +229,6 @@ export class PerfilPage implements OnInit {
   async confirmarRegistroAlert(usuario) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Confirm!',
       message: 'Desea continuar con la actualización de los datos?',
       buttons: [
         {
@@ -242,7 +241,8 @@ export class PerfilPage implements OnInit {
         }, {
           text: 'Aceptar',
           handler: () => {
-            // this.showRegisterLoading('register_load');
+            // console.log(this.userDetalle)
+            this.showRegisterLoading('register_load');
             delete this.userDetalle['image_perfil'];
             if(usuario['genero'] == ''){
               console.log(true)
@@ -269,12 +269,14 @@ export class PerfilPage implements OnInit {
             else{
               this.userDetalle['password'] = usuario['password'];
             }
-            console.log(this.userDetalle)
+            this.userDetalle['is_facebook'] = this.userDetalle['is_facebook'];
+            this.userDetalle['is_active'] = true;
+            // console.log(this.userDetalle)
             this.userDetalle['first_name'] = usuario['first_name'];
             this.userDetalle['last_name'] = usuario['last_name'];
             this.userDetalle['username'] = usuario['username'];
             this.userDetalle['email'] = usuario['email'];
-            console.log(this.userDetalle)
+            // console.log(this.userDetalle)
             this.storage.get(TOKEN_KEY).then(
               token => {
                 if(token){
@@ -283,6 +285,7 @@ export class PerfilPage implements OnInit {
                       if(username){
                         this._authService.putInfoUser(token, username, this.userDetalle).subscribe( 
                           async (resp) => {
+                            this.dismissRegisterLoading('register_load');
                               this.storage.set(FIRST_NAME, resp['first_name']).then(
                                 (fname)=>{
                                   this.storage.set(LAST_NAME, resp['last_name']).then(

@@ -41,18 +41,24 @@
           </ion-item>
           <label for="">{{base}}</label>
         </ion-list>
-        <ion-grid *ngIf="this.validarImagen">
+        <ion-list lines="none" *ngIf="this.validarImagen">
+          <img id="img_foto" src="assets/page-muro/modal/IMAGEN2.png" (click)="seleccionarImagen()">
+        </ion-list>
+        <small *ngIf="imagen.length == 0" text-center class="advertencia">Seleccione alguna Imagen</small>
+
+
+        <!-- <ion-grid *ngIf="this.validarImagen">
           <ion-row>
             <ion-col size=4>
               <ion-row id="alinear_row" (click)="seleccionarImagen()">
-                <ion-img id="img_foto" src="assets/page-muro/modal/IMAGEN2.png"></ion-img>
+                <img id="img_foto" src="assets/page-muro/modal/IMAGEN2.png" (click)="seleccionarImagen()">
               </ion-row>  
             </ion-col>
           </ion-row>
           <ion-row>
             <small *ngIf="imagen.length == 0" text-center class="advertencia">Seleccione alguna Imagen</small>
           </ion-row>
-        </ion-grid>
+        </ion-grid> -->
       </div>
       <div id="contentAceptar">
         <ion-button  id="publicarButton" type="submit" expand="full" [disabled]="!mensajeImagenForm.valid">
