@@ -18,9 +18,9 @@ export class SearchResultsPage implements OnInit {
     private menu: MenuController
     ) 
     {
-    this.platform.backButton.subscribeWithPriority(20, () => {
-      this.router.navigate(['search']);
-    });
+    // this.platform.backButton.subscribeWithPriority(20, () => {
+    //   this.router.navigate(['search']);
+    // });
    }
 
   ngOnInit() {
