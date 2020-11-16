@@ -61,7 +61,7 @@ export class RegisterPage implements OnInit {
     private storage: Storage,
     ) 
     {
-      this.menu.enable(false);
+      // this.menu.enable(false);
     //   this.platform.backButton.subscribeWithPriority(0, () => {
     //   this.router.navigate(['login']);
     // });

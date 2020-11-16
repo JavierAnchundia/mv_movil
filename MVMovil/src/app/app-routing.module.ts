@@ -53,6 +53,10 @@ const routes: Routes = [
     path: 'notificacion-fcm/:data',
     loadChildren: () => import('./pages/notificacion-fcm/notificacion-fcm.module').then( m => m.NotificacionFcmPageModule)
   },
+  {
+    path: 'recuperar-contrasena',
+    loadChildren: () => import('./pages/recuperar-contrasena/recuperar-contrasena.module').then( m => m.RecuperarContrasenaPageModule)
+  },
 ];
 
 @NgModule({

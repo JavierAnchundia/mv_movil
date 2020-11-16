@@ -248,4 +248,8 @@ export class AuthService {
     );
   }
 
+  sendEmail(email, id_camp){
+    let url = URL_SERVICIOS.enviar_email_password + email + "/" + id_camp + "/";
+    return this.http.get(url);
+  }
 }

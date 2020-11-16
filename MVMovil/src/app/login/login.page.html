@@ -37,7 +37,7 @@
           <span class="text_danger" *ngIf="credentialsForm.controls['password'].touched && credentialsForm.controls['password'].hasError('required')">
             Contraseña es requerida!</span>
         <div id="olvidarPassword">
-            <ion-text><small><b>¿Olvidaste tú contraseña?</b></small></ion-text>
+            <ion-text (click)="goRecuperarContrasena()"><small><b>¿Olvidaste tú contraseña?</b></small></ion-text>
         </div>
         <div id="contenedorBottomFB">
           <ion-button class="buttonFacebook" expand="block" size="default" (click) = "signIn()">

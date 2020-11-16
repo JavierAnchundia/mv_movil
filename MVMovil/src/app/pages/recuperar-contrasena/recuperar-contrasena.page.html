@@ -1,0 +1,36 @@
+<ion-content [fullscreen]="true" id="seccionLogin">
+  <div id="circuloCamposanto">
+    <div id="ovalo">
+      <img src="assets/LOGO.png" alt="" id="logoI">
+      <img src="assets/FONDO.png" alt="" id="fondoI">
+    </div>
+    <div id="cuadrado"></div>
+  </div>
+  <form [formGroup] = "recuperarForm" (ngSubmit) = "onSubmit()">
+    <div id="contenedorDatos">
+      <div id="contenedorTop">
+        <div id="divLabel">
+          <ion-label>Ingresa tu correo electrónico para recuperar tú contraseña</ion-label>
+        </div>
+        <ion-item lines="none" class="item-input itemCredenciales">
+          <ion-icon name="mail-outline" class="ion-margin-end"></ion-icon>
+          <ion-input type="email" placeholder="Correo Electrónico" formControlName="email" 
+          [ngClass]="{ 'is-invalid': submitted && recuperarForm.controls.email.errors }" required
+          ></ion-input>
+        </ion-item>
+        <div *ngIf="recuperarForm.controls.email.invalid && (recuperarForm.controls.email.dirty || recuperarForm.controls.email.touched ) " class="text_danger">
+          <div *ngIf="recuperarForm.controls.email.errors.required" class="text_danger">Ingresar un correo electrónico</div>
+          <div *ngIf="recuperarForm.controls.email.errors?.pattern" class="text_danger">Ingresar un correo electrónico válido</div>
+        </div>
+      </div>
+      <div id="contenedorInferior">
+        <div>
+          <ion-button id="recuperarButton" class="ion-text-uppercase" expand="full" type="submit" [disabled]="!recuperarForm.valid">
+            Recuperar
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </form>
+</ion-content>
+

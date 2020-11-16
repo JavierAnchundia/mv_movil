@@ -45,7 +45,7 @@ export class LoginPage implements OnInit {
     private homenaje: HomenajesService,
     private storage: Storage,
   ) {
-    this.menu.enable(false);
+    // this.menu.enable(false);
     // this.platform.backButton.subscribeWithPriority(-1, () => {
     //   if (!this.routerOutlet.canGoBack()) {
     //     App.exitApp();
@@ -153,7 +153,9 @@ export class LoginPage implements OnInit {
       // });
     });
   }
-  
+  goRecuperarContrasena(){
+    this.router.navigate(['/recuperar-contrasena']);
+  }
   // mostrar login controller de authenticando usuario
   async showAuthLoading(idLoading) {
     const loading = await this.loadingController.create({

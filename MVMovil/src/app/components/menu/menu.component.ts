@@ -57,6 +57,11 @@ export class MenuComponent implements OnInit {
      )
   }
 
+  goInicio(){
+    this.menu.close();
+    this.router.navigate(['/inicio']);
+  }
+
   goPerfil(){
     this.menu.close();
     this.router.navigate(['/perfil']);
@@ -89,6 +94,7 @@ export class MenuComponent implements OnInit {
   }
 
   login(){
+    this.menu.close();
     this.router.navigate(['/login'])
   }
   
