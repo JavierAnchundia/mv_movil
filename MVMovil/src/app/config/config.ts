@@ -1,8 +1,8 @@
-const URL_ROOT = 'https://carmsanc.pythonanywhere.com/api'
-const URL_ROOT_AUTH = 'https://carmsanc.pythonanywhere.com'
+// const URL_ROOT = 'https://carmsanc.pythonanywhere.com/api'
+// const URL_ROOT_AUTH = 'https://carmsanc.pythonanywhere.com'
 
-// const URL_ROOT = 'http://192.168.0.107:8000/api'
-// const URL_ROOT_AUTH = 'http://192.168.0.107:8000'
+const URL_ROOT = 'http://192.168.0.104:8000/api'
+const URL_ROOT_AUTH = 'http://192.168.0.104:8000'
 
 const URL_SERVICIOS = {
     url_backend: URL_ROOT_AUTH,

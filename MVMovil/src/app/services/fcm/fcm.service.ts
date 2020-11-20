@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import URL_SERVICIOS from 'src/app/config/config';
 import {​​​​ AlertController, Platform }​​​​ from '@ionic/angular';
 import { NavigationExtras, Router } from '@angular/router';
+import { StorageNotificationService } from 'src/app/services/fcm/storage-notification.service';
 import {
   Plugins,
   PushNotification,
@@ -21,7 +22,8 @@ export class FcmService {
     public platform: Platform,
     public router: Router,
     private zone: NgZone,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private _storageFcm: StorageNotificationService,
   ) { }
 
   initFCM(){
@@ -49,25 +51,36 @@ export class FcmService {
       }
     );
 
+    // PushNotifications.getDeliveredNotifications().then(
+    //   (noti)=>{
+    //     alert(JSON.stringify(noti));
+    //   }
+    // )
+
     // Show us the notification payload if the app is open on our device
     PushNotifications.addListener('pushNotificationReceived',
       async (notification: PushNotification) => {
+        let valor = await this.castNumberPushNotification();
+        await this.setNumNotification(valor);
+        this._storageFcm.set_NP(true);
         console.log(notification)
         this.dataNotificacion = await notification.data
-        let data = await JSON.stringify(this.dataNotificacion);
-        this.presentAlertNotification(data);
-        // await this.delay(1500);
-        // alert('Push received: ' + JSON.stringify(notification));
+        // let data = await JSON.stringify(this.dataNotificacion);
+        await this._storageFcm.setListNotificationFcm(this.dataNotificacion['message'], "mensaje extra");
+        // this.presentAlertNotification(data);
       }
     );
 
     // Method called when tapping on a notification
     PushNotifications.addListener('pushNotificationActionPerformed',
       async (notification: PushNotificationActionPerformed) => {
+        let valor = await this.castNumberPushNotification();
+        await this.setNumNotification(valor);
+        this._storageFcm.set_NP(true);
         console.log(notification)
         this.dataNotificacion = await notification.notification.data
-        let data = await JSON.stringify(this.dataNotificacion);
-        this.router.navigateByUrl(`/notificacion-fcm/${data}`);
+        await this._storageFcm.setListNotificationFcm(this.dataNotificacion['message'], "mensaje extra");
+        this.router.navigate(['notificacion']);
         // alert('Push action performed: '+ body);
       }
     );
@@ -104,10 +117,12 @@ export class FcmService {
     }
   }
 
+  // guardar Token del dispositvo para notificaciones push
   async getLocalTokeDevice(){
     let value = await Storage.get({ key: 'token_fcm' });
     return value
   }
+
   async setLocalTokenDevice(token, id) {
     await Storage.set({
       key: 'token_fcm',
@@ -118,6 +133,32 @@ export class FcmService {
     });
   }
 
+  //guardar numero de notification llegadas
+  async getNumNotification(){
+    let value = await Storage.get({ key: 'num_noti_push' });
+    return value
+  }
+
+  async setNumNotification(numero) {
+    await Storage.set({
+      key: 'num_noti_push',
+      value: numero
+    });
+  }
+
+  async castNumberPushNotification(){
+    let oldNum = await this.getNumNotification();
+    let setNumero;
+    if(!isNaN(Number(oldNum.value))){
+      let sumatoria = await Number(oldNum.value) + 1;
+      setNumero = await String(sumatoria);
+    }
+    else{
+      setNumero = await "0";
+    }
+    return await setNumero;
+  }
+  
   async presentAlertNotification(data) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',

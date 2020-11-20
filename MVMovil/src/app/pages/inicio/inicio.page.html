@@ -8,10 +8,10 @@
       <ion-buttons slot="start">
         <ion-menu-button autoHide="false" class="botonHeader"></ion-menu-button>
       </ion-buttons>
-      <!-- <ion-title class="ion-text-uppercase"></ion-title> -->
       <ion-buttons slot="end">
-        <ion-tab-button>
+        <ion-tab-button (click)="goNotification()">
           <ion-icon name="notifications" class="botonHeader"></ion-icon>
+          <ion-badge color="danger" *ngIf="validateBadge">{{numNotificationPush}}</ion-badge>
         </ion-tab-button>
       </ion-buttons>
     </ion-toolbar>

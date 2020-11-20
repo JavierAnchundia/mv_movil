@@ -6,6 +6,9 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './services/auth/auth.service';
 import { Router } from '@angular/router';
 import { FcmService } from 'src/app/services/fcm/fcm.service';
+import { StorageNotificationService } from 'src/app/services/fcm/storage-notification.service';
+
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -20,6 +23,7 @@ export class AppComponent {
     private router: Router,
     private menu: MenuController,
     private fcm: FcmService,
+    private _storageFcm: StorageNotificationService,
   ) {
     
     this.initializeApp();
@@ -29,6 +33,8 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.fcm.initFCM();
+      this._storageFcm.removeNotification();
+      this._storageFcm.set_NP(true);
       // this.auth.authenticationState.subscribe(
       //   state => {
       //     if(state){

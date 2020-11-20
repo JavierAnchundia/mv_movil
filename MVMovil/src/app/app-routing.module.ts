@@ -46,12 +46,8 @@ const routes: Routes = [
     loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
   },
   {
-    path: 'notificacion/:data',
+    path: 'notificacion',
     loadChildren: () => import('./pages/notificacion/notificacion.module').then( m => m.NotificacionPageModule)
-  },
-  {
-    path: 'notificacion-fcm/:data',
-    loadChildren: () => import('./pages/notificacion-fcm/notificacion-fcm.module').then( m => m.NotificacionFcmPageModule)
   },
   {
     path: 'recuperar-contrasena',

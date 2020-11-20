@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StorageNotificationService } from 'src/app/services/fcm/storage-notification.service'
 
 @Component({
   selector: 'app-notificacion',
@@ -8,11 +9,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class NotificacionPage implements OnInit {
 
-  notificacion: any = [];
+  notificaciones: any = [];
   message: String = "";
   constructor(
     private route: ActivatedRoute, 
     private router: Router,
+    private _storageFcm: StorageNotificationService,
   ) { }
 
   ngOnInit() {
@@ -22,10 +24,10 @@ export class NotificacionPage implements OnInit {
     this.cargarData();
   }
   async cargarData(){
-    await this.route.paramMap.subscribe( async params => {
-      let data = await params.get('data');
-      this.notificacion = await JSON.parse(data);
-      this.message = this.notificacion['message'];
-    });
+    await this._storageFcm.getListNotificationFcm().then(
+      (lista) =>{
+        this.notificaciones = lista.reverse();
+      }
+    )
   }
 }

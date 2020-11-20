@@ -7,9 +7,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-card
-  >
+<ion-content [fullscreen]="true" [scrollY]="true">
+  <ion-card *ngFor="let notificacion of this.notificaciones">
     <ion-card-content>
       <ion-item lines="none">
         <ion-grid>
@@ -19,7 +18,7 @@
             </ion-col>
             <ion-col size="10">
               <ion-row>
-                <small id="labelTitulo">{{message}}</small>
+                <small id="labelTitulo">{{notificacion.message_body}}</small>
               </ion-row>
               <ion-row>
                 <small id="mensajeSecundatio">Recuerda a tu ser querido en este día. Déjale un mensaje</small> 
@@ -28,7 +27,6 @@
           </ion-row>
         </ion-grid>
       </ion-item>
-      
     </ion-card-content>
   </ion-card>
 </ion-content>
