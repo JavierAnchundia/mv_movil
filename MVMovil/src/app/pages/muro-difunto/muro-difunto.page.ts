@@ -8,7 +8,6 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { HomenajesService } from 'src/app/services/homenajes/homenajes.service';
 import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { ToastController, LoadingController } from "@ionic/angular";
-
 import { Platform } from '@ionic/angular';
 import { GeolocalizacionService } from 'src/app/services/geolocalizacion/geolocalizacion.service';
 import { Storage } from '@ionic/storage';
@@ -16,9 +15,8 @@ import { DatePipe } from '@angular/common';
 import { DifuntoService } from 'src/app/services/difunto/difunto.service';
 import { ModalRosaComponent } from './modal-rosa/modal-rosa.component';
 import { AuthService } from 'src/app/services/auth/auth.service';
-
-const IDUSER = 'id_usuario';
-const TOKEN_KEY = 'access_token';
+import INFO_SESION from 'src/app/config/infoSesion';
+import { FavoritosService } from 'src/app/services/favoritos/favoritos.service';
 
 @Component({
   selector: 'app-muro-difunto',
@@ -27,14 +25,13 @@ const TOKEN_KEY = 'access_token';
 })
 export class MuroDifuntoPage implements OnInit {
   @ViewChild("fab") fab;
-  // polygon = [ [ 1, 1 ], [ 1, 2 ], [ 2, 2 ], [ 2, 1 ] ];
   difunto: any = []
   lat: number;
   lng: number;
   puntos_polygon: any = [];
   historial_rosas: any = [];
-  // booleanSesionUser: boolean = true;
-
+  is_save: boolean = false;
+  assetGuardado: any = "assets/page-muro/GUARDAR.png";
   constructor(
     public modalController: ModalController,
     private route: ActivatedRoute, 
@@ -50,7 +47,8 @@ export class MuroDifuntoPage implements OnInit {
     public datepipe: DatePipe,
     private service_difunto: DifuntoService,
     private menu: MenuController,
-    private _serviceAuth: AuthService
+    private _serviceAuth: AuthService,
+    private _favoritos: FavoritosService,
   )
   {
   }
@@ -60,16 +58,23 @@ export class MuroDifuntoPage implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.difunto = this.router.getCurrentNavigation().extras.state.difunto;
         this.checkUserLogin();
-        this.menu.enable(true);
       }
     });
     this.setCurrentPosition();
     this.cargarPuntosPoligono();
     this.cargarHistorialRosas();
+    this._serviceAuth.authenticationState.subscribe(
+      state => {
+        if(state){
+          this.verificarStateSave();
+        }
+      }
+    );
+    this.verificarStateSave();
   }
 
   checkUserLogin(){
-    this.storage.get(TOKEN_KEY).then(
+    this.storage.get(INFO_SESION.TOKEN_KEY).then(
       (token)=>{
         if(token){
           this.homenaje.sendMessage('cargar');
@@ -80,17 +85,14 @@ export class MuroDifuntoPage implements OnInit {
       }
     )
   }
+
   validateSesionMuro(){
-    this.storage.get(TOKEN_KEY).then(
+    this.storage.get(INFO_SESION.TOKEN_KEY).then(
       (token)=>{
         if(!token){
           this.fab.close();
-          // this.booleanSesionUser = false;
-          this.loginMessageAlertMuro();
+          this.loginMessageAlertMuro('Por favor inicie sesión o registrese para poder publicar');
         }
-        // else{
-        //   this.booleanSesionUser = true;
-        // }
       }
     )
   }
@@ -144,6 +146,7 @@ export class MuroDifuntoPage implements OnInit {
       this.historial_rosas = resp.reverse();
     })
   }
+
   async postContRose(){
     await this.homenaje.dejarRosa(this.difunto.id_difunto).toPromise().then(
       async (resp)=>{
@@ -153,12 +156,13 @@ export class MuroDifuntoPage implements OnInit {
       }
     )
   }
+
   async postRegistroUserRose(){
-    await this.storage.get(TOKEN_KEY).then(
+    await this.storage.get(INFO_SESION.TOKEN_KEY).then(
       (token)=>{
         if(token){
           this.presentToast("Dejando Rosa!!!", 500, 'top', 'secondary');
-          this.storage.get(IDUSER).then(
+          this.storage.get(INFO_SESION.IDUSER).then(
             (id) => { 
               const log = new FormData();
               let fecha = this.getFechaPublicacion();
@@ -178,7 +182,7 @@ export class MuroDifuntoPage implements OnInit {
           )
         } 
         else{
-          this.loginMessageAlertMuro();
+          this.loginMessageAlertMuro('Por favor inicie sesión o registrese para poder publicar');
         }
       }
     )
@@ -191,8 +195,153 @@ export class MuroDifuntoPage implements OnInit {
       }
     )
   }
+
+  verificarStateSave(){
+    this.storage.get(INFO_SESION.IDUSER).then(
+      (id_user)=>{
+        if(id_user){
+          this.storage.get(INFO_SESION.TOKEN_KEY).then(
+            (token) => {
+              if(token){
+                this._favoritos.loadFavoritos(id_user, token).subscribe(
+                  (listaFavoritos)=>{
+                    for(let favorito in listaFavoritos){
+                      if(listaFavoritos[favorito].id_difunto == this.difunto.id_difunto){
+                        this.is_save = true;
+                        this.assetGuardado = "assets/page-muro/GUARDADO.png";
+                      }
+                    } 
+                  },
+                  (error)=>{
+                    this.is_save = false;
+                    this.assetGuardado = "assets/page-muro/GUARDAR.png";
+                  }
+                );
+              }
+            }
+          )
+        }
+      }
+    );
+  }
+
+  favoritoAction(){
+    this.storage.get(INFO_SESION.IDUSER).then(
+      (id_user)=>{
+        if(id_user){
+          this.storage.get(INFO_SESION.TOKEN_KEY).then(
+            (token) => {
+              if(token){
+                if(!this.is_save){
+                  this.favoritoState('Está seguro que desea continuar?', this.is_save);
+                }
+                else{
+                  this.favoritoState('Está seguro que desea eliminar de sus favoritos?', this.is_save);
+                }
+              }
+              else{
+                this.loginMessageAlertMuro('Por favor inicie sesión o registrese para poder guardar a favoritos');
+              }
+            }
+          )
+        }
+        else{
+          this.loginMessageAlertMuro('Por favor inicie sesión o registrese para poder guardar a favoritos');
+        }
+      }
+    )
+  }
+
+  async favoritoState(message, estado) {
+    const alert = await this.alertController.create({
+      cssClass: 'controlerAlert',
+      message: message,
+      buttons: [
+        {
+          text: 'Sí',
+          cssClass: 'colorTextButton',
+          handler: () => {
+            if(estado){
+              this.deleteFavorito();
+            }
+            else{
+              this.postFavorito();
+            }
+          }
+        },
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'colorTextButton',
+          handler: () => {
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  postFavorito(){
+    this.storage.get(INFO_SESION.IDUSER).then(
+      (id_user)=>{
+        if(id_user){
+          const favorito = new FormData();
+          favorito.append("id_usuario", id_user as string);
+          favorito.append("id_difunto", this.difunto.id_difunto as string);
+          favorito.append("estado", "True");
+          this.storage.get(INFO_SESION.TOKEN_KEY).then(
+            token => {
+              if(token){
+                this._favoritos.agregarFavorito(favorito, token).subscribe(
+                  (data)=>{
+                    this.is_save = true;
+                    this.assetGuardado = "assets/page-muro/GUARDADO.png";
+                    this.presentToast("Perfil se ha agregado a sus favoritos", 2000, "middle", "dark");
+                    this._favoritos.recarga_Info_Fav("recargar");
+                    this.service_difunto.recarga_Lista_Difunto("recargar");
+                  },
+                  (error)=>{
+                    this.presentToast("Error al agregar el perfil a favoritos", 2000, "bottom", "danger");
+                  }
+                );
+              }
+            }
+          );
+        }
+      }
+    );
+  }
+  
+
+  deleteFavorito(){
+    this.storage.get(INFO_SESION.TOKEN_KEY).then(
+      token => {
+        if(token){
+          this.storage.get(INFO_SESION.IDUSER).then(
+            (id_user)=>{
+              if(id_user){
+                this._favoritos.removeFavorito(id_user, this.difunto.id_difunto, token).subscribe(
+                  (data)=>{
+                    this.is_save = false;
+                    this.assetGuardado = "assets/page-muro/GUARDAR.png";
+                    this.presentToast("Se ha eliminado el perfil de sus favoritos", 2000, "middle", "dark");
+                    this._favoritos.recarga_Info_Fav("recargar");
+                    this.service_difunto.recarga_Lista_Difunto("recargar");
+                  },
+                  (error)=>{
+                    this.presentToast("Error al eliminar el perfil de favoritos", 2000, "bottom", "danger");
+                  }
+                );
+              }
+            }
+          );
+        }
+      }
+    )
+  }
+
   cambiarPageInicio(){
-    // this.menu.enable(true, 'menu_button');
     this.router.navigate(["/inicio"]);
   }
   
@@ -276,14 +425,15 @@ export class MuroDifuntoPage implements OnInit {
     return await modal.present();
   }
 
-  async loginMessageAlertMuro() {
+  async loginMessageAlertMuro(message) {
     const alert = await this.alertController.create({
-      cssClass: 'loginMAlert',
+      cssClass: 'controlerAlert',
       // header: 'Confirm!',
-      message: '<strong>Por favor inicie sesión o registrese para poder publicar</strong>',
+      message: '<strong>'+message+'</strong>',
       buttons: [
         {
           text: 'Login',
+          cssClass: 'colorTextButton',
           handler: () => {
             let navigationExtras: NavigationExtras = { state: { difunto: this.difunto} };
             this.router.navigate(['login'], navigationExtras);
@@ -292,7 +442,7 @@ export class MuroDifuntoPage implements OnInit {
         {
           text: 'Cancelar',
           role: 'cancel',
-          cssClass: 'secondary',
+          cssClass: 'colorTextButton',
           handler: () => {
             
           }
@@ -305,10 +455,10 @@ export class MuroDifuntoPage implements OnInit {
 
   async ubicacionAlert() {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: 'controlerAlert',
       header: 'Alerta Ubicación',
       message: 'Usted no se encuentra dentro del área del camposanto para publicar!!',
-      buttons: ['OK']
+      buttons: [{ text:'OK', cssClass: 'colorTextButton'}]
     });
     await alert.present();
   }
@@ -318,7 +468,6 @@ export class MuroDifuntoPage implements OnInit {
     let latest_date = this.datepipe.transform(date, 'yyyy-MM-dd HH:mm');
     return latest_date;
   }
-
 
   async presentToast(text, tiempo, position, color) {
     const toast = await this.toastController.create({
@@ -350,7 +499,7 @@ export class MuroDifuntoPage implements OnInit {
   async showMensajeLoading(idLoading) {
     const loading = await this.loadingController.create({
       id: idLoading,
-      cssClass: 'my-custom-class',
+      cssClass: 'colorloading',
       message: 'Publicando mensaje...'
     });
     

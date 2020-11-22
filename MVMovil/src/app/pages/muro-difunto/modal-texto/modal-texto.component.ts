@@ -7,9 +7,7 @@ import { HomenajesService } from 'src/app/services/homenajes/homenajes.service'
 import { DatePipe } from '@angular/common';
 import { Storage } from '@ionic/storage';
 import { HomenajeTextoService } from 'src/app/services/homenaje_texto/homenaje-texto.service'
-
-const IDUSER = 'id_usuario';
-const TOKEN_KEY = 'access_token';
+import INFO_SESION from 'src/app/config/infoSesion';
 
 @Component({
   selector: 'app-modal-texto',
@@ -47,11 +45,11 @@ export class ModalTextoComponent implements OnInit {
     let textoData = await new FormData();
     textoData.append('mensaje', this.mensajeTextoForm.value.mensaje);
 
-    this.storage.get(TOKEN_KEY).then(
+    this.storage.get(INFO_SESION.TOKEN_KEY).then(
       (token)=>{
         this.homenaje_texto.postTexto(textoData, token).toPromise().then(
           (resp) => {
-            this.storage.get(IDUSER).then(
+            this.storage.get(INFO_SESION.IDUSER).then(
               (id) => { 
                 console.log(id)
                 let fecha = this.getFechaPublicacion();
@@ -103,10 +101,10 @@ export class ModalTextoComponent implements OnInit {
 
   async textoAlert(mensaje, titulo) {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: 'controlerAlert',
       header: titulo,
       message: mensaje,
-      buttons: ['OK']
+      buttons: [{text: 'OK', cssClass: 'colorTextButton'}]
     });
     await alert.present();
   }
@@ -125,7 +123,7 @@ export class ModalTextoComponent implements OnInit {
   async showMensajeLoading(idLoading) {
     const loading = await this.loadingController.create({
       id: idLoading,
-      cssClass: 'my-custom-class',
+      cssClass: 'colorloading',
       message: 'Publicando mensaje...'
     });
     

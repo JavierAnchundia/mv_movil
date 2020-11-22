@@ -7,9 +7,10 @@ import { HomenajesService } from 'src/app/services/homenajes/homenajes.service'
 import { DatePipe } from '@angular/common';
 import { Storage } from '@ionic/storage';
 import { HomenajeVideoService } from 'src/app/services/homenaje_video/homenaje-video.service'
+import INFO_SESION from 'src/app/config/infoSesion';
 
-const IDUSER = 'id_usuario';
-const TOKEN_KEY = 'access_token';
+// const IDUSER = 'id_usuario';
+// const TOKEN_KEY = 'access_token';
 
 @Component({
   selector: 'app-modal-video',
@@ -83,11 +84,11 @@ export class ModalVideoComponent implements OnInit {
     videoData.append('video', this.file_video);
     videoData.append('mensaje', this.mensajeVideoForm.value.mensaje);
 
-    this.storage.get(TOKEN_KEY).then(
+    this.storage.get(INFO_SESION.TOKEN_KEY).then(
       (token)=>{
         this.homenaje_video.postVideo(videoData, token).toPromise().then(
           (resp) => {
-            this.storage.get(IDUSER).then(
+            this.storage.get(INFO_SESION.IDUSER).then(
               (id) => { 
                 console.log(id)
                 let fecha = this.getFechaPublicacion();
@@ -145,10 +146,10 @@ export class ModalVideoComponent implements OnInit {
 
   async videoAlert(mensaje, titulo) {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: 'controlerAlert',
       header: titulo,
       message: mensaje,
-      buttons: ['OK']
+      buttons: [{text: 'OK', cssClass: 'colorTextButton'}]
     });
     await alert.present();
   }
@@ -167,7 +168,7 @@ export class ModalVideoComponent implements OnInit {
   async showMensajeLoading(idLoading) {
     const loading = await this.loadingController.create({
       id: idLoading,
-      cssClass: 'my-custom-class',
+      cssClass: 'colorloading',
       message: 'Publicando mensaje...'
     });
     

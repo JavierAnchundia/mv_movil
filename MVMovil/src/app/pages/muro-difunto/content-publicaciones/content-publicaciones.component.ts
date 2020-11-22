@@ -8,8 +8,7 @@ import { HomenajeImagenService } from 'src/app/services/homenaje_imagen/homenaje
 import { HomenajeTextoService } from 'src/app/services/homenaje_texto/homenaje-texto.service'
 import URL_SERVICIOS from 'src/app/config/config';
 import { AlertController, ToastController } from '@ionic/angular';
-
-const IDUSER = 'id_usuario';
+import INFO_SESION from 'src/app/config/infoSesion';
 
 @Component({
   selector: 'app-content-publicaciones',
@@ -46,7 +45,7 @@ export class ContentPublicacionesComponent implements OnInit {
   }
 
   cargarIdUser(){
-    this.storage.get(IDUSER).then(
+    this.storage.get(INFO_SESION.IDUSER).then(
       (id) => { 
         this.idUser = id;
       }
@@ -56,7 +55,6 @@ export class ContentPublicacionesComponent implements OnInit {
   getHomenajes() {
     this.serv_h_general.getHomenajesDifunto(this.difunto_datos.id_difunto).subscribe(
       (resp: any) => {
-        console.log(resp)
         this.lista_publicaciones = resp;
         this.lista_publicaciones.reverse();
       })
@@ -78,12 +76,13 @@ export class ContentPublicacionesComponent implements OnInit {
 
   async alertaConfirmar(tipoFile, publicacion, id) {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: 'controlerAlert',
       // header: 'Confirm!',
       message: '<strong>¿Está seguro que desea eliminar ' + tipoFile+'?</strong>',
       buttons: [
         {
           text: 'Sí',
+          cssClass: 'colorTextButton',
           handler: () => {
             if(publicacion == 'audio'){
               this.serv_h_audio.deleteAudio(id).subscribe(
@@ -134,7 +133,7 @@ export class ContentPublicacionesComponent implements OnInit {
         {
           text: 'No',
           role: 'cancel',
-          cssClass: 'secondary',
+          cssClass: 'colorTextButton',
           handler: (blah) => {
           }
         }

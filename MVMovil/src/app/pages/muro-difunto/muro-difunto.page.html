@@ -10,8 +10,8 @@
       </ion-buttons>
       <ion-title></ion-title>
       <ion-buttons slot="end">
-        <ion-tab-button>
-          <ion-icon name="home" class="botonHeader" (click)="cambiarPageInicio()" id="iconHome"></ion-icon>
+        <ion-tab-button (click)="cambiarPageInicio()">
+          <ion-icon name="home" class="botonHeader" id="iconHome"></ion-icon>
         </ion-tab-button>
       </ion-buttons>
     </ion-toolbar>
@@ -23,7 +23,7 @@
   <ion-grid>
       <ion-row>
         <ion-label id="nameDifunto">{{difunto.nombre}} {{difunto.apellido}}</ion-label>
-        <ion-img src="assets/page-muro/GUARDAR.png" alt="" id="pin"></ion-img>
+        <ion-img [src]="assetGuardado" alt="" id="pin" (click)="favoritoAction()"></ion-img>
       </ion-row>
       <ion-row>
           <ion-col size="5.8">

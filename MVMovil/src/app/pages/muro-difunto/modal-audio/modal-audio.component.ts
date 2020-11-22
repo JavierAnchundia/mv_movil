@@ -7,9 +7,7 @@ import { HomenajesService } from 'src/app/services/homenajes/homenajes.service'
 import { DatePipe } from '@angular/common';
 import { Storage } from '@ionic/storage';
 import { HomenajeAudioService } from 'src/app/services/homenaje_audio/homenaje-audio.service';
-
-const IDUSER = 'id_usuario';
-const TOKEN_KEY = 'access_token';
+import INFO_SESION from 'src/app/config/infoSesion';
 
 @Component({
   selector: 'app-modal-audio',
@@ -83,11 +81,11 @@ export class ModalAudioComponent implements OnInit {
     audioData.append('audio', this.file_audio);
     audioData.append('mensaje', this.mensajeAudioForm.value.mensaje);
 
-    this.storage.get(TOKEN_KEY).then(
+    this.storage.get(INFO_SESION.TOKEN_KEY).then(
       (token)=>{
         this.homenaje_audio.postAudio(audioData, token).toPromise().then(
           (resp) => {
-            this.storage.get(IDUSER).then(
+            this.storage.get(INFO_SESION.IDUSER).then(
               (id) => { 
                 console.log(id)
                 let fecha = this.getFechaPublicacion();
@@ -144,10 +142,10 @@ export class ModalAudioComponent implements OnInit {
 
   async audioAlert(mensaje, titulo) {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: 'controlerAlert',
       header: titulo,
       message: mensaje,
-      buttons: ['OK']
+      buttons: [{text: 'OK', cssClass: 'colorTextButton'}]
     });
     await alert.present();
   }
@@ -166,7 +164,7 @@ export class ModalAudioComponent implements OnInit {
   async showMensajeLoading(idLoading) {
     const loading = await this.loadingController.create({
       id: idLoading,
-      cssClass: 'my-custom-class',
+      cssClass: 'colorloading',
       message: 'Publicando mensaje...'
     });
     

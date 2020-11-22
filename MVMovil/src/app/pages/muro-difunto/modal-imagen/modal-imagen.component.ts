@@ -8,10 +8,9 @@ import { FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
 import { Storage } from '@ionic/storage';
 import { DatePipe } from '@angular/common'
 import { HomenajesService } from 'src/app/services/homenajes/homenajes.service'
-const { Filesystem } = Plugins;
 const { Camera } = Plugins;
-const IDUSER = 'id_usuario';
-const TOKEN_KEY = 'access_token';
+import INFO_SESION from 'src/app/config/infoSesion';
+
 
 @Component({
   selector: "app-modal-imagen",
@@ -97,11 +96,11 @@ export class ModalImagenComponent implements OnInit {
     imagenData.append('mensaje', this.mensajeImagenForm.value.mensaje)
     imagenData.append("img_base64", img_base64);
 
-    this.storage.get(TOKEN_KEY).then(
+    this.storage.get(INFO_SESION.TOKEN_KEY).then(
       (token)=>{
         this.service_homenaje.postImagen(imagenData, token).toPromise().then(
           (resp) => {
-            this.storage.get(IDUSER).then(
+            this.storage.get(INFO_SESION.IDUSER).then(
               (id) => { 
                 console.log(id)
                 let fecha = this.getFechaPublicacion();
@@ -113,6 +112,7 @@ export class ModalImagenComponent implements OnInit {
                 homenajePost.append('estado', 'True');
                 homenajePost.append('likes', '0');
                 homenajePost.append('id_imagecontent', id_imagen);
+                console.log(homenajePost.forEach((data)=>{console.log(data)}))
                 this.homenaje.postHomenajeGeneral(homenajePost, token).subscribe(
                   async (resp: any) => {
                     this.validarImagen = true;
@@ -158,10 +158,10 @@ export class ModalImagenComponent implements OnInit {
   }
   async imagenAlert(mensaje, titulo) {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: 'controlerAlert',
       header: titulo,
       message: mensaje,
-      buttons: ['OK']
+      buttons: [{text: 'OK', cssClass: 'colorTextButton'}]
     });
     await alert.present();
   }
@@ -180,7 +180,7 @@ export class ModalImagenComponent implements OnInit {
   async showMensajeLoading(idLoading) {
     const loading = await this.loadingController.create({
       id: idLoading,
-      cssClass: 'my-custom-class',
+      cssClass: 'colorloading',
       message: 'Publicando mensaje...'
     });
     
