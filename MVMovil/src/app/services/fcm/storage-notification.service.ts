@@ -19,18 +19,25 @@ export class StorageNotificationService {
     this._setNumberNotification.next(state);
   }
 
-  async setListNotificationFcm(message_body, extra_message){
-    // await this.storage.remove(STORAGE_NOTIFICATION)
+  async setListNotificationFcm(data: any){
+    // await this.storage.remove(INFO_SESION.STORAGE_NOTIFICATION)
     let arrayNotification = [];
+    let difunto = null;
+    let is_difunto = false;
     let getNotifications = await this.getListNotificationFcm();
     if(getNotifications != null){
       for(let notificacion in getNotifications){
         arrayNotification.push(getNotifications[notificacion]);
       }
     }
+    if(Object.keys(data).includes("difunto")){
+      difunto = JSON.parse(data.difunto);
+      is_difunto = true;
+    }
     await arrayNotification.push({
-      message_body: message_body,
-      extra_message: extra_message,
+      title: data.title,
+      difunto: difunto,
+      is_difunto: is_difunto,
       time_recibido: new Date().getTime(),
       tipo: "fcm"
     });

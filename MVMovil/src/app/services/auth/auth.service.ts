@@ -8,7 +8,7 @@ import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import URL_SERVICIOS from 'src/app/config/config';
 import INFO_SESION from 'src/app/config/infoSesion';
-
+import { FcmService } from 'src/app/services/fcm/fcm.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,8 @@ export class AuthService {
     private storage: Storage,
     private http: HttpClient,
     private plataform: Platform,
-    private helper: JwtHelperService
+    private helper: JwtHelperService,
+    private _fcm: FcmService,
   ) {
     this.plataform.ready().then(
       () => {
@@ -103,10 +104,11 @@ export class AuthService {
       tap(
         resp => {
           if(resp['access'] && resp['refresh']){
-            this.storage.set(INFO_SESION.TOKEN_KEY, resp['access'])
-            this.storage.set(INFO_SESION.REFRESH_TOKEN, resp['refresh'])
-            let user_id = this.helper.decodeToken(resp['access'])
+            this.storage.set(INFO_SESION.TOKEN_KEY, resp['access']);
+            this.storage.set(INFO_SESION.REFRESH_TOKEN, resp['refresh']);
+            let user_id = this.helper.decodeToken(resp['access']);
             this.storage.set(INFO_SESION.IDUSER, user_id.user_id);
+            this.updateTokenDevice(user_id.user_id);
             this.getInfoUser(user_id.user_id, resp['access']).toPromise().then(
               (resp)=>{
                 this.storage.set(INFO_SESION.FIRST_NAME, resp['first_name']);
@@ -189,8 +191,9 @@ export class AuthService {
           this.storage.set(INFO_SESION.TOKEN_KEY, resp['access']).then();
           this.storage.set(INFO_SESION.REFRESH_TOKEN, resp['refresh']).then();
           this.storage.set(INFO_SESION.IS_FACEBOOK, true).then();
-          let user_id = this.helper.decodeToken(resp['access'])
-          this.storage.set(INFO_SESION.IDUSER, user_id.user_id)
+          let user_id = this.helper.decodeToken(resp['access']);
+          this.storage.set(INFO_SESION.IDUSER, user_id.user_id);
+          this.updateTokenDevice(user_id.user_id);
           this.getInfoUser(user_id.user_id, resp['access']).toPromise().then(
             (resp)=>{
               if(resp['username'] != null){
@@ -250,4 +253,19 @@ export class AuthService {
     return this.http.get(url);
   }
 
+  async updateTokenDevice(id_User){
+    let storageTokenDevice = await this._fcm.getLocalTokeDevice();
+    let parseData = JSON.parse(storageTokenDevice.value);
+    if(!parseData.id_user){
+      let url = URL_SERVICIOS.api_token_device + parseData.id + "/";
+      const dataTokenDevice = new FormData();
+      dataTokenDevice.append("token_device", parseData.token);
+      dataTokenDevice.append("id_user", id_User);
+      this.http.put(url, dataTokenDevice).subscribe(
+        (data)=>{
+          this._fcm.setLocalTokenDevice(data['token_device'], data['id_token_device'], data["id_user"]);
+        }
+      )
+    }
+  }
 }

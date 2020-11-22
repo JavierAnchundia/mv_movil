@@ -62,11 +62,9 @@ export class FcmService {
       async (notification: PushNotification) => {
         let valor = await this.castNumberPushNotification();
         await this.setNumNotification(valor);
+        this.dataNotificacion = await notification.data;
+        await this._storageFcm.setListNotificationFcm(this.dataNotificacion);
         this._storageFcm.set_NP(true);
-        console.log(notification)
-        this.dataNotificacion = await notification.data
-        // let data = await JSON.stringify(this.dataNotificacion);
-        await this._storageFcm.setListNotificationFcm(this.dataNotificacion['message'], "mensaje extra");
         // this.presentAlertNotification(data);
       }
     );
@@ -76,10 +74,9 @@ export class FcmService {
       async (notification: PushNotificationActionPerformed) => {
         let valor = await this.castNumberPushNotification();
         await this.setNumNotification(valor);
+        this.dataNotificacion = await notification.notification.data;
+        await this._storageFcm.setListNotificationFcm(this.dataNotificacion);
         this._storageFcm.set_NP(true);
-        console.log(notification)
-        this.dataNotificacion = await notification.notification.data
-        await this._storageFcm.setListNotificationFcm(this.dataNotificacion['message'], "mensaje extra");
         this.router.navigate(['notificacion']);
         // alert('Push action performed: '+ body);
       }
@@ -98,7 +95,6 @@ export class FcmService {
     let url = URL_SERVICIOS.post_token_device;
     let data = new FormData();
     data.append('token_device', token);
-    data.append('id_user', '1');
     data.append('plataform', plataformDevice);
     return this.http.post(url, data);
   }
@@ -111,7 +107,7 @@ export class FcmService {
     else{
       this.postTokenDevice(token).subscribe(
         (data)=>{
-          this.setLocalTokenDevice(data['token_device'], data['id_token_device']);
+          this.setLocalTokenDevice(data['token_device'], data['id_token_device'], null);
         }
       )
     }
@@ -123,12 +119,13 @@ export class FcmService {
     return value
   }
 
-  async setLocalTokenDevice(token, id) {
+  async setLocalTokenDevice(token, id, id_user) {
     await Storage.set({
       key: 'token_fcm',
       value: JSON.stringify({
         id: id,
-        token: token
+        token: token,
+        id_user: id_user
       })
     });
   }
