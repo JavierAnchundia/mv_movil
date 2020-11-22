@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
-
-const STORAGE_NOTIFICATION = 'list_notification';
+import INFO_SESION from 'src/app/config/infoSesion';
 
 @Injectable({
   providedIn: 'root'
@@ -35,11 +34,11 @@ export class StorageNotificationService {
       time_recibido: new Date().getTime(),
       tipo: "fcm"
     });
-    this.storage.set(STORAGE_NOTIFICATION, arrayNotification).then();
+    this.storage.set(INFO_SESION.STORAGE_NOTIFICATION, arrayNotification).then();
   }
 
   async getListNotificationFcm(){
-    return await this.storage.get(STORAGE_NOTIFICATION).then(
+    return await this.storage.get(INFO_SESION.STORAGE_NOTIFICATION).then(
       (lista)=>{
         if(lista){
           return lista;
@@ -63,6 +62,6 @@ export class StorageNotificationService {
         newListNP.push(listaNP[notificacion]);
       }
     }
-    this.storage.set(STORAGE_NOTIFICATION, newListNP).then();
+    this.storage.set(INFO_SESION.STORAGE_NOTIFICATION, newListNP).then();
   }
 }

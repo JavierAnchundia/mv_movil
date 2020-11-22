@@ -69,7 +69,6 @@ export class MenuComponent implements OnInit {
   cargarInfoUser(){
     this.storage.get(IMAGE_USER).then(
       imagen => {
-        console.log(imagen)
         if(imagen){
           this.imageProfile = this.urlBackend+imagen;
         }
@@ -77,7 +76,6 @@ export class MenuComponent implements OnInit {
     )
     this.storage.get(FIRST_NAME).then(
       fname => {
-        console.log(fname)
         if(fname){
           this.first_name = fname;
         }
@@ -85,7 +83,6 @@ export class MenuComponent implements OnInit {
     )
     this.storage.get(LAST_NAME).then(
       lname => {
-        console.log(lname)
         if(lname){
           this.last_name = lname;
         }

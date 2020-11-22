@@ -4,7 +4,6 @@ import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import URL_SERVICIOS from 'src/app/config/config';
 import { Storage  } from '@ionic/storage';
 
-const TOKEN_KEY = 'access_token';
 @Injectable({
   providedIn: 'root'
 })

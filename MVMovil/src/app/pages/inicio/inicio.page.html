@@ -22,8 +22,8 @@
   <ion-toolbar>
     <ion-grid class="center-grid">
       <ion-row>
-        <ion-col>
-          <ion-tab-button (click)="goSearch()">
+        <ion-col (click)="goSearch()">
+          <ion-tab-button>
             <img src="assets/page-inicio/CONSULTAR_DIFUNTOS.png">
             <div>
               <ion-label class="labelInicio ion-text-uppercase">consultar difuntos</ion-label>
@@ -32,7 +32,7 @@
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col>
+        <ion-col (click)="goFavoritos()">
           <ion-tab-button>
             <img src="assets/page-inicio/DIFUNTOS_GUARDADOS.png">
             <div>

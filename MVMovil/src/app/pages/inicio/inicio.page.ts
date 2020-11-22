@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonButton, IonIcon, IonContent, ToastController, NavController } from '@ionic/angular';
+import { IonButton, IonIcon, IonContent, ToastController, NavController, AlertController } from '@ionic/angular';
 import { star } from 'ionicons/icons';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
@@ -8,6 +8,8 @@ import { MenuController } from '@ionic/angular';
 import { StorageNotificationService } from 'src/app/services/fcm/storage-notification.service';
 import { FcmService } from 'src/app/services/fcm/fcm.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { Storage } from '@ionic/storage';
+import INFO_SESION from 'src/app/config/infoSesion';
 
 @Component({
   selector: 'app-inicio',
@@ -27,7 +29,9 @@ export class InicioPage implements OnInit {
     private navCtrl: NavController,
     private _storageFcm: StorageNotificationService,
     private _fcm: FcmService,
-    private cRef: ChangeDetectorRef
+    private cRef: ChangeDetectorRef,
+    private alertController: AlertController,
+    private storage: Storage,
   ) {
     this.menu.enable(true)
     this.platform.ready().then(() => {
@@ -41,7 +45,6 @@ export class InicioPage implements OnInit {
    }
 
   ngOnInit() {
-    
     this._storageFcm.updateNumNP$.subscribe(
       async (estado) =>{
         if(estado){
@@ -53,8 +56,6 @@ export class InicioPage implements OnInit {
         }
       }
     );
-
-    // this.menu.enable(true, 'menu_button');
   }
 
   actualizarEstado(numero, estado){
@@ -64,11 +65,21 @@ export class InicioPage implements OnInit {
   }
 
   goSearch(){
-    // this.navCtrl.navigateRoot('/search', { animated: true, animationDirection: 'forward' });
     this.router.navigate(['/search']);
   }
 
-
+  goFavoritos(){
+    this.storage.get(INFO_SESION.TOKEN_KEY).then(
+      (token) => {
+        if(token){
+          this.router.navigate(['/favoritos']);
+        }
+        else{
+          this.loginMessageAlertMuro('Por favor inicie sesión o registrese para ver sus favoritos');
+        }
+      }
+    );
+  }
 
   goNotification(){
     this._storageFcm.set_NP(false);
@@ -76,23 +87,30 @@ export class InicioPage implements OnInit {
     this.router.navigate(['/notificacion']);
   }
 
-  // ionViewWillEnter(){
-  //   this.desbloquearIonMenu();
-  // }
-  // ionViewDidEnter(){
-  //   this.desbloquearIonMenu();
-  // }
-  // desbloquearIonMenu(){
-  //   this.menu.enable(true, 'menu_button');
-  //   this.presentToast()
-  // }
-
-  async presentToast() {
-    const toast = await this.toastController.create({
-      message: 'Your settings have been saved.',
-      duration: 2000
+  async loginMessageAlertMuro(message) {
+    const alert = await this.alertController.create({
+      cssClass: 'controlerAlert',
+      // header: 'Confirm!',
+      message: '<strong>'+message+'</strong>',
+      buttons: [
+        {
+          text: 'Login',
+          cssClass: 'colorTextButton',
+          handler: () => {
+            this.router.navigate(['login']);
+          }
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'colorTextButton',
+          handler: () => {
+            
+          }
+        }
+      ]
     });
-    toast.present();
-  }
 
+    await alert.present();
+  }
 }

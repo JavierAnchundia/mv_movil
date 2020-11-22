@@ -104,7 +104,7 @@ export class SearchPage implements OnInit {
   async showSearchLoading(idLoading) {
     const loading = await this.loadingController.create({
       id: idLoading,
-      cssClass: 'my-custom-class',
+      cssClass: 'colorloading',
       message: 'Cargando difuntos...'
     });
     

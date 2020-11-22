@@ -50,18 +50,19 @@ export class RecuperarContrasenaPage implements OnInit {
 
   async confirmarRecuperarAlert(email, id_camp) {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: 'controlerAlert',
       header: 'Confirmar Envío',
       message: 'Esta seguro que desea continuar?',
       buttons: [
         {
           text: 'No',
           role: 'cancel',
-          cssClass: 'secondary',
+          cssClass: 'colorTextButton',
           handler: (blah) => {
           }
         }, {
           text: 'Sí',
+          cssClass: 'colorTextButton',
           handler: () => {
             this.showRegisterLoading('id_recuperar');
             this.sendEmailServer(email, id_camp);
@@ -92,11 +93,12 @@ export class RecuperarContrasenaPage implements OnInit {
   
   async mensajeEnviadoAlert(status, message) {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: 'controlerAlert',
       message: '<strong>'+ message +'</strong>',
       buttons: [
         {
           text: 'Ok',
+          cssClass: 'colorTextButton',
           handler: () => {
             if(status == "success"){
               this.router.navigate(['inicio']);
@@ -115,7 +117,7 @@ export class RecuperarContrasenaPage implements OnInit {
   async showRegisterLoading(idLoading) {
     const loading = await this.loadingController.create({
       id: idLoading,
-      cssClass: 'my-custom-class',
+      cssClass: 'colorloading',
       message: 'Enviando correo...'
     });
     

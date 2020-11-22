@@ -1,9 +1,8 @@
-<app-header titulo="consultar difuntos" ruta="/search" enableIonMenu="false"></app-header>
+<app-header titulo="consultar difuntos" ruta="/search" enableIonMenu="true"></app-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-card
     *ngFor="let difunto of this.lista_resultados"
-    routerLink="/ubicacion-fallecido"
     (click)="cargar_muro(difunto)"
   >
     <ion-card-content>
@@ -37,14 +36,7 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-<!--         
-       <div>
-        
-       </div> -->
-       
       </ion-item>
-      
     </ion-card-content>
   </ion-card>
-  
 </ion-content>

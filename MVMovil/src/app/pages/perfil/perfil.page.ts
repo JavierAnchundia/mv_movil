@@ -12,16 +12,9 @@ import { HomenajesService } from 'src/app/services/homenajes/homenajes.service';
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { Storage } from '@ionic/storage';
 import URL_SERVICIOS from 'src/app/config/config';
+import INFO_SESION from 'src/app/config/infoSesion';
 
 const { Camera } = Plugins;
-
-const IDUSER = 'id_usuario';
-const TOKEN_KEY = 'access_token';
-const IMAGE_USER = "image_user";
-const USERNAME = 'username';
-const PASSWORD = 'password';
-const FIRST_NAME = "first_name";
-const LAST_NAME = "last_name";
 
 @Component({
   selector: 'app-perfil',
@@ -116,17 +109,17 @@ export class PerfilPage implements OnInit {
   }
 
   recargarPerfil(){
-    this.storage.get(IMAGE_USER).then(
+    this.storage.get(INFO_SESION.IMAGE_USER).then(
       imagen => {
         if(imagen){
           this.imagePerfil = this.urlBackend+imagen;
         }
       }
     )
-    this.storage.get(TOKEN_KEY).then(
+    this.storage.get(INFO_SESION.TOKEN_KEY).then(
       token => {
         if(token){
-          this.storage.get(IDUSER).then(
+          this.storage.get(INFO_SESION.IDUSER).then(
             id => {
               if(id){
                 this._authService.getInfoUser(id, token).toPromise().then(
@@ -203,7 +196,7 @@ export class PerfilPage implements OnInit {
   async showRegisterLoading(idLoading) {
     const loading = await this.loadingController.create({
       id: idLoading,
-      cssClass: 'my-custom-class',
+      cssClass: 'colorloading',
       message: 'Actualizando datos...'
     });
     
@@ -217,10 +210,10 @@ export class PerfilPage implements OnInit {
 
   async registerAlert() {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: 'controlerAlert',
       header: 'Alerta Registro',
       message: 'Ya existe un usuario con la misma credencial.',
-      buttons: ['OK']
+      buttons: [{text: 'OK', cssClass: 'colorTextButton'}]
     });
 
     await alert.present();
@@ -228,18 +221,19 @@ export class PerfilPage implements OnInit {
 
   async confirmarRegistroAlert(usuario) {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: 'controlerAlert',
       message: 'Desea continuar con la actualización de los datos?',
       buttons: [
         {
           text: 'Cancelar',
           role: 'cancel',
-          cssClass: 'secondary',
+          cssClass: 'colorTextButton',
           handler: (blah) => {
             this.showSpinner = false;
           }
         }, {
           text: 'Aceptar',
+          cssClass: 'colorTextButton',
           handler: () => {
             // console.log(this.userDetalle)
             this.showRegisterLoading('register_load');
@@ -277,18 +271,18 @@ export class PerfilPage implements OnInit {
             this.userDetalle['username'] = usuario['username'];
             this.userDetalle['email'] = usuario['email'];
             // console.log(this.userDetalle)
-            this.storage.get(TOKEN_KEY).then(
+            this.storage.get(INFO_SESION.TOKEN_KEY).then(
               token => {
                 if(token){
-                  this.storage.get(USERNAME).then(
+                  this.storage.get(INFO_SESION.USERNAME).then(
                     username => {
                       if(username){
                         this._authService.putInfoUser(token, username, this.userDetalle).subscribe( 
                           async (resp) => {
                             this.dismissRegisterLoading('register_load');
-                              this.storage.set(FIRST_NAME, resp['first_name']).then(
+                              this.storage.set(INFO_SESION.FIRST_NAME, resp['first_name']).then(
                                 (fname)=>{
-                                  this.storage.set(LAST_NAME, resp['last_name']).then(
+                                  this.storage.set(INFO_SESION.LAST_NAME, resp['last_name']).then(
                                     (lname)=>{
                                       this._authService.recarga_Info('recargar');
                                     }
@@ -299,19 +293,19 @@ export class PerfilPage implements OnInit {
                                 await this.uploadImage(resp['id'], resp['image_perfil']);
                               }
                               if(!resp['is_facebook']){
-                                this.storage.get(PASSWORD).then(
+                                this.storage.get(INFO_SESION.PASSWORD).then(
                                   password => {
                                     if(password){
                                       if(resp['username'] !== username || resp['password'] !== password){
-                                        this.storage.set(USERNAME, resp['username']);
-                                        this.storage.set(PASSWORD, resp['password']);
+                                        this.storage.set(INFO_SESION.USERNAME, resp['username']);
+                                        this.storage.set(INFO_SESION.PASSWORD, resp['password']);
                                       }
                                     }
                                   }
                                 )
                               }
                               else{
-                                this.storage.set(USERNAME, resp['username']);
+                                this.storage.set(INFO_SESION.USERNAME, resp['username']);
                               }
                               this.router.navigate(['/inicio']);
                           },
@@ -347,7 +341,7 @@ export class PerfilPage implements OnInit {
     this._authService.uploadImageProfile(id, data).toPromise().then(
       (resp)=>{
         console.log(resp)
-        this.storage.set(IMAGE_USER, resp['image_perfil']).then(
+        this.storage.set(INFO_SESION.IMAGE_USER, resp['image_perfil']).then(
           (imag)=>{
             this._authService.recarga_Info('recargar');
           }

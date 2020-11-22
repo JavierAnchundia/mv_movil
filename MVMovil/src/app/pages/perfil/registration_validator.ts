@@ -14,6 +14,7 @@ export class RegistrationValidator {
             };
         }
         if( repeatPassword === password ){
+
             return null;
         }
         return null;

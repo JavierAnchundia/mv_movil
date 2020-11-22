@@ -11,13 +11,8 @@ import { LoadingController } from '@ionic/angular';
 import { HomenajesService } from '../services/homenajes/homenajes.service';
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { Storage } from '@ionic/storage';
-import { ComponentsModule } from '../components/components.module';
 
 const { Camera } = Plugins;
-
-const IDUSER = 'id_usuario';
-const TOKEN_KEY = 'access_token';
-const IMAGE_USER = "image_user";
 
 @Component({
   selector: 'app-register',
@@ -154,7 +149,7 @@ export class RegisterPage implements OnInit {
   async showRegisterLoading(idLoading) {
     const loading = await this.loadingController.create({
       id: idLoading,
-      cssClass: 'my-custom-class',
+      cssClass: 'colorloading',
       message: 'Registrando datos...'
     });
     
@@ -168,10 +163,10 @@ export class RegisterPage implements OnInit {
 
   async registerAlert() {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: 'controlerAlert',
       header: 'Alerta Registro',
       message: 'Ya existe un usuario con la misma credencial.',
-      buttons: ['OK']
+      buttons: [{text:'OK', cssClass: 'colorTextButton'}]
     });
 
     await alert.present();
@@ -179,19 +174,20 @@ export class RegisterPage implements OnInit {
 
   async confirmarRegistroAlert(usuario) {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Confirm!',
+      cssClass: 'controlerAlert',
+      header: 'Confirmar!',
       message: 'Desea continuar con el registro?',
       buttons: [
         {
           text: 'Cancelar',
           role: 'cancel',
-          cssClass: 'secondary',
+          cssClass: 'colorTextButton',
           handler: (blah) => {
             this.showSpinner = false;
           }
         }, {
           text: 'Aceptar',
+          cssClass: 'colorTextButton',
           handler: () => {
             this.showRegisterLoading('register_load');
             this._authService.register(usuario).subscribe( 

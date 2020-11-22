@@ -12,9 +12,6 @@ import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { HomenajesService } from '../services/homenajes/homenajes.service';
 import { Storage } from '@ionic/storage';
 
-const IDUSER = 'id_usuario';
-const TOKEN_KEY = 'access_token';
-const USERNAME = 'username';
 
 @Component({
   selector: 'app-login',
@@ -160,7 +157,7 @@ export class LoginPage implements OnInit {
   async showAuthLoading(idLoading) {
     const loading = await this.loadingController.create({
       id: idLoading,
-      cssClass: 'my-custom-class',
+      cssClass: 'colorloading',
       message: 'Autenticando credenciales...'
     });
     
@@ -174,20 +171,20 @@ export class LoginPage implements OnInit {
 
   async loginAlert() {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: 'controlerAlert',
       header: 'Alerta Login',
       message: 'Credenciales Incorrectas.',
-      buttons: ['OK']
+      buttons: [{text: 'OK', cssClass: 'colorTextButton'}]
     });
     await alert.present();
   }
 
   async facebbookAlert() {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: 'controlerAlert',
       header: 'Alerta Facebook',
       message: 'No es posible autenticarse con facebook',
-      buttons: ['OK']
+      buttons: [{text:'OK', cssClass: 'colorTextButton'}]
     });
     await alert.present();
   }
