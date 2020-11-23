@@ -1,139 +1,135 @@
+ion-header {
+  #ovalo {
+    background-color: #a3c442;
+    position: fixed;
+    top: -13.5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 30%;
+    border-radius: 0 0 46% 46%;
+    ion-img {
+      position: absolute;
+      top: 60%;
+      width: 18%;
+    }
+  }
 
-ion-header{
-    #ovalo {
-        background-color:   #a3c442;
-        position: fixed;
-        top: -13.5%;
+  #cuadrado {
+    top: -8%;
+    position: fixed;
+    background-color: #a3c442;
+    border-radius: initial;
+    width: 100%;
+    height: 10%;
+  }
+
+  ion-toolbar {
+    --background: transparent;
+    --ion-color-base: transparent !important;
+    #iconHome {
+      padding-right: 25%;
+    }
+  }
+
+  .botonHeader {
+    color: white;
+  }
+}
+ion-content {
+  --padding-top: 8%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  ion-grid {
+    margin-top: 18%;
+    ion-row:nth-child(1) {
+      padding-top: 10px;
+      justify-content: center;
+      ion-label {
+        padding-right: 10px;
+      }
+      #nameDifunto {
+        font-weight: 700;
+        font-size: 1.3em;
+      }
+      ion-img {
+        width: 4%;
+      }
+    }
+    ion-row:nth-child(2) {
+      #divGuion {
+        width: 100%;
+        height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 30%;
-        border-radius: 0 0 46% 46%;
-        ion-img{
-            position: absolute;
-            top: 60%;
-            width: 18%;
-            // color: white;
-        }
-    }
-
-    #cuadrado{
-        top: -8%;
-        position: fixed;
-        background-color:  #a3c442;
-        border-radius:initial;
-        width: 100%;
-        height: 10%;
-    }
-
-    ion-toolbar {
-        --background: transparent;
-        --ion-color-base: transparent !important;
-        #iconHome{
-          padding-right: 25%;
-        }
-    }
-
-
-    .botonHeader{
-        color: white;
-    }
-}
-ion-content {
-    --padding-top: 8%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    height: 100vh;
-    ion-grid{
-      margin-top: 18%;
-      ion-row:nth-child(1){
-        padding-top: 10px;
-        justify-content: center;
-        ion-label{
-          padding-right: 10px;
-        }
-        #nameDifunto{
-          font-weight: 700;
-          font-size: 1.3em;
-        }
-        ion-img{
-          width: 4%;
+      }
+      padding-top: 15px;
+      ion-col:nth-child(1) {
+        ion-row {
+          padding-right: 6%;
+          justify-content: flex-end;
         }
       }
-      ion-row:nth-child(2){
-        #divGuion{
-          width: 100%;
-          height: 100%;
+      ion-col:nth-child(3) {
+        ion-row {
+          padding-left: 6%;
+          justify-content: flex-start;
+        }
+      }
+
+      ion-col ion-row {
+        ion-label {
+          padding-left: 10px;
+        }
+        ion-img {
+          width: 14%;
+        }
+      }
+    }
+    ion-row:nth-child(3) {
+      padding-top: 25px;
+      justify-content: center;
+      ion-col ion-row {
+        padding-bottom: 7px;
+        justify-content: center;
+        ion-label {
           display: flex;
           flex-direction: column;
           justify-content: center;
+          padding-left: 10px;
         }
-        padding-top: 15px;
-        ion-col:nth-child(1){
-          ion-row{
-            padding-right: 6%;
-            justify-content: flex-end;
-          }
-        }
-        ion-col:nth-child(3){
-          ion-row{
-            padding-left: 6%;
-            justify-content: flex-start;
-          }
-        }
-          
-        ion-col ion-row{
-          ion-label{
-              padding-left: 10px;
-          }
-          ion-img{
-            width: 14%;
-          }
+        ion-img {
+          width: 10%;
         }
       }
-      ion-row:nth-child(3){
-        padding-top: 25px;
-        justify-content: center;
-        ion-col ion-row{
-          padding-bottom: 7px;
-            justify-content: center;
-            ion-label{
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                padding-left: 10px;
-            }
-            ion-img{
-              width: 10%;
-            }
-        }
-        .vl {
-            border-left: 1.8px solid #aeadb3;
-            height: 100%;
-        }
-        hr{
-            height: 1.2px;
-            width: 90%;
-            background-color: #aeadb3;
-            border-color: #aeadb3;
-            transform: rotate(180deg);
-            margin: 0;
-        }
+      .vl {
+        border-left: 1.8px solid #aeadb3;
+        height: 100%;
+      }
+      hr {
+        height: 1.2px;
+        width: 90%;
+        background-color: #aeadb3;
+        border-color: #aeadb3;
+        transform: rotate(180deg);
+        margin: 0;
       }
     }
+  }
 
-    #colorPlus{
-        --background:  #a3c442;
-        --background-activated:  #acc969;
-        --background-focused: #acc969;
-        --background-hover: #acc969;
-
-    }
+  #colorPlus {
+    --background: #a3c442;
+    --background-activated: #acc969;
+    --background-focused: #acc969;
+    --background-hover: #acc969;
+  }
 }
-#detalle-difunto{
-    border-style: groove
+#detalle-difunto {
+  border-style: groove;
 }

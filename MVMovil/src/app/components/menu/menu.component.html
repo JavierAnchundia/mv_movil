@@ -3,23 +3,31 @@
     <ion-toolbar>
       <ion-item lines="none" *ngIf="ocultar">
         <ion-avatar slot="start">
-          <img [src]="imageProfile">
+          <img [src]="imageProfile" />
         </ion-avatar>
-        <ion-label id="labelUser">{{first_name}} {{last_name}}</ion-label>
+        <ion-label id="labelUser">{{ first_name }} {{ last_name }}</ion-label>
       </ion-item>
     </ion-toolbar>
   </ion-header>
   <ion-content>
     <ion-list>
-      <ion-item lines="none" class="seleccionItem" (click)="goInicio()">Inicio</ion-item>
+      <ion-item lines="none" class="seleccionItem" (click)="goInicio()"
+        >Inicio</ion-item
+      >
       <ion-item lines="none" class="seleccionItem">Sugerencias</ion-item>
       <ion-item lines="none" class="seleccionItem">Acerca de Nosotros</ion-item>
-      <ion-item lines="none" class="seleccionItem" (click)="goPerfil()" *ngIf="ocultar">Perfil</ion-item>
+      <ion-item
+        lines="none"
+        class="seleccionItem"
+        (click)="goPerfil()"
+        *ngIf="ocultar"
+        >Perfil</ion-item
+      >
     </ion-list>
   </ion-content>
-  
+
   <ion-footer class="ion-no-border">
-    <hr>
+    <hr />
     <label (click)="login()" *ngIf="!ocultar">
       <b>Iniciar Sesión</b>
     </label>

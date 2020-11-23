@@ -1,7 +1,6 @@
-
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-buttons slot="start" (click) = "dismiss()">
+    <ion-buttons slot="start" (click)="dismiss()">
       <ion-icon name="arrow-back-outline"></ion-icon>
     </ion-buttons>
     <ion-title class="ion-text-uppercase">Publicar Mensaje</ion-title>
@@ -13,26 +12,44 @@
     <div id="contenido">
       <div id="contentDatos">
         <ion-item lines="none" id="itemArea">
-          <ion-textarea 
+          <ion-textarea
             placeholder="Escriba aquí su mensaje..."
-            rows="14" cols="20"
-            formControlName = "mensaje"
-            >
+            rows="14"
+            cols="20"
+            formControlName="mensaje"
+          >
           </ion-textarea>
         </ion-item>
-        <div 
-          *ngIf="mensajeTextoForm.controls['mensaje'].invalid && mensajeTextoForm.controls['mensaje'].touched">
-            <span class="advertencia"  *ngIf="mensajeTextoForm.controls['mensaje'].errors.required">
+        <div
+          *ngIf="
+            mensajeTextoForm.controls['mensaje'].invalid &&
+            mensajeTextoForm.controls['mensaje'].touched
+          "
+        >
+          <span
+            class="advertencia"
+            *ngIf="mensajeTextoForm.controls['mensaje'].errors.required"
+          >
             <small>Mensaje es requerido!</small>
-            </span>
-            <span class="advertencia"
-              *ngIf="mensajeTextoForm.controls['mensaje'].errors.minlength || mensajeTextoForm.controls['mensaje'].errors.maxlength">
-              <small>Mensaje debe tener entre 10 y 200 carácteres</small>
-            </span>
+          </span>
+          <span
+            class="advertencia"
+            *ngIf="
+              mensajeTextoForm.controls['mensaje'].errors.minlength ||
+              mensajeTextoForm.controls['mensaje'].errors.maxlength
+            "
+          >
+            <small>Mensaje debe tener entre 10 y 200 carácteres</small>
+          </span>
         </div>
       </div>
       <div id="contentAceptar">
-        <ion-button id="publicarButton" type="submit" expand="full" [disabled]="!mensajeTextoForm.valid">
+        <ion-button
+          id="publicarButton"
+          type="submit"
+          expand="full"
+          [disabled]="!mensajeTextoForm.valid"
+        >
           Publicar
           <ion-icon slot="end" name="send"></ion-icon>
         </ion-button>

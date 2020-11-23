@@ -1,29 +1,25 @@
-// ion-icon {
-//     --ionicon-stroke-width: 25px;
-//     font-size: 30px;
-//   }
-ion-header{
+ion-header {
   #ovalo {
-    background-color:  #a3c442;
+    background-color: #a3c442;
     position: fixed;
     top: -13.5%;
     display: block;
     width: 100%;
     height: 30%;
     border-radius: 0 0 46% 46%;
-    img{
+    img {
       width: 100%;
       padding: 0 26% 0;
       top: 64%;
       position: absolute;
     }
   }
-  
-  #cuadrado{
+
+  #cuadrado {
     top: -8%;
     position: fixed;
     background-color: #a3c442;
-    border-radius:initial;
+    border-radius: initial;
     width: 100%;
     height: 10%;
   }
@@ -33,21 +29,20 @@ ion-header{
     --ion-color-base: transparent !important;
   }
 
-  ion-tab-button{
+  ion-tab-button {
     height: 30px;
   }
-  .botonHeader{
+  .botonHeader {
     color: white;
   }
 }
 
+ion-button {
+  width: 110px;
+  height: 110px;
+  border-radius: 10px;
+}
 
-  ion-button {
-    width:110px;
-    height:110px;
-    border-radius: 10px;
-  }
-  
 ion-content {
   --padding-top: 26%;
   display: flex;
@@ -56,39 +51,36 @@ ion-content {
   justify-content: flex-start;
   height: 100vh;
 
-  img{
+  img {
     width: 55%;
     margin-bottom: 15%;
   }
 
-  .labelInicio{
+  .labelInicio {
     font-size: 1.2em;
     color: #a3c442;
   }
 
-  ion-col{
+  ion-col {
     border: 1.2px solid #000000;
     border-radius: 10%;
     padding: 10% 5% 10%;
   }
 
-  ion-row{
+  ion-row {
     margin: 7% 20% 9%;
   }
-  
+
   ion-tab-button div {
     text-align: center;
   }
-  #colorWhatsapp{
+  #colorWhatsapp {
     --background: #42d77d;
-    --background-activated:  #42d77d;
+    --background-activated: #42d77d;
     --background-focused: #42d77d;
     --background-hover: #42d77d;
   }
-  ion-fab{
+  ion-fab {
     margin: 4% 2% 4%;
   }
 }
-  
-
-  

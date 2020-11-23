@@ -6,7 +6,10 @@
     <div id="cuadrado"></div>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button defaultHref="/search-results" class="botonHeader"></ion-back-button>
+        <ion-back-button
+          defaultHref="/search-results"
+          class="botonHeader"
+        ></ion-back-button>
       </ion-buttons>
       <ion-title></ion-title>
       <ion-buttons slot="end">
@@ -18,57 +21,74 @@
   </div>
 </ion-header>
 
-<!-- <app-header titulo="muro" ruta="/search-results" enableIonMenu="false"></app-header> -->
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-grid>
-      <ion-row>
-        <ion-label id="nameDifunto">{{difunto.nombre}} {{difunto.apellido}}</ion-label>
-        <ion-img [src]="assetGuardado" alt="" id="pin" (click)="favoritoAction()"></ion-img>
-      </ion-row>
-      <ion-row>
-          <ion-col size="5.8">
-            <ion-row>
-              <ion-img src="assets/page-muro/NACIMIENTO.png"></ion-img>
-              <ion-label id="labelFecha">{{difunto.fecha_nacimiento | date:'dd/MM/yyyy'}}</ion-label>
-            </ion-row>
-          </ion-col>
-          <ion-col size="0.4">
-            <div id="divGuion">
-              -
-            </div>
-          </ion-col>
-          <ion-col size="5.8">
-            <ion-row>
-              <ion-img src="assets/page-muro/DEFUNCION.png"></ion-img>
-              <ion-label id="labelFecha">{{difunto.fecha_difuncion | date:'dd/MM/yyyy'}}</ion-label>
-            </ion-row>
-          </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="5.8"  (click)="cargar_mapa()">
-          <ion-row>
-            <ion-img id="imgMapa" src="assets/page-muro/POINTER.png" alt=""></ion-img>
-            <ion-label>Mapa</ion-label>
-          </ion-row>
-        </ion-col>
-        <ion-col size="0.4">
-          <div class="vl"></div>
-        </ion-col>
-        <ion-col size="5.8">
-          <ion-row>
-            <ion-img id="imgRose" src="assets/page-muro/ROSAS.png" alt="" (click)="addRose()"></ion-img>
-            <ion-label (click)="modalHistorialRosas()">{{difunto.num_rosas}} Rosas</ion-label>
-          </ion-row>
-        </ion-col>
-        <hr>
-      </ion-row>
-      
+    <ion-row>
+      <ion-label id="nameDifunto"
+        >{{difunto.nombre}} {{difunto.apellido}}</ion-label
+      >
+      <ion-img
+        [src]="assetGuardado"
+        alt=""
+        id="pin"
+        (click)="favoritoAction()"
+      ></ion-img>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5.8">
+        <ion-row>
+          <ion-img src="assets/page-muro/NACIMIENTO.png"></ion-img>
+          <ion-label id="labelFecha"
+            >{{difunto.fecha_nacimiento | date:'dd/MM/yyyy'}}</ion-label
+          >
+        </ion-row>
+      </ion-col>
+      <ion-col size="0.4">
+        <div id="divGuion">-</div>
+      </ion-col>
+      <ion-col size="5.8">
+        <ion-row>
+          <ion-img src="assets/page-muro/DEFUNCION.png"></ion-img>
+          <ion-label id="labelFecha"
+            >{{difunto.fecha_difuncion | date:'dd/MM/yyyy'}}</ion-label
+          >
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5.8" (click)="cargar_mapa()">
+        <ion-row>
+          <ion-img
+            id="imgMapa"
+            src="assets/page-muro/POINTER.png"
+            alt=""
+          ></ion-img>
+          <ion-label>Mapa</ion-label>
+        </ion-row>
+      </ion-col>
+      <ion-col size="0.4">
+        <div class="vl"></div>
+      </ion-col>
+      <ion-col size="5.8">
+        <ion-row>
+          <ion-img
+            id="imgRose"
+            src="assets/page-muro/ROSAS.png"
+            alt=""
+            (click)="addRose()"
+          ></ion-img>
+          <ion-label (click)="modalHistorialRosas()"
+            >{{difunto.num_rosas}} Rosas</ion-label
+          >
+        </ion-row>
+      </ion-col>
+      <hr />
+    </ion-row>
   </ion-grid>
-  
-  <app-content-publicaciones [difunto_datos]="difunto" >
 
+  <app-content-publicaciones [difunto_datos]="difunto">
   </app-content-publicaciones>
-  
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" #fab>
     <ion-fab-button id="colorPlus" (click)="validateSesionMuro()">
       <ion-icon name="add"></ion-icon>
@@ -80,7 +100,7 @@
       <ion-fab-button (click)="modalImagen()">
         <ion-icon name="image"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button (click)="modalAudio()" >
+      <ion-fab-button (click)="modalAudio()">
         <ion-icon name="musical-note"></ion-icon>
       </ion-fab-button>
       <ion-fab-button (click)="modalVideo()">

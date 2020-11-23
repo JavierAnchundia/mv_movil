@@ -1,50 +1,49 @@
-ion-content{
-    #nonePublicacion{
-        padding-top: 30px;
-        p{
-            color: #aeadb3;
-            font-size: 0.8em;
-        }
-        text-align: center;
+ion-content {
+  #nonePublicacion {
+    padding-top: 30px;
+    p {
+      color: #aeadb3;
+      font-size: 0.8em;
     }
-    --padding-top: 30px;
-    ion-card{
-        margin-bottom: 20px;
-        border-radius: 12px;
-        ion-card-content{
-            padding: 0;
-            ion-grid{
-                ion-col{
-                    padding: 0
-                }
-                ion-row ion-col:nth-child(1){
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                }
-                ion-row ion-col:nth-child(2){
-                    ion-row{
-                        margin: 10px 0 10px;
-                        ion-col{
-                            padding: 0
-                        }
-                    }
-                }
-                #labelNombre{
-                    padding-left: 5px;
-                    font-size: 0.9em;
-                    font-weight: 600;
-                }
-            }
-            #imgDifunto{
-                width: 15%;
-            }
-            #labelFecha{
-                font-size: 0.7em;
-                padding-left: 10px;
-                color: gray;
-            }
+    text-align: center;
+  }
+  --padding-top: 30px;
+  ion-card {
+    margin-bottom: 20px;
+    border-radius: 12px;
+    ion-card-content {
+      padding: 0;
+      ion-grid {
+        ion-col {
+          padding: 0;
         }
+        ion-row ion-col:nth-child(1) {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+        ion-row ion-col:nth-child(2) {
+          ion-row {
+            margin: 10px 0 10px;
+            ion-col {
+              padding: 0;
+            }
+          }
+        }
+        #labelNombre {
+          padding-left: 5px;
+          font-size: 0.9em;
+          font-weight: 600;
+        }
+      }
+      #imgDifunto {
+        width: 15%;
+      }
+      #labelFecha {
+        font-size: 0.7em;
+        padding-left: 10px;
+        color: gray;
+      }
     }
-    
+  }
 }

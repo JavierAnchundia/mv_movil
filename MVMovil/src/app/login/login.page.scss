@@ -1,148 +1,134 @@
-ion-content{
+ion-content {
+  width: 100%;
+  height: 100%;
+  --overflow: hidden;
+
+  #circuloCamposanto {
+    // background-color: #90aa54;
+    width: 100%;
+    height: 40%;
+
+    #ovalo {
+      background-color: #a3c442;
+      position: fixed;
+      top: -13.5%;
+      display: block;
+      width: 100%;
+      height: 52%;
+      border-radius: 0 0 46% 46%;
+      img:nth-child(1) {
+        width: 100%;
+        padding: 0 14% 0;
+        position: absolute;
+        top: 45%;
+      }
+      img:nth-child(2) {
+        width: 100%;
+        position: absolute;
+        top: 65%;
+      }
+    }
+  }
+
+  #contenedorDatos {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  #contenedorTop {
+    padding: 0 8% 4%;
+    overflow-y: scroll;
+  }
+  #contenedorInferior {
+    margin: 0;
+    padding: 0;
+  }
+
+  form {
     width: 100%;
     height: 100%;
-    --overflow: hidden;
+  }
 
-    #circuloCamposanto{
-        // background-color: #90aa54;
-        width: 100%;
-        height: 40%;
-        
-        #ovalo {
-            background-color:  #a3c442;
-            position: fixed;
-            top: -13.5%;
-            display: block;
-            width: 100%;
-            height: 52%;
-            border-radius: 0 0 46% 46%;
-            img:nth-child(1){
-                width: 100%;
-                padding: 0 14% 0;
-                position: absolute;
-                top: 45%;
-            }
-            img:nth-child(2){
-                width: 100%;
-                position: absolute;
-                top: 65%;
-            }
-        }
-        
-        // #cuadrado{
-        //     top: -8%;
-        //     position: fixed;
-        //     background-color: #acc969;
-        //     border-radius:initial;
-        //     width: 100%;
-        //     height: 10%;
-        // }
-    }
+  #contenedorBottomFB {
+    bottom: 0;
+    padding: 6% 10% 0;
+  }
 
-    #contenedorDatos{
-        width: 100%;
-        height: 60%;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        
-    }
-    
-    #contenedorTop{
-        padding: 0 8% 4%;
-        overflow-y: scroll;
-    }
-    #contenedorInferior{
-        margin: 0;
-        padding: 0;
-    }
-    
-    form{
-        width: 100%;
-        height: 100%;
-    }
+  .itemCredenciales {
+    --ion-background-color: #edeef0;
+    --border-radius: 12px;
+    padding-top: 20px;
+  }
 
-    #contenedorBottomFB{
-        bottom: 0;
-        padding: 6% 10% 0;
-    }
+  ion-input {
+    color: #87868a;
+    font-size: 0.85em;
+  }
 
-    .itemCredenciales{
-        --ion-background-color:#edeef0;
-        --border-radius: 12px;
-        padding-top: 20px;
-    }
-    
-    ion-input{
-        color: #87868a;
-        font-size: 0.85em;
-    }
-    
-    #olvidarPassword{
-        margin-top: 5%;
-        text-align: right;
-    }
-    
-    .buttonFacebook {
-        // width: 65%;
-        --background: #3B5998;
-        margin:0 auto;
-        display:block;
-        --border-radius: 8px;
-    }
-    
-    ion-input{
-        overflow-x: scroll;
-        overflow-x: hidden;
-    }
-    
-    .text_danger{
-        font-size: 0.8em;
-        color:  #90aa54;
-    }
-    
-    b{
-        color: black;
-    }
-    
-    #registerDiv{
-        text-align: center;
-        padding-top: 15%;
-    }
+  #olvidarPassword {
+    margin-top: 5%;
+    text-align: right;
+  }
 
-    #loginButton{
-        --background: #a3c442;
-        --background-activated: #acc969;
-        --background-focused: #acc969;
-        --background-hover: #acc969;
-        --width: 100%;
-        height: 50px;
-        margin: 0;
-    }
-    
-    #accederFacebook{
-        font-size: 0.8em;
-    }
-    
-    #spanFacebook{
-        font-weight: 600;
-    }
+  .buttonFacebook {
+    --background: #3b5998;
+    margin: 0 auto;
+    display: block;
+    --border-radius: 8px;
+  }
 
-    
+  ion-input {
+    overflow-x: scroll;
+    overflow-x: hidden;
+  }
+
+  .text_danger {
+    font-size: 0.8em;
+    color: #90aa54;
+  }
+
+  b {
+    color: black;
+  }
+
+  #registerDiv {
+    text-align: center;
+    padding-top: 15%;
+  }
+
+  #loginButton {
+    --background: #a3c442;
+    --background-activated: #acc969;
+    --background-focused: #acc969;
+    --background-hover: #acc969;
+    --width: 100%;
+    height: 50px;
+    margin: 0;
+  }
+
+  #accederFacebook {
+    font-size: 0.8em;
+  }
+
+  #spanFacebook {
+    font-weight: 600;
+  }
 }
 
-
 @media (max-height: 500px) {
-    ion-content{
-        width: 100%;
-        height: 100%;
-        position: relative;
-        #circuloCamposanto{
-            display: none;
-        }
-        #contenedorDatos{
-            width: 100%;
-            height: 100%;
-        }
+  ion-content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    #circuloCamposanto {
+      display: none;
     }
+    #contenedorDatos {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }

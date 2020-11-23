@@ -1,11 +1,17 @@
-<app-header titulo="buscar fallecido" ruta="/inicio" enableIonMenu="true"></app-header>
+<app-header
+  titulo="buscar fallecido"
+  ruta="/inicio"
+  enableIonMenu="true"
+></app-header>
 
-<ion-content [fullscreen]="true" >
+<ion-content [fullscreen]="true">
   <form [formGroup]="searchFG" (ngSubmit)="onSubmit(searchFG.value)">
     <div id="contenido">
       <div id="contentDatos">
-        <div >
-          <ion-label id="labelTexto">Realiza la búsqueda con uno o más criterios</ion-label>
+        <div>
+          <ion-label id="labelTexto"
+            >Realiza la búsqueda con uno o más criterios</ion-label
+          >
         </div>
         <ion-item lines="none">
           <ion-input

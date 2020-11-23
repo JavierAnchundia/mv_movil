@@ -1,16 +1,12 @@
-<!-- <ion-header id="seccionImagen">
-
-</ion-header> -->
-
 <ion-content [fullscreen]="true" id="seccionLogin">
   <div id="circuloCamposanto">
     <div id="ovalo">
-      <img src="assets/LOGO.png" alt="" id="logoI">
-      <img src="assets/FONDO.png" alt="" id="fondoI">
+      <img src="assets/LOGO.png" alt="" id="logoI" />
+      <img src="assets/FONDO.png" alt="" id="fondoI" />
     </div>
     <div id="cuadrado"></div>
   </div>
-  <form [formGroup] = "credentialsForm" (ngSubmit) = "onSubmit()">
+  <form [formGroup]="credentialsForm" (ngSubmit)="onSubmit()">
     <div id="contenedorDatos">
       <div id="contenedorTop">
         <ion-item lines="none" class="item-input itemCredenciales">
@@ -18,29 +14,52 @@
             name="person-circle-outline"
             class="ion-margin-end"
           ></ion-icon>
-          <ion-input type = "text" placeholder="nombre de usuario" formControlName = "username"></ion-input>
+          <ion-input
+            type="text"
+            placeholder="nombre de usuario"
+            formControlName="username"
+          ></ion-input>
         </ion-item>
-          <span class="text_danger" *ngIf="credentialsForm.controls['username'].touched && credentialsForm.controls['username'].hasError('required')">
-            Nombre de usuario es requerido!</span>
+        <span
+          class="text_danger"
+          *ngIf="credentialsForm.controls['username'].touched && credentialsForm.controls['username'].hasError('required')"
+        >
+          Nombre de usuario es requerido!</span
+        >
         <ion-item lines="none" class="item-input itemCredenciales">
           <ion-icon
             name="lock-closed-outline"
             class="ion-margin-end"
           ></ion-icon>
-          <ion-input [type]="showPassword ? 'text' : 'password'" placeholder="contraseña" formControlName = "password"></ion-input>
+          <ion-input
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="contraseña"
+            formControlName="password"
+          ></ion-input>
           <ion-icon
             slot="end"
-            [name] = "passwordToggle"
-            (click) = "togglePassword()"
+            [name]="passwordToggle"
+            (click)="togglePassword()"
           ></ion-icon>
         </ion-item>
-          <span class="text_danger" *ngIf="credentialsForm.controls['password'].touched && credentialsForm.controls['password'].hasError('required')">
-            Contraseña es requerida!</span>
+        <span
+          class="text_danger"
+          *ngIf="credentialsForm.controls['password'].touched && credentialsForm.controls['password'].hasError('required')"
+        >
+          Contraseña es requerida!</span
+        >
         <div id="olvidarPassword">
-            <ion-text (click)="goRecuperarContrasena()"><small><b>¿Olvidaste tú contraseña?</b></small></ion-text>
+          <ion-text (click)="goRecuperarContrasena()"
+            ><small><b>¿Olvidaste tú contraseña?</b></small></ion-text
+          >
         </div>
         <div id="contenedorBottomFB">
-          <ion-button class="buttonFacebook" expand="block" size="default" (click) = "signIn()">
+          <ion-button
+            class="buttonFacebook"
+            expand="block"
+            size="default"
+            (click)="signIn()"
+          >
             <ion-icon name="logo-facebook"></ion-icon>
             <ion-label class="ion-padding-start" id="accederFacebook">
               Acceder con <span id="spanFacebook">Facebook</span>
@@ -48,17 +67,22 @@
           </ion-button>
         </div>
         <div id="registerDiv">
-          <ion-text><small>¿Eres nuevo? </small> 
-            <!-- <ion-router-link href="/register" class="underline"> -->
-              <small (click)="register()"><b> Regístrate aquí</b></small>
-            <!-- </ion-router-link> -->
+          <ion-text
+            ><small>¿Eres nuevo? </small>
+            <small (click)="register()"><b> Regístrate aquí</b></small>
           </ion-text>
         </div>
       </div>
-      
+
       <div id="contenedorInferior">
         <div>
-          <ion-button id="loginButton" class="ion-text-uppercase" expand="full" type="submit" [disabled]="!credentialsForm.valid">
+          <ion-button
+            id="loginButton"
+            class="ion-text-uppercase"
+            expand="full"
+            type="submit"
+            [disabled]="!credentialsForm.valid"
+          >
             Iniciar Sesión
           </ion-button>
         </div>

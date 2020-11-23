@@ -1,7 +1,7 @@
 <ion-header class="ion-no-border">
   <div>
     <div id="ovalo">
-      <img src="assets/LOGO.png" alt="" id="logoI">
+      <img src="assets/LOGO.png" alt="" id="logoI" />
     </div>
     <div id="cuadrado"></div>
     <ion-toolbar>
@@ -11,22 +11,25 @@
       <ion-buttons slot="end">
         <ion-tab-button (click)="goNotification()">
           <ion-icon name="notifications" class="botonHeader"></ion-icon>
-          <ion-badge color="danger" *ngIf="validateBadge">{{numNotificationPush}}</ion-badge>
+          <ion-badge color="danger" *ngIf="validateBadge"
+            >{{numNotificationPush}}</ion-badge
+          >
         </ion-tab-button>
       </ion-buttons>
     </ion-toolbar>
   </div>
 </ion-header>
-<!-- <app-menu></app-menu> -->
 <ion-content>
   <ion-toolbar>
     <ion-grid class="center-grid">
       <ion-row>
         <ion-col (click)="goSearch()">
           <ion-tab-button>
-            <img src="assets/page-inicio/CONSULTAR_DIFUNTOS.png">
+            <img src="assets/page-inicio/CONSULTAR_DIFUNTOS.png" />
             <div>
-              <ion-label class="labelInicio ion-text-uppercase">consultar difuntos</ion-label>
+              <ion-label class="labelInicio ion-text-uppercase"
+                >consultar difuntos</ion-label
+              >
             </div>
           </ion-tab-button>
         </ion-col>
@@ -34,18 +37,18 @@
       <ion-row>
         <ion-col (click)="goFavoritos()">
           <ion-tab-button>
-            <img src="assets/page-inicio/DIFUNTOS_GUARDADOS.png">
+            <img src="assets/page-inicio/DIFUNTOS_GUARDADOS.png" />
             <div>
-              <ion-label class="labelInicio ion-text-uppercase">difuntos guardados</ion-label>
+              <ion-label class="labelInicio ion-text-uppercase"
+                >difuntos guardados</ion-label
+              >
             </div>
-            
           </ion-tab-button>
         </ion-col>
       </ion-row>
-      
     </ion-grid>
   </ion-toolbar>
-  
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button id="colorWhatsapp">
       <ion-icon name="logo-whatsapp"></ion-icon>

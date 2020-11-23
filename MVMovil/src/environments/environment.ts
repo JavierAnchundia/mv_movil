@@ -4,9 +4,9 @@
 
 export const environment = {
   api_key: "AIzaSyD4O-t27PSlyGg2_K6fHbPKlO9Tu_x5h-4",
-  camposanto : {idCamposanto: 1, nombre: ""},
+  camposanto: { idCamposanto: 1, nombre: "" },
   production: false,
-  client_id: 'tg0UMkMCY2jwCdFT2QwWY9eStMC67py6bCxQJ3gB',
+  client_id: "tg0UMkMCY2jwCdFT2QwWY9eStMC67py6bCxQJ3gB",
 };
 
 /*

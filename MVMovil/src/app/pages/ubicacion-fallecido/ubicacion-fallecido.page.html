@@ -1,10 +1,14 @@
-<app-header titulo="Mapa" ruta="/muro-difunto" enableIonMenu="false"></app-header>
+<app-header
+  titulo="Mapa"
+  ruta="/muro-difunto"
+  enableIonMenu="false"
+></app-header>
 <ion-content>
   <agm-map
     [latitude]="latFallecido"
     [longitude]="lngFallecido"
     [zoom]="zoom"
-    [zoomControl] = "true"
+    [zoomControl]="true"
     [disableDefaultUI]="false"
     [zoomControl]="false"
   >
