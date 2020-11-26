@@ -286,19 +286,17 @@ export class AuthService {
   async updateTokenDevice(id_User) {
     let storageTokenDevice = await this._fcm.getLocalTokeDevice();
     let parseData = JSON.parse(storageTokenDevice.value);
-    if (!parseData.id_user) {
-      let url = URL_SERVICIOS.api_token_device + parseData.id + "/";
-      const dataTokenDevice = new FormData();
-      dataTokenDevice.append("token_device", parseData.token);
-      dataTokenDevice.append("id_user", id_User);
-      this.http.put(url, dataTokenDevice).subscribe((data) => {
-        this._fcm.setLocalTokenDevice(
-          data["token_device"],
-          data["id_token_device"],
-          data["id_user"]
-        );
-      });
-    }
+    let url = URL_SERVICIOS.api_token_device + parseData.id + "/";
+    const dataTokenDevice = new FormData();
+    dataTokenDevice.append("token_device", parseData.token);
+    dataTokenDevice.append("id_user", id_User);
+    this.http.put(url, dataTokenDevice).subscribe((data) => {
+      this._fcm.setLocalTokenDevice(
+        data["token_device"],
+        data["id_token_device"],
+        data["id_user"]
+      );
+    });
   }
 
   /**

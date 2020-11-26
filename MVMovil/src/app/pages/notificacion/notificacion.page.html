@@ -8,6 +8,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" [scrollY]="true">
+  <div *ngIf="this.notificaciones.length == 0" id="nonePublicacion">
+    <p>No tiene notificaciones</p>
+  </div>
   <ion-card *ngFor="let notificacion of this.notificaciones">
     <ion-card-content *ngIf="notificacion.is_difunto">
       <ion-item lines="none" (click)="goMuroDifunto(notificacion.difunto)">

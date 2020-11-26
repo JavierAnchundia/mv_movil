@@ -12,6 +12,14 @@ ion-content {
   --padding-top: 30px;
   --padding-start: 20px;
   --padding-end: 20px;
+  #nonePublicacion {
+    padding-top: 20px;
+    p {
+      color: #aeadb3;
+      font-size: 0.8em;
+    }
+    text-align: center;
+  }
   ion-card {
     margin-bottom: 20px;
     border-radius: 12px;

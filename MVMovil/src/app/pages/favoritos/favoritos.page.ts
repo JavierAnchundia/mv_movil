@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { NavigationExtras, Router } from "@angular/router";
-import { AlertController } from "@ionic/angular";
+import { AlertController, LoadingController } from "@ionic/angular";
 import { environment } from "../../../environments/environment";
 import { Storage } from "@ionic/storage";
 import INFO_SESION from "src/app/config/infoSesion";
@@ -21,7 +21,8 @@ export class FavoritosPage implements OnInit {
     private router: Router,
     private storage: Storage,
     private _favoritos: FavoritosService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private loadingController: LoadingController
   ) {}
 
   ngOnInit() {
@@ -40,15 +41,18 @@ export class FavoritosPage implements OnInit {
    * permite cargar los favoritos de un usuario solo si este ha iniciado sesión
    */
   async cargarfavoritos() {
+    await this.showFavoritosLoading("id_favoritos");
     this.storage.get(INFO_SESION.IDUSER).then((id_user) => {
       if (id_user) {
         this.storage.get(INFO_SESION.TOKEN_KEY).then((token) => {
           if (token) {
             this._favoritos.obtenerFavoritos(id_user, token).subscribe(
               (data) => {
+                this.dismissFavoritosLoading("id_favoritos");
                 this.lista_resultados = data;
               },
               (error) => {
+                this.dismissFavoritosLoading("id_favoritos");
                 this.alertErrorLoadFavorite();
               }
             );
@@ -56,6 +60,7 @@ export class FavoritosPage implements OnInit {
         });
       }
     });
+    this.dismissFavoritosLoading("id_favoritos");
   }
 
   /**
@@ -78,5 +83,27 @@ export class FavoritosPage implements OnInit {
       buttons: ["OK"],
     });
     await alert.present();
+  }
+
+  /**
+   * Muestra un loading controller mientras se consulta el listado de favoritos al server
+   * @param idLoading id del loading controller
+   */
+  async showFavoritosLoading(idLoading) {
+    const loading = await this.loadingController.create({
+      id: idLoading,
+      cssClass: "colorloading",
+      message: "Cargando favoritos...",
+    });
+
+    return await loading.present();
+  }
+
+  /**
+   * Oculta el loading controller cuando ha retornado alguna informacion del backend
+   * @param idLoading id del loading controller
+   */
+  async dismissFavoritosLoading(idLoading) {
+    return await this.loadingController.dismiss(null, null, idLoading);
   }
 }
