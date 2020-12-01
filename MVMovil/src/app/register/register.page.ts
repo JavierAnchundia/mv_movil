@@ -23,17 +23,15 @@ const { Camera } = Plugins;
   styleUrls: ["./register.page.scss"],
 })
 export class RegisterPage implements OnInit {
-  usuarioRegistro: Usuario;
+  usuarioRegistro: any;
   registrationFormGroup: FormGroup;
   passwordFormGroup: FormGroup;
   idCamposanto: number;
   showSpinner: Boolean = false;
-
   showPassword: boolean = false;
   passwordToggle: String = "eye";
   showConfiPassword: boolean = false;
   passwordConfiToggle: String = "eye";
-
   submitted = false;
   usernameLista: any = [];
   emailLista: any = [];
@@ -84,16 +82,16 @@ export class RegisterPage implements OnInit {
           "",
           Validators.compose([
             Validators.required,
-            Validators.minLength(4),
-            Validators.maxLength(30),
+            Validators.minLength(6),
+            Validators.maxLength(20),
           ]),
         ],
         repeatPassword: [
           "",
           Validators.compose([
             Validators.required,
-            Validators.minLength(4),
-            Validators.maxLength(30),
+            Validators.minLength(6),
+            Validators.maxLength(20),
           ]),
         ],
       },
@@ -179,7 +177,8 @@ export class RegisterPage implements OnInit {
       direccion: "",
       genero: "",
       tipo_usuario: "uf",
-      idcamposanto: this.idCamposanto,
+      is_active: "true",
+      id_camposanto: this.idCamposanto,
     };
     await this.confirmarRegistroAlert(this.usuarioRegistro);
   }
@@ -194,7 +193,6 @@ export class RegisterPage implements OnInit {
       cssClass: "colorloading",
       message: "Registrando datos...",
     });
-
     return await loading.present();
   }
 
@@ -216,7 +214,6 @@ export class RegisterPage implements OnInit {
       message: "Ya existe un usuario con la misma credencial.",
       buttons: [{ text: "OK", cssClass: "colorTextButton" }],
     });
-
     await alert.present();
   }
 

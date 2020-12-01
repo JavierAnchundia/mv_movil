@@ -9,6 +9,13 @@
     }
     text-align: center;
   }
+  #spinnerLoad {
+    padding-top: 30px;
+    text-align: center;
+    ion-spinner {
+      --color: #a3c442;
+    }
+  }
   ion-card {
     margin: 5px 5px;
     margin-bottom: 20px;

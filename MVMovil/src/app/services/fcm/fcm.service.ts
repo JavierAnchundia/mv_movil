@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import URL_SERVICIOS from "src/app/config/config";
-import { Platform } from "@ionic/angular";
+import { Platform, ToastController } from "@ionic/angular";
 import { Router } from "@angular/router";
 import { StorageNotificationService } from "src/app/services/fcm/storage-notification.service";
 import {
@@ -22,7 +22,8 @@ export class FcmService {
     private http: HttpClient,
     public platform: Platform,
     public router: Router,
-    private _storageFcm: StorageNotificationService
+    private _storageFcm: StorageNotificationService,
+    private toastController: ToastController
   ) {}
 
   initFCM() {
@@ -64,6 +65,7 @@ export class FcmService {
         await this.saveNumNewNotification();
         this.dataNotificacion = await notification.data;
         await this.saveNewNotification(this.dataNotificacion);
+        this.messageNewNotification();
       }
     );
 
@@ -190,8 +192,17 @@ export class FcmService {
       let sumatoria = (await Number(oldNum.value)) + 1;
       setNumero = await String(sumatoria);
     } else {
-      setNumero = await "0";
+      setNumero = await "1";
     }
     return await setNumero;
+  }
+
+  async messageNewNotification() {
+    const toast = await this.toastController.create({
+      message: "Tiene nuevas notificaciones",
+      position: "middle",
+      duration: 2500,
+    });
+    toast.present();
   }
 }

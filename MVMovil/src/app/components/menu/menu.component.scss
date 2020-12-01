@@ -12,15 +12,17 @@ ion-header {
     align-items: center;
     display: flex;
     flex-direction: column;
-  }
-  ion-avatar {
-    width: 100% !important;
-    height: 100% !important;
-    max-width: 25% !important;
-    max-height: 25% !important;
-  }
-  #labelUser {
-    color: #acc969;
+    ion-item {
+      padding-left: 15px;
+      ion-avatar {
+        width: 75px;
+        height: 75px;
+      }
+      #labelUser {
+        color: #acc969;
+        padding-left: 15px;
+      }
+    }
   }
 }
 

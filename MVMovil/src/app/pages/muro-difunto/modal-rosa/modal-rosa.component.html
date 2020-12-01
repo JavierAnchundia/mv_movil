@@ -25,7 +25,9 @@
         {{ hist.id_usuario.last_name }}</ion-label
       >
       <div>
-        <small>{{ hist.fecha_publicacion | date: "dd/MM/yyyy, h:mm a" }}</small>
+        <small>{{
+          hist.fecha_publicacion | date: "dd/MM/yyyy, h:mm a":"+0:00"
+        }}</small>
       </div>
     </ion-item>
   </ion-list>

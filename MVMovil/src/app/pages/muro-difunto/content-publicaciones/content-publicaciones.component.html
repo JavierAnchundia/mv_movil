@@ -2,11 +2,14 @@
   <div *ngIf="this.lista_publicaciones.length == 0" id="nonePublicacion">
     <p>No hay publicaciones en este perfil</p>
   </div>
+  <div id="spinnerLoad" *ngIf="spinnerState">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
   <ion-card *ngFor="let publicacion of this.lista_publicaciones; index as pos">
     <ion-card-header>
       <ion-card-subtitle class="alinear_fecha">
         <small>{{
-          publicacion.fecha_publicacion | date: "MMM d, y h:mm a"
+          publicacion.fecha_publicacion | date: "MMM d, y h:mm a":"+0:00"
         }}</small>
       </ion-card-subtitle>
       <ion-card-title

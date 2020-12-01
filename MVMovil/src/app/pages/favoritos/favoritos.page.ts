@@ -41,7 +41,7 @@ export class FavoritosPage implements OnInit {
    * permite cargar los favoritos de un usuario solo si este ha iniciado sesión
    */
   async cargarfavoritos() {
-    await this.showFavoritosLoading("id_favoritos");
+    this.showFavoritosLoading("id_favoritos");
     this.storage.get(INFO_SESION.IDUSER).then((id_user) => {
       if (id_user) {
         this.storage.get(INFO_SESION.TOKEN_KEY).then((token) => {
@@ -50,6 +50,7 @@ export class FavoritosPage implements OnInit {
               (data) => {
                 this.dismissFavoritosLoading("id_favoritos");
                 this.lista_resultados = data;
+                this.lista_resultados.reverse();
               },
               (error) => {
                 this.dismissFavoritosLoading("id_favoritos");
@@ -58,9 +59,10 @@ export class FavoritosPage implements OnInit {
             );
           }
         });
+      } else {
+        this.dismissFavoritosLoading("id_favoritos");
       }
     });
-    this.dismissFavoritosLoading("id_favoritos");
   }
 
   /**
@@ -95,7 +97,6 @@ export class FavoritosPage implements OnInit {
       cssClass: "colorloading",
       message: "Cargando favoritos...",
     });
-
     return await loading.present();
   }
 

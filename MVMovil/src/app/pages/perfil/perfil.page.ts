@@ -84,15 +84,15 @@ export class PerfilPage implements OnInit {
         password: [
           "",
           Validators.compose([
-            Validators.minLength(4),
-            Validators.maxLength(30),
+            Validators.minLength(6),
+            Validators.maxLength(20),
           ]),
         ],
         repeatPassword: [
           "",
           Validators.compose([
-            Validators.minLength(4),
-            Validators.maxLength(30),
+            Validators.minLength(6),
+            Validators.maxLength(20),
           ]),
         ],
       },
@@ -466,7 +466,7 @@ export class PerfilPage implements OnInit {
       }
       if (
         this.lista_usuarios[i]["id_camposanto"] == this.id &&
-        this.lista_usuarios[i]["id_camposanto"] != this.userDetalle["email"]
+        this.lista_usuarios[i]["email"] != this.userDetalle["email"]
       ) {
         this.emailLista.push(this.lista_usuarios[i]["email"]);
       }

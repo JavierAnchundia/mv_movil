@@ -15,7 +15,9 @@
     <div id="contenido">
       <div id="contentDatos">
         <div id="cuadro">
-          <ion-img [src]="imagePerfil" (click)="capturarFoto()"></ion-img>
+          <ion-avatar>
+            <ion-img [src]="imagePerfil" (click)="capturarFoto()"></ion-img>
+          </ion-avatar>
         </div>
         <ion-item lines="none">
           <ion-input
@@ -125,6 +127,12 @@
           >
             La contraseña no es válida
           </p>
+          <p
+            class="text_danger"
+            *ngIf="passwordFormGroup.controls.password.errors?.maxlength || passwordFormGroup.controls.password.errors?.minlength"
+          >
+            Contraseña debe tener mínimo 6 carácteres
+          </p>
           <ion-item lines="none">
             <ion-input
               [type]="showConfiPassword ? 'text' : 'password'"
@@ -144,6 +152,12 @@
             *ngIf="passwordFormGroup.controls.repeatPassword.errors?.required && passwordFormGroup.controls.repeatPassword.touched"
           >
             La contraseña no es válida
+          </p>
+          <p
+            class="text_danger"
+            *ngIf="passwordFormGroup.controls.repeatPassword.errors?.maxlength || passwordFormGroup.controls.repeatPassword.errors?.minlength"
+          >
+            Contraseña debe tener mínimo 6 carácteres
           </p>
           <p
             class="text_danger"

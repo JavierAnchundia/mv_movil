@@ -6,7 +6,11 @@ import { HomenajeAudioService } from "src/app/services/homenaje_audio/homenaje-a
 import { HomenajeImagenService } from "src/app/services/homenaje_imagen/homenaje-imagen.service";
 import { HomenajeTextoService } from "src/app/services/homenaje_texto/homenaje-texto.service";
 import URL_SERVICIOS from "src/app/config/config";
-import { AlertController, ToastController } from "@ionic/angular";
+import {
+  AlertController,
+  LoadingController,
+  ToastController,
+} from "@ionic/angular";
 import INFO_SESION from "src/app/config/infoSesion";
 
 @Component({
@@ -19,6 +23,7 @@ export class ContentPublicacionesComponent implements OnInit {
   lista_publicaciones: any = [];
   url_backend: string = URL_SERVICIOS.url_backend;
   idUser: number;
+  spinnerState: boolean = false;
   constructor(
     private serv_h_video: HomenajeVideoService,
     private serv_h_audio: HomenajeAudioService,
@@ -27,7 +32,8 @@ export class ContentPublicacionesComponent implements OnInit {
     private serv_h_general: HomenajesService,
     private storage: Storage,
     private alertController: AlertController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private loadingController: LoadingController
   ) {}
 
   ngOnInit() {
@@ -52,13 +58,20 @@ export class ContentPublicacionesComponent implements OnInit {
   /**
    * Permite cargar los homenajes que pertenecen a un perfil del difunto
    */
-  getHomenajes() {
-    this.serv_h_general
+  async getHomenajes() {
+    this.spinnerState = await true;
+    await this.serv_h_general
       .getHomenajesDifunto(this.difunto_datos.id_difunto)
-      .subscribe((resp: any) => {
-        this.lista_publicaciones = resp;
-        this.lista_publicaciones.reverse();
-      });
+      .subscribe(
+        async (resp: any) => {
+          this.spinnerState = await false;
+          this.lista_publicaciones = resp;
+          this.lista_publicaciones.reverse();
+        },
+        (error) => {
+          this.spinnerState = false;
+        }
+      );
   }
 
   /**
@@ -110,9 +123,14 @@ export class ContentPublicacionesComponent implements OnInit {
           text: "Sí",
           cssClass: "colorTextButton",
           handler: () => {
+            this.showPublicacionesLoading(
+              "id_delete_publi",
+              "Eliminando publicación..."
+            );
             if (publicacion == "audio") {
               this.serv_h_audio.deleteAudio(id).subscribe(
-                (resp) => {
+                async (resp) => {
+                  await this.dismissPublicacionesLoading("id_delete_publi");
                   this.getHomenajes();
                   this.borradoExito(
                     "Se ha eliminado con éxito la publicación",
@@ -120,6 +138,7 @@ export class ContentPublicacionesComponent implements OnInit {
                   );
                 },
                 (error) => {
+                  this.dismissPublicacionesLoading("id_delete_publi");
                   this.borradoExito(
                     "No se ha podido eliminar la publicación",
                     "danger"
@@ -128,7 +147,8 @@ export class ContentPublicacionesComponent implements OnInit {
               );
             } else if (publicacion == "video") {
               this.serv_h_video.deleteVideo(id).subscribe(
-                (resp) => {
+                async (resp) => {
+                  await this.dismissPublicacionesLoading("id_delete_publi");
                   this.getHomenajes();
                   this.borradoExito(
                     "Se ha eliminado con éxito la publicación",
@@ -136,6 +156,7 @@ export class ContentPublicacionesComponent implements OnInit {
                   );
                 },
                 (error) => {
+                  this.dismissPublicacionesLoading("id_delete_publi");
                   this.borradoExito(
                     "No se ha podido eliminar la publicación",
                     "danger"
@@ -144,7 +165,8 @@ export class ContentPublicacionesComponent implements OnInit {
               );
             } else if (publicacion == "image") {
               this.serv_h_imagen.deleteImagen(id).subscribe(
-                (resp) => {
+                async (resp) => {
+                  await this.dismissPublicacionesLoading("id_delete_publi");
                   this.getHomenajes();
                   this.borradoExito(
                     "Se ha eliminado con éxito la publicación",
@@ -152,6 +174,7 @@ export class ContentPublicacionesComponent implements OnInit {
                   );
                 },
                 (error) => {
+                  this.dismissPublicacionesLoading("id_delete_publi");
                   this.borradoExito(
                     "No se ha podido eliminar la publicación",
                     "danger"
@@ -160,7 +183,8 @@ export class ContentPublicacionesComponent implements OnInit {
               );
             } else if (publicacion == "texto") {
               this.serv_h_texto.deleteTexto(id).subscribe(
-                (resp) => {
+                async (resp) => {
+                  await this.dismissPublicacionesLoading("id_delete_publi");
                   this.getHomenajes();
                   this.borradoExito(
                     "Se ha eliminado con éxito la publicación",
@@ -168,6 +192,7 @@ export class ContentPublicacionesComponent implements OnInit {
                   );
                 },
                 (error) => {
+                  this.dismissPublicacionesLoading("id_delete_publi");
                   this.borradoExito(
                     "No se ha podido eliminar la publicación",
                     "danger"
@@ -201,5 +226,26 @@ export class ContentPublicacionesComponent implements OnInit {
       color: color,
     });
     toast.present();
+  }
+
+  /**
+   * Muestra un loading controller mientras se consulta el listado de publicaciones al server
+   * @param idLoading id del loading controller
+   */
+  async showPublicacionesLoading(idLoading, message) {
+    const loading = await this.loadingController.create({
+      id: idLoading,
+      cssClass: "colorloading",
+      message: message,
+    });
+    return await loading.present();
+  }
+
+  /**
+   * Oculta el loading controller cuando ha retornado alguna informacion del backend
+   * @param idLoading id del loading controller
+   */
+  async dismissPublicacionesLoading(idLoading) {
+    return await this.loadingController.dismiss(null, null, idLoading);
   }
 }

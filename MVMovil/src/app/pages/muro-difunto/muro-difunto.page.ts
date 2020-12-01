@@ -54,6 +54,7 @@ export class MuroDifuntoPage implements OnInit {
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.difunto = this.router.getCurrentNavigation().extras.state.difunto;
+        this.obtenerDatosDifunto(this.difunto["id_difunto"]);
         this.checkUserLogin();
       }
     });
@@ -68,6 +69,15 @@ export class MuroDifuntoPage implements OnInit {
     this.verificarStateSave();
   }
 
+  /**
+   * Permite obtener los datos del difunto
+   * @param id del difunto
+   */
+  obtenerDatosDifunto(id) {
+    this.service_difunto.getDifuntoByID(id).subscribe((data) => {
+      this.difunto = data;
+    });
+  }
   /**
    * Verifica que si no existe sesión de usuario llama al método publicar Toast para mostrar mensaje
    */
