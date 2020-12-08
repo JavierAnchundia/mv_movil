@@ -76,6 +76,13 @@ const routes: Routes = [
         (m) => m.FavoritosPageModule
       ),
   },
+  {
+    path: "paquetes",
+    loadChildren: () =>
+      import("./pages/paquetes/paquetes.module").then(
+        (m) => m.Paquetes1PageModule
+      ),
+  },
 ];
 
 @NgModule({

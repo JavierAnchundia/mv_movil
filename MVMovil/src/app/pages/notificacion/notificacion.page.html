@@ -8,8 +8,17 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" [scrollY]="true">
-  <div *ngIf="this.notificaciones.length == 0" id="nonePublicacion">
+  <div
+    *ngIf="this.notificaciones.length == 0 && spinnerState == false"
+    id="nonePublicacion"
+  >
     <p>No tiene notificaciones</p>
+  </div>
+  <div id="spinnerLoad" *ngIf="spinnerState">
+    <ion-spinner name="crescent"></ion-spinner>
+    <div id="label_cargando">
+      <label for="">Cargando notificaciones...</label>
+    </div>
   </div>
   <ion-card *ngFor="let notificacion of this.notificaciones">
     <ion-card-content *ngIf="notificacion.is_difunto">
@@ -25,10 +34,10 @@
             </ion-col>
             <ion-col size="10">
               <ion-row>
-                <small id="labelTitulo">{{notificacion.title}}</small>
+                <small class="labelTitulo">{{notificacion.title}}</small>
               </ion-row>
               <ion-row>
-                <small id="mensajeSecundatio"
+                <small class="mensajeSecundario"
                   >Recuerda a tu ser querido en este día. Déjale un
                   mensaje</small
                 >

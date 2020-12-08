@@ -30,18 +30,6 @@ export class InicioPage implements OnInit {
     private storage: Storage
   ) {
     this.menu.enable(true);
-    this.platform.ready().then(() => {
-      this.platform.backButton.subscribeWithPriority(5, () => {
-        document.addEventListener(
-          "backbutton",
-          function (event) {
-            event.preventDefault();
-            event.stopPropagation();
-          },
-          false
-        );
-      });
-    });
   }
 
   ngOnInit() {
@@ -53,6 +41,10 @@ export class InicioPage implements OnInit {
         this.actualizarEstado(0, false);
       }
     });
+  }
+
+  goPaquetes() {
+    this.router.navigate(["/paquetes"]);
   }
 
   /**

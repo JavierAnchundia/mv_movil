@@ -10,7 +10,7 @@
       <div id="contentDatos">
         <div>
           <ion-label id="labelTexto"
-            >Realiza la búsqueda con uno o más criterios</ion-label
+            >Realiza la búsqueda con dos o más criterios</ion-label
           >
         </div>
         <ion-item lines="none">
@@ -35,7 +35,8 @@
           <ion-label>Fecha defunción desde:</ion-label>
           <ion-datetime
             value="1990-02-19"
-            formControlName="fechaDefuncion"
+            displayFormat="YYYY-MM-DD"
+            formControlName="fechaDesde"
           ></ion-datetime>
           <ion-icon name="calendar-outline" class="calendarIcon"></ion-icon>
         </ion-item>
@@ -43,7 +44,8 @@
           <ion-label>Fecha defunción hasta:</ion-label>
           <ion-datetime
             value="1990-02-19"
-            formControlName="fechaDefuncion"
+            displayFormat="YYYY-MM-DD"
+            formControlName="fechaHasta"
           ></ion-datetime>
           <ion-icon name="calendar-outline" class="calendarIcon"></ion-icon>
         </ion-item>

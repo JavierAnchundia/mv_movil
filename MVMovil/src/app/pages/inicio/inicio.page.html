@@ -19,9 +19,21 @@
     </ion-toolbar>
   </div>
 </ion-header>
-<ion-content>
+<ion-content [fullscreen]="true">
   <ion-toolbar>
     <ion-grid class="center-grid">
+      <ion-row>
+        <ion-col (click)="goPaquetes()">
+          <ion-tab-button>
+            <img src="assets/page-inicio/TRIBUTO.png" />
+            <div>
+              <ion-label class="labelInicio ion-text-uppercase"
+                >Paquetes</ion-label
+              >
+            </div>
+          </ion-tab-button>
+        </ion-col>
+      </ion-row>
       <ion-row>
         <ion-col (click)="goSearch()">
           <ion-tab-button>

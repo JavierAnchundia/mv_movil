@@ -1,9 +1,17 @@
 ion-header {
+  // begin
+  width: 100%;
+  height: 2%;
+  z-index: 500000;
+  // end
   #ovalo {
     background-color: #a3c442;
     position: fixed;
     top: -13.5%;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 30%;
     border-radius: 0 0 46% 46%;
@@ -37,19 +45,20 @@ ion-header {
   }
 }
 
-ion-button {
-  width: 110px;
-  height: 110px;
-  border-radius: 10px;
-}
-
 ion-content {
+  z-index: 1;
   --padding-top: 26%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   height: 100vh;
+
+  ion-button {
+    width: 110px;
+    height: 110px;
+    border-radius: 10px;
+  }
 
   img {
     width: 55%;

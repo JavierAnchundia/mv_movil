@@ -182,6 +182,11 @@ export class PerfilPage implements OnInit {
                     resp["direccion"]
                   );
                 }
+                if (resp["genero"] != null) {
+                  this.registrationFormGroup.controls["genero"].setValue(
+                    resp["genero"]
+                  );
+                }
                 if (resp["telefono"] != null) {
                   this.registrationFormGroup.controls["telefono"].setValue(
                     resp["telefono"]
@@ -341,6 +346,7 @@ export class PerfilPage implements OnInit {
                       .subscribe(
                         async (resp) => {
                           this.dismissRegisterLoading("register_load");
+
                           this.storage
                             .set(INFO_SESION.FIRST_NAME, resp["first_name"])
                             .then((fname) => {
@@ -382,7 +388,7 @@ export class PerfilPage implements OnInit {
                               resp["username"]
                             );
                           }
-                          this.router.navigate(["/inicio"]);
+                          this.successSaveProfile();
                         },
                         (error) => {
                           this.dismissRegisterLoading("register_load");
@@ -397,6 +403,24 @@ export class PerfilPage implements OnInit {
         },
       ],
     });
+    await alert.present();
+  }
+
+  async successSaveProfile() {
+    const alert = await this.alertController.create({
+      cssClass: "controlerAlert",
+      message: "Se ha actualizado con éxito sus datos",
+      buttons: [
+        {
+          text: "Ok",
+          cssClass: "colorTextButton",
+          handler: () => {
+            this.router.navigate(["/inicio"]);
+          },
+        },
+      ],
+    });
+
     await alert.present();
   }
 

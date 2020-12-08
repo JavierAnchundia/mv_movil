@@ -20,6 +20,21 @@ ion-content {
     }
     text-align: center;
   }
+  #spinnerLoad {
+    padding-top: 25px;
+    text-align: center;
+    ion-spinner {
+      transform: scale(1.5);
+      --color: #a3c442;
+    }
+    #label_cargando {
+      margin-top: 10px;
+      label {
+        color: #aeadb3;
+        font-size: 0.8em;
+      }
+    }
+  }
   ion-card {
     margin-bottom: 20px;
     border-radius: 12px;
@@ -35,12 +50,12 @@ ion-content {
             flex-direction: column;
             justify-content: center;
           }
-          #labelTitulo {
+          .labelTitulo {
             font-weight: 600;
             font-size: 0.8em;
             color: #000000;
           }
-          #mensajeSecundatio {
+          .mensajeSecundario {
             padding-top: 5px;
             font-size: 0.65em;
             color: #87868a;

@@ -49,6 +49,7 @@ const URL_SERVICIOS = {
   favoritos: URL_ROOT + "/favoritos/",
   favoritos_list: URL_ROOT + "/favoritos_list/",
   favoritos_del: URL_ROOT + "/favoritos_del/",
+  paquetes_list: URL_ROOT + "/paquetes_list/",
 };
 
 export default URL_SERVICIOS;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
-import { NavController, Platform } from "@ionic/angular";
+import { NavController, Platform, ToastController } from "@ionic/angular";
 import { NavigationExtras, Router } from "@angular/router";
 import { SectorService } from "src/app/services/sector/sector.service";
 import { TiposepulturaService } from "src/app/services/tiposepultura/tiposepultura.service";
@@ -34,20 +34,22 @@ export class SearchPage implements OnInit {
     private alertController: AlertController,
     private _difunto: DifuntoService,
     private platform: Platform,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private toastController: ToastController
   ) {
     this.searchFG = new FormGroup({
       nombres: new FormControl(""),
       apellidos: new FormControl(""),
       tipoSepultura: new FormControl(""),
       sector: new FormControl(""),
-      fechaDefuncion: new FormControl(""),
+      fechaDesde: new FormControl(""),
+      fechaHasta: new FormControl(""),
       noLapida: new FormControl(""),
     });
 
-    this.platform.backButton.subscribeWithPriority(10, () => {
-      this.router.navigate(["inicio"]);
-    });
+    // this.platform.backButton.subscribeWithPriority(10, () => {
+    //   this.router.navigate(["inicio"]);
+    // });
   }
 
   ngOnInit() {
@@ -61,7 +63,6 @@ export class SearchPage implements OnInit {
    * @param value objecto con los datos del formulario
    */
   async onSubmit(value) {
-    await this.showSearchLoading("id_search");
     this.cargarResultados(value);
   }
 
@@ -71,34 +72,34 @@ export class SearchPage implements OnInit {
    * @param value objecto con los datos del formulario
    */
   async cargarResultados(value) {
-    if (value.nombres == "") {
-      value.nombres = null;
-    }
-    if (value.apellidos == "") {
-      value.apellidos = null;
-    }
-    await this._difunto
-      .getDifuntos(this.id_camposanto, value.nombres, value.apellidos)
-      .toPromise()
-      .then(
-        (resp: any) => {
-          // this.showSpinner = false;
-          this.dismissSearchLoading("id_search");
-          this.lista_resultados = resp;
-          if (this.lista_resultados == 0) {
+    // console.log(value.fechaDesde.split("T")[0]);
+    if (value.nombres == "" || value.apellidos == "") {
+      this.messageBusqueda();
+    } else if (value.apellidos != "" && value.apellidos != "") {
+      await this.showSearchLoading("id_search");
+      await this._difunto
+        .getDifuntos(this.id_camposanto, value.nombres, value.apellidos)
+        .toPromise()
+        .then(
+          (resp: any) => {
+            // this.showSpinner = false;
+            this.dismissSearchLoading("id_search");
+            this.lista_resultados = resp;
+            if (this.lista_resultados == 0) {
+              this.noFoundAlert();
+            } else {
+              let navigationExtras: NavigationExtras = {
+                state: { listaFallecidos: this.lista_resultados },
+              };
+              this.router.navigate(["search-results"], navigationExtras);
+            }
+          },
+          (error) => {
+            this.dismissSearchLoading("id_search");
             this.noFoundAlert();
-          } else {
-            let navigationExtras: NavigationExtras = {
-              state: { listaFallecidos: this.lista_resultados },
-            };
-            this.router.navigate(["search-results"], navigationExtras);
           }
-        },
-        (error) => {
-          this.dismissSearchLoading("id_search");
-          this.noFoundAlert();
-        }
-      );
+        );
+    }
   }
 
   /**
@@ -168,5 +169,14 @@ export class SearchPage implements OnInit {
    */
   onChangeSector(value) {
     this.sectorOption = value;
+  }
+
+  async messageBusqueda() {
+    const toast = await this.toastController.create({
+      message: "Nombres y apellidos son necesarios para la búsqueda...",
+      position: "middle",
+      duration: 2500,
+    });
+    toast.present();
   }
 }

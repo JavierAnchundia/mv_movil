@@ -16,7 +16,15 @@ export class DifuntoService {
    * @param apellido del difunto
    */
   getDifuntos(id, nombre, apellido) {
-    let url = URL_SERVICIOS.difuntos + id + "/" + nombre + "/" + apellido + "/";
+    let url =
+      URL_SERVICIOS.difuntos +
+      id +
+      "/" +
+      nombre +
+      "/" +
+      apellido +
+      "/" +
+      "null/null/null/null/null/";
     return this.http.get(url);
   }
 

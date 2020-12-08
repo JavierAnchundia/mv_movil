@@ -12,6 +12,7 @@ import { LoadingController } from "@ionic/angular";
 export class NotificacionPage implements OnInit {
   notificaciones: any = [];
   message: String = "";
+  spinnerState: boolean = true;
   constructor(
     private router: Router,
     private _storageFcm: StorageNotificationService,
@@ -32,18 +33,26 @@ export class NotificacionPage implements OnInit {
    * Funcion permite cargar del storage del dispositivo de las notificaciones push que han llegado
    */
   async cargarData() {
-    await this.showNotificacionLoading("id_notificacion");
+    this.spinnerState = await true;
+    // await this.delay(6000);
+    // await this.showNotificacionLoading("id_notificacion");
     await this._storageFcm
       .getListNotificationFcm()
       .then((lista) => {
         this.notificaciones = lista.reverse();
         this.cRef.detectChanges();
-        this.dismissNotificacionLoading("id_notificacion");
+        this.spinnerState = false;
+        // this.dismissNotificacionLoading("id_notificacion");
       })
       .catch((error) => {
-        this.dismissNotificacionLoading("id_notificacion");
+        this.spinnerState = false;
+        // this.dismissNotificacionLoading("id_notificacion");
       });
   }
+
+  // delay(ms: number) {
+  //   return new Promise((resolve) => setTimeout(resolve, ms));
+  // }
 
   /**
    * Permite cambiar de pantalla a la del muro del difunto

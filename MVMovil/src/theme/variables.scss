@@ -255,6 +255,44 @@
   }
 }
 
+.alertPaquete {
+  .alertImg {
+    width: 100px;
+    margin: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .alertImg img {
+    border-radius: 10px;
+    perspective: 1000;
+    transform-style: preserve-3d;
+    width: 100px;
+  }
+  .alertLabel {
+    font-size: 0.8em;
+    text-align: justify;
+  }
+  .alertLabel ion-label {
+    font-size: 0.9em;
+    font-weight: 100;
+  }
+  .alert-button-group {
+    justify-content: flex-end;
+  }
+  .colorTextButton {
+    font-style: italic;
+    text-transform: capitalize;
+    font-weight: 600;
+    color: #acc969;
+  }
+  .colorTextButtonCerrar {
+    text-transform: capitalize;
+    font-style: normal;
+    color: #aeadb3;
+  }
+}
+
 .controlerAlert {
   .colorTextButton {
     color: #acc969;
