@@ -1,0 +1,72 @@
+ion-header {
+  ion-title {
+    font-size: 0.85em;
+    color: #a3c442;
+  }
+  ion-back-button {
+    --color: #a3c442;
+  }
+}
+
+ion-content {
+  --padding-end: 10px;
+  #nonePublicacion {
+    padding-top: 20px;
+    p {
+      color: #aeadb3;
+      font-size: 0.8em;
+    }
+    text-align: center;
+  }
+
+  ion-card {
+    justify-content: center;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    ion-card-content {
+      padding: 0;
+      ion-grid {
+        ion-row:nth-child(1) {
+          padding-top: 10px;
+          img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            perspective: 1000;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+              0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          }
+          ion-col:nth-child(2) {
+            padding-top: 10px;
+            padding-left: 15px;
+            .labelTitulo {
+              font-weight: 550;
+              font-size: 0.75em;
+              color: #000000;
+            }
+            .precioClass {
+              padding-top: 10px;
+              color: #acc969;
+              font-weight: 700;
+            }
+            .buttonVer {
+              --background: #a3c442;
+              --background-activated: #acc969;
+              --background-focused: #acc969;
+              --background-hover: #acc969;
+              width: 50px;
+              --border-radius: 30px;
+            }
+            .rowVer {
+              display: flex;
+              flex-direction: column;
+              align-content: flex-end;
+            }
+          }
+        }
+      }
+    }
+  }
+}

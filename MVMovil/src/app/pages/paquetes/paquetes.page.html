@@ -1,0 +1,37 @@
+<app-header titulo="paquetes" ruta="/inicio" enableIonMenu="true"></app-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="this.lista_paquetes.length == 0" id="nonePublicacion">
+    <p>No existen paquetes disponibles</p>
+  </div>
+  <ion-card *ngFor="let paquete of this.lista_paquetes" mode="ios">
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="4">
+              <img
+                src="{{this.url_backend}}{{paquete.imagen}}"
+                alt=""
+                id="iconNotificacion"
+              />
+            </ion-col>
+            <ion-col size="8">
+              <ion-row>
+                <small class="labelTitulo">{{paquete.nombre}}</small>
+              </ion-row>
+              <ion-row>
+                <span class="precioClass">${{paquete.precio}}</span>
+              </ion-row>
+              <ion-row class="rowVer">
+                <ion-button class="buttonVer" (click)="goPaquete(paquete)"
+                  >Ver</ion-button
+                >
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

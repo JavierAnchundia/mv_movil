@@ -1,0 +1,38 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title class="ion-text-uppercase"></ion-title>
+    <ion-buttons slot="end" (click)="dismiss()">
+      <ion-icon name="close"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div id="contenido">
+    <div id="contentDatos">
+      <div id="divImage">
+        <img
+          id="imgPaquete"
+          src="{{ url_backend }}{{ paquete.imagen }}"
+          alt=""
+        />
+      </div>
+      <div id="dataInfo">
+        <div id="divNombre">
+          <span>{{ paquete.nombre }}</span>
+        </div>
+        <div id="divDescrip">
+          <span>{{ paquete.descripcion }}</span>
+        </div>
+        <div id="divPrecio">
+          <span>$ {{ paquete.precio }}</span>
+        </div>
+      </div>
+    </div>
+    <div id="contentAceptar">
+      <ion-button id="publicarButton" type="button" expand="full">
+        Comprar
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
