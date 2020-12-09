@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:942879808145:android:80b0991922d5adee82bd30",
+        "mobilesdk_app_id": "1:942879808145:android:47eea70871914e7182bd30",
         "android_client_info": {
           "package_name": "com.mapavirtual.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "942879808145-o2gkg4ep0rr7lorbamfrkua6j9hmvacg.apps.googleusercontent.com",
+          "client_id": "942879808145-nggf5m953ahbkf8ab7ppqsf7csm6efj0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.mapavirtual.app",
-            "certificate_hash": "b765c2ccda275c6ef90395d4fb81e3d37fa39b1e"
+            "certificate_hash": "8a7a401551b60860006f71804c494b29b6076b46"
           }
         },
         {

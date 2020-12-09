@@ -29,10 +29,11 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      // this.splashScreen.hide();
       this.fcm.initFCM();
       this._storageFcm.removeNotification();
       this._storageFcm.set_NP(true);
+      this.splashScreen.hide();
     });
   }
 
