@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name">mapavirtual</string>
-    <string name="title_activity_main">mapavirtual</string>
+    <string name="title_activity_main">Mapa Virtual</string>
     <string name="package_name">com.mapavirtual.app</string>
     <string name="custom_url_scheme">com.mapavirtual.app</string>
     <!-- Registrar id y nombre de la aplicacion creada en facebook developer -->
