@@ -2,7 +2,7 @@ ion-header {
   ion-toolbar {
     ion-icon {
       font-size: 25px;
-      margin-left: 10px;
+      margin-right: 10px;
       color: #a3c442;
     }
     ion-title {
@@ -54,7 +54,7 @@ ion-content {
         }
       }
       #divDescrip {
-        padding-top: 20px;
+        padding-top: 10px;
         text-align: justify;
         span {
           color: #aeadb3;
@@ -69,6 +69,15 @@ ion-content {
           color: #acc969;
           font-size: 1.2em;
           font-weight: 700;
+        }
+      }
+      #divDetalle {
+        text-align: left;
+        padding-top: 15px;
+        span {
+          color: #acc969;
+          font-size: 0.95em;
+          font-weight: 550;
         }
       }
     }

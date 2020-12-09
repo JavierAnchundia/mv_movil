@@ -30,6 +30,10 @@ export class PaquetesPage implements OnInit {
     this.obtenerListaPaquetes(this.id_camposanto);
   }
 
+  /**
+   * Funcion permite cargar los paquetes que posee el camposanto
+   * @param id del camposanto
+   */
   async obtenerListaPaquetes(id) {
     await this.showPaqueteLoading("id_paquete");
     this._paquetes.getPaquetes(id).subscribe(
@@ -44,6 +48,10 @@ export class PaquetesPage implements OnInit {
     );
   }
 
+  /**
+   * Permite abrir el modal que mostara informacion del paquete
+   * @param paquete escogido en la opcion de ver paquete
+   */
   goPaquete(paquete) {
     this.cargarModalDetalle(paquete);
   }
@@ -69,6 +77,10 @@ export class PaquetesPage implements OnInit {
     return await this.loadingController.dismiss(null, null, idLoading);
   }
 
+  /**
+   * Funcion permite abrir el modal que mostara la informacion del paquete
+   * @param paquete Contiene informacion del paquete
+   */
   async cargarModalDetalle(paquete: any) {
     const modal = await this.modalController.create({
       component: ModalDetalleComponent,

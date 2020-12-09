@@ -8,8 +8,12 @@ import URL_SERVICIOS from "src/app/config/config";
 export class PaquetesService {
   constructor(private http: HttpClient) {}
 
-  getPaquetes(id_camposanto) {
-    let url = URL_SERVICIOS.paquetes_list + id_camposanto + "/";
+  /**
+   * Permite llamar a la api de cargar paquetes que posee el camposanto
+   * @param id del camposanto
+   */
+  getPaquetes(id) {
+    let url = URL_SERVICIOS.paquetes_list + id + "/";
     return this.http.get(url);
   }
 }

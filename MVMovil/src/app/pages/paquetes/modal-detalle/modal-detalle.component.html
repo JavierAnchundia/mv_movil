@@ -21,6 +21,9 @@
         <div id="divNombre">
           <span>{{ paquete.nombre }}</span>
         </div>
+        <div id="divDetalle">
+          <span>Detalle</span>
+        </div>
         <div id="divDescrip">
           <span>{{ paquete.descripcion }}</span>
         </div>
@@ -30,7 +33,12 @@
       </div>
     </div>
     <div id="contentAceptar">
-      <ion-button id="publicarButton" type="button" expand="full">
+      <ion-button
+        id="publicarButton"
+        type="button"
+        expand="full"
+        (click)="comprarPaquete()"
+      >
         Comprar
       </ion-button>
     </div>
