@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { MenuController } from "@ionic/angular";
+import { AlertController, MenuController } from "@ionic/angular";
 import { AuthService } from "src/app/services/auth/auth.service";
 import { HomenajesService } from "src/app/services/homenajes/homenajes.service";
 import { Storage } from "@ionic/storage";
@@ -26,7 +26,8 @@ export class MenuComponent implements OnInit {
     private menu: MenuController,
     private homenaje: HomenajesService,
     private auth: AuthService,
-    private storage: Storage
+    private storage: Storage,
+    private alertController: AlertController
   ) {}
 
   ngOnInit() {
@@ -58,6 +59,23 @@ export class MenuComponent implements OnInit {
   }
 
   /**
+   * Permite cambiar a la pestaña de sugerencias, "Se debe validar que este con login"
+   */
+  async goSugerencias() {
+    this.menu.close();
+    let estado;
+    await this.auth.authenticationState.subscribe((state) => {
+      estado = state;
+    });
+    if (estado) {
+      this.router.navigate(["/sugerencias"]);
+    } else {
+      this.loginMessageAlertMuro(
+        "Por favor inicie sesión para enviar una sugerencia"
+      );
+    }
+  }
+  /**
    * Permite cambiar a la pantalla de perfil
    */
   goPerfil() {
@@ -65,6 +83,13 @@ export class MenuComponent implements OnInit {
     this.router.navigate(["/perfil"]);
   }
 
+  /**
+   * Permite cambair a la pestaña de sobre nosotros
+   */
+  goNosotros() {
+    this.menu.close();
+    this.router.navigate(["/sobre-nosotros"]);
+  }
   /**
    * Permite cargar la información del usuario en el menú lateral solo si el usuario
    * ha iniciado sesión
@@ -105,5 +130,32 @@ export class MenuComponent implements OnInit {
       this.homenaje.sendMessage("null");
       this.router.navigate(["/inicio"]);
     });
+  }
+
+  /**
+   * Permite abrir un Alert controller para mostar en caso de que no haya iniciado sesion
+   * @param message contiene informacion que se quiere mostrar
+   */
+  async loginMessageAlertMuro(message) {
+    const alert = await this.alertController.create({
+      cssClass: "controlerAlert",
+      message: "<strong>" + message + "</strong>",
+      buttons: [
+        {
+          text: "Login",
+          cssClass: "colorTextButton",
+          handler: () => {
+            this.router.navigate(["login"]);
+          },
+        },
+        {
+          text: "Cancelar",
+          role: "cancel",
+          cssClass: "colorTextButton",
+          handler: () => {},
+        },
+      ],
+    });
+    await alert.present();
   }
 }

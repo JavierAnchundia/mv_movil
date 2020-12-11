@@ -14,6 +14,7 @@ import { ModalTextoComponent } from "./modal-texto/modal-texto.component";
 import { DatePipe } from "@angular/common";
 import { ModalRosaComponent } from "./modal-rosa/modal-rosa.component";
 import { ComponentsModule } from "src/app/components/components.module";
+
 @NgModule({
   imports: [
     CommonModule,

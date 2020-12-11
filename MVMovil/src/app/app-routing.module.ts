@@ -83,6 +83,20 @@ const routes: Routes = [
         (m) => m.Paquetes1PageModule
       ),
   },
+  {
+    path: "sugerencias",
+    loadChildren: () =>
+      import("./pages/sugerencias/sugerencias.module").then(
+        (m) => m.SugerenciasPageModule
+      ),
+  },
+  {
+    path: "sobre-nosotros",
+    loadChildren: () =>
+      import("./pages/sobre-nosotros/sobre-nosotros.module").then(
+        (m) => m.SobreNosotrosPageModule
+      ),
+  },
 ];
 
 @NgModule({
