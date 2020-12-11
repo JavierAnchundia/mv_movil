@@ -1,0 +1,58 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-uppercase">sugerencias</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="form_sugerencia" (ngSubmit)="enviarSugerencia()">
+    <div id="contenido">
+      <div id="contentDatos">
+        <ion-item lines="none" id="itemArea">
+          <ion-textarea
+            placeholder="Escriba aquí su mensaje..."
+            rows="14"
+            cols="20"
+            formControlName="mensaje"
+          >
+          </ion-textarea>
+        </ion-item>
+        <div
+          *ngIf="
+          form_sugerencia.controls['mensaje'].invalid &&
+          form_sugerencia.controls['mensaje'].touched
+          "
+        >
+          <span
+            class="advertencia"
+            *ngIf="form_sugerencia.controls['mensaje'].errors.required"
+          >
+            <small>Mensaje es requerido!</small>
+          </span>
+          <span
+            class="advertencia"
+            *ngIf="
+            form_sugerencia.controls['mensaje'].errors.minlength ||
+            form_sugerencia.controls['mensaje'].errors.maxlength
+            "
+          >
+            <small>Mensaje debe tener entre 10 y 200 carácteres</small>
+          </span>
+        </div>
+      </div>
+      <div id="contentEnviar">
+        <ion-button
+          id="enviarButton"
+          type="submit"
+          expand="full"
+          [disabled]="!form_sugerencia.valid"
+        >
+          Enviar
+        </ion-button>
+      </div>
+    </div>
+  </form>
+</ion-content>
