@@ -46,10 +46,6 @@ export class SearchPage implements OnInit {
       fechaHasta: new FormControl(""),
       noLapida: new FormControl(""),
     });
-
-    // this.platform.backButton.subscribeWithPriority(10, () => {
-    //   this.router.navigate(["inicio"]);
-    // });
   }
 
   ngOnInit() {
@@ -72,13 +68,29 @@ export class SearchPage implements OnInit {
    * @param value objecto con los datos del formulario
    */
   async cargarResultados(value) {
-    // console.log(value.fechaDesde.split("T")[0]);
     if (value.nombres == "" || value.apellidos == "") {
       this.messageBusqueda();
     } else if (value.apellidos != "" && value.apellidos != "") {
+      let fechaDesde, fechaHasta, tipoSepultura, n_lapida, sector;
+      if (value.fechaDesde != "") {
+        fechaDesde = value.fechaDesde.split("T")[0];
+      } else {
+        fechaDesde = "null";
+      }
+      if (value.fechaHasta != "") {
+        fechaHasta = value.fechaHasta.split("T")[0];
+      } else {
+        fechaHasta = "null";
+      }
       await this.showSearchLoading("id_search");
       await this._difunto
-        .getDifuntos(this.id_camposanto, value.nombres, value.apellidos)
+        .getDifuntos(
+          this.id_camposanto,
+          value.nombres,
+          value.apellidos,
+          fechaDesde,
+          fechaHasta
+        )
         .toPromise()
         .then(
           (resp: any) => {

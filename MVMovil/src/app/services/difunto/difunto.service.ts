@@ -15,7 +15,7 @@ export class DifuntoService {
    * @param nombre del difunto
    * @param apellido del difunto
    */
-  getDifuntos(id, nombre, apellido) {
+  getDifuntos(id, nombre, apellido, fechaDesde, fechaHasta) {
     let url =
       URL_SERVICIOS.difuntos +
       id +
@@ -24,7 +24,10 @@ export class DifuntoService {
       "/" +
       apellido +
       "/" +
-      "null/null/null/null/null/";
+      fechaDesde +
+      "/" +
+      fechaHasta +
+      "/null/null/null/";
     return this.http.get(url);
   }
 
