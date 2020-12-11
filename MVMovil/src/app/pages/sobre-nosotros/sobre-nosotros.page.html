@@ -1,0 +1,112 @@
+<ion-header class="ion-no-border">
+  <div>
+    <div id="ovalo">
+      <img src="assets/LOGO.png" alt="" id="logoI" />
+      <span><b>SOBRE NOSOTROS</b></span>
+    </div>
+    <div id="cuadrado"></div>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/" class="botonHeader"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </div>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <div id="contenido">
+    <div id="contentDatos">
+      <div id="divImage">
+        <img id="imgPaquete" src="assets/FOTO-CAMPOSANTO.png" alt="" />
+      </div>
+      <div id="dataInfo">
+        <div id="divNombre">
+          <span>PARQUE DE LA PAZ</span>
+        </div>
+        <div class="divDetalle">
+          <ion-item lines="none">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="2">
+                  <img
+                    src="assets/nosotros/POINTER_VERDE.png"
+                    id="iconPointer"
+                    alt=""
+                  />
+                </ion-col>
+                <ion-col size="10">
+                  <span
+                    >Av. León Febres Cordero Km 13 1/2 Vía la Puntilla -
+                    Pascuales, junto al Colegio Torremar.
+                    <i (click)="openMap()">Ver en mapa</i></span
+                  >
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="2">
+                  <img
+                    src="assets/nosotros/TELEFONO.png"
+                    class="iconDiseno"
+                    alt=""
+                  />
+                </ion-col>
+                <ion-col size="10">
+                  <span>042782345</span>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="2">
+                  <img
+                    src="assets/nosotros/WEB.png"
+                    class="iconDiseno"
+                    alt=""
+                  />
+                </ion-col>
+                <ion-col size="10">
+                  <span
+                    ><a href="http://www.parquedelapaz.ec/"
+                      >http://www.parquedelapaz.ec/</a
+                    ></span
+                  >
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="2">
+                  <img
+                    src="assets/nosotros/CORREO.png"
+                    class="iconDiseno"
+                    alt=""
+                  />
+                </ion-col>
+                <ion-col size="10">
+                  <span>parque_paz@gmail.com</span>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </div>
+        <div id="divRedesSociales">
+          <img
+            src="assets/nosotros/FACEBOOK.png"
+            alt=""
+            id="iconFacebook"
+            (click)="openFacebook()"
+          />
+          <img src="assets/nosotros/TWITTER.png" alt="" id="iconTwitter" />
+          <img src="assets/nosotros/INSTAGRAM.png" alt="" id="iconInstagram" />
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

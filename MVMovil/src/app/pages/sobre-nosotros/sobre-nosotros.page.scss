@@ -1,0 +1,148 @@
+ion-header {
+  // begin
+  width: 100%;
+  height: 2%;
+  z-index: 500000;
+  // end
+  #ovalo {
+    background-color: #a3c442;
+    position: fixed;
+    top: -13.5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 30%;
+    border-radius: 0 0 46% 46%;
+    img {
+      width: 100%;
+      padding: 0 26% 0;
+      top: 64%;
+      position: absolute;
+    }
+    span {
+      position: absolute;
+      top: 77%;
+      font-size: 0.9em;
+      color: #ffffff;
+    }
+  }
+
+  #cuadrado {
+    top: -8%;
+    position: fixed;
+    background-color: #a3c442;
+    border-radius: initial;
+    width: 100%;
+    height: 10%;
+  }
+
+  ion-toolbar {
+    --background: transparent;
+    --ion-color-base: transparent !important;
+  }
+
+  .botonHeader {
+    color: white;
+  }
+}
+
+ion-content {
+  z-index: 1;
+  --padding-top: 26%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  #contenido {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  #contentDatos {
+    overflow-y: scroll;
+    width: 100%;
+    height: 100%;
+    #divImage {
+      padding-top: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 250px;
+      #imgPaquete {
+        width: 75%;
+        height: 200px;
+        border-radius: 10px;
+        perspective: 1000;
+        transform-style: preserve-3d;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+          0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      }
+    }
+    #dataInfo {
+      padding: 5% 5% 0%;
+      #divNombre {
+        text-align: center;
+        span {
+          color: #000000;
+          font-size: 1.1em;
+          font-weight: 700;
+        }
+      }
+      .divDetalle {
+        padding-top: 15px;
+        ion-item {
+          ion-grid {
+            ion-row {
+              ion-col:nth-child(1) {
+                #iconPointer {
+                  width: 44%;
+                }
+                .iconDiseno {
+                  width: 55%;
+                }
+              }
+              ion-col:nth-child(1) {
+                span {
+                  text-align: justify;
+                  font-size: 0.65em;
+                }
+              }
+              a {
+                text-decoration: none;
+                color: #000000;
+              }
+              i {
+                color: #549ef4;
+              }
+            }
+          }
+        }
+      }
+      #divRedesSociales {
+        padding-top: 25px;
+        padding-bottom: 20px;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        #iconFacebook {
+          width: 6%;
+          margin-right: 50px;
+        }
+        #iconTwitter {
+          width: 12%;
+          margin-right: 50px;
+        }
+        #iconInstagram {
+          width: 12%;
+        }
+      }
+    }
+  }
+}
