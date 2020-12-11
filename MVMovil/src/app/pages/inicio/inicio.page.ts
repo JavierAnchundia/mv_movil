@@ -8,6 +8,7 @@ import { FcmService } from "src/app/services/fcm/fcm.service";
 import { ChangeDetectorRef } from "@angular/core";
 import { Storage } from "@ionic/storage";
 import INFO_SESION from "src/app/config/infoSesion";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-inicio",
@@ -17,6 +18,7 @@ import INFO_SESION from "src/app/config/infoSesion";
 export class InicioPage implements OnInit {
   validateBadge: boolean = false;
   numNotificationPush: any = 0;
+  urlWhatsapp: string = "";
 
   constructor(
     private router: Router,
@@ -41,6 +43,7 @@ export class InicioPage implements OnInit {
         this.actualizarEstado(0, false);
       }
     });
+    this.openWhatsapp();
   }
 
   goPaquetes() {
@@ -56,6 +59,14 @@ export class InicioPage implements OnInit {
     this.numNotificationPush = numero;
     this.validateBadge = estado;
     this.cRef.detectChanges();
+  }
+
+  /**
+   * Permite abrir whatsapp en el teléfono con el numero celular del camposanto
+   */
+  openWhatsapp() {
+    let numberPhone = environment.camposanto.telefono;
+    this.urlWhatsapp = "https://wa.me/" + numberPhone;
   }
 
   /**
