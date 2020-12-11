@@ -82,6 +82,21 @@ export class SearchPage implements OnInit {
       } else {
         fechaHasta = "null";
       }
+      if (value.sector != "") {
+        sector = value.sector;
+      } else {
+        sector = "null";
+      }
+      if (value.tipoSepultura != "") {
+        tipoSepultura = value.tipoSepultura;
+      } else {
+        tipoSepultura = "null";
+      }
+      if (value.noLapida != "") {
+        n_lapida = value.noLapida;
+      } else {
+        n_lapida = "null";
+      }
       await this.showSearchLoading("id_search");
       await this._difunto
         .getDifuntos(
@@ -89,7 +104,10 @@ export class SearchPage implements OnInit {
           value.nombres,
           value.apellidos,
           fechaDesde,
-          fechaHasta
+          fechaHasta,
+          n_lapida,
+          sector,
+          tipoSepultura
         )
         .toPromise()
         .then(
