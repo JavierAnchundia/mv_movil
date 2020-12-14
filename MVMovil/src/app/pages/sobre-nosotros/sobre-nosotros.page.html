@@ -16,7 +16,7 @@
   <div id="contenido">
     <div id="contentDatos">
       <div id="divImage">
-        <img id="imgPaquete" src="{{url_backend}}{{imagen}}" alt="No disponible" />
+        <img id="imgPaquete" src="{{url_image}}" alt="No disponible" />
       </div>
       <div id="dataInfo">
         <div id="divNombre">
@@ -35,8 +35,7 @@
                 </ion-col>
                 <ion-col size="10">
                   <span
-                    >{{direccion}}
-                    <i (click)="openMap()">Ver en mapa</i></span
+                    >{{direccion}} <i (click)="openMap()">Ver en mapa</i></span
                   >
                 </ion-col>
               </ion-row>
@@ -69,11 +68,7 @@
                   />
                 </ion-col>
                 <ion-col size="10">
-                  <span
-                    ><a href="{{linkPagina}}"
-                      >{{linkPagina}}</a
-                    ></span
-                  >
+                  <span><a href="{{linkPagina}}">{{linkPagina}}</a></span>
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -102,8 +97,18 @@
             id="iconFacebook"
             (click)="openFacebook()"
           />
-          <img src="assets/nosotros/TWITTER.png" alt="" id="iconTwitter" />
-          <img src="assets/nosotros/INSTAGRAM.png" alt="" id="iconInstagram" />
+          <img
+            src="assets/nosotros/TWITTER.png"
+            alt=""
+            id="iconTwitter"
+            (click)="openTwitter()"
+          />
+          <img
+            src="assets/nosotros/INSTAGRAM.png"
+            alt=""
+            id="iconInstagram"
+            (click)="openInstagram()"
+          />
         </div>
       </div>
     </div>
