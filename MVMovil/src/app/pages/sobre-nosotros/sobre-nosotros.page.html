@@ -16,11 +16,11 @@
   <div id="contenido">
     <div id="contentDatos">
       <div id="divImage">
-        <img id="imgPaquete" src="assets/FOTO-CAMPOSANTO.png" alt="" />
+        <img id="imgPaquete" src="{{url_backend}}{{imagen}}" alt="No disponible" />
       </div>
       <div id="dataInfo">
         <div id="divNombre">
-          <span>PARQUE DE LA PAZ</span>
+          <span>{{nombre}}</span>
         </div>
         <div class="divDetalle">
           <ion-item lines="none">
@@ -35,8 +35,7 @@
                 </ion-col>
                 <ion-col size="10">
                   <span
-                    >Av. León Febres Cordero Km 13 1/2 Vía la Puntilla -
-                    Pascuales, junto al Colegio Torremar.
+                    >{{direccion}}
                     <i (click)="openMap()">Ver en mapa</i></span
                   >
                 </ion-col>
@@ -54,7 +53,7 @@
                   />
                 </ion-col>
                 <ion-col size="10">
-                  <span>042782345</span>
+                  <span>+593{{telefono}}</span>
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -71,8 +70,8 @@
                 </ion-col>
                 <ion-col size="10">
                   <span
-                    ><a href="http://www.parquedelapaz.ec/"
-                      >http://www.parquedelapaz.ec/</a
+                    ><a href="{{linkPagina}}"
+                      >{{linkPagina}}</a
                     ></span
                   >
                 </ion-col>
@@ -90,7 +89,7 @@
                   />
                 </ion-col>
                 <ion-col size="10">
-                  <span>parque_paz@gmail.com</span>
+                  <span>{{correo}}</span>
                 </ion-col>
               </ion-row>
             </ion-grid>
