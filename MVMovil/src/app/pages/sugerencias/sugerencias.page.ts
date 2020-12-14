@@ -5,6 +5,7 @@ import {
   FormGroup,
   FormControl,
 } from "@angular/forms";
+import { AlertController } from "@ionic/angular";
 import { environment } from "src/environments/environment";
 
 @Component({
@@ -16,7 +17,10 @@ export class SugerenciasPage implements OnInit {
   form_sugerencia: FormGroup;
   idCamposanto: any;
 
-  constructor(public formBuilder: FormBuilder) {}
+  constructor(
+    public formBuilder: FormBuilder,
+    private alertController: AlertController
+  ) {}
 
   ngOnInit() {
     this.idCamposanto = environment.camposanto.idCamposanto;
@@ -30,5 +34,26 @@ export class SugerenciasPage implements OnInit {
         ])
       ),
     });
+  }
+
+  enviarSugerencia() {
+    let message = "Opción de enviar sugerencia no disponible por el momento";
+    let title = "";
+    this.mostarAlert(message, title);
+  }
+
+  /**
+   * Muesta un alerta con informacion que se desea mostar al usuario
+   * @param title Titulo que se desea mostar
+   * @param message Mensaje que se desea mostar
+   */
+  async mostarAlert(message, title) {
+    const alert = await this.alertController.create({
+      cssClass: "controlerAlert",
+      header: title,
+      message: message,
+      buttons: [{ text: "OK", cssClass: "colorTextButton" }],
+    });
+    await alert.present();
   }
 }
