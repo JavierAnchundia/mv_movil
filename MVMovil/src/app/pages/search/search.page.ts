@@ -68,41 +68,77 @@ export class SearchPage implements OnInit {
    * @param value objecto con los datos del formulario
    */
   async cargarResultados(value) {
-    if (value.nombres == "" || value.apellidos == "") {
-      this.messageBusqueda();
-    } else if (value.apellidos != "" && value.apellidos != "") {
-      let fechaDesde, fechaHasta, tipoSepultura, n_lapida, sector;
-      if (value.fechaDesde != "") {
-        fechaDesde = value.fechaDesde.split("T")[0];
-      } else {
-        fechaDesde = "null";
-      }
-      if (value.fechaHasta != "") {
-        fechaHasta = value.fechaHasta.split("T")[0];
-      } else {
-        fechaHasta = "null";
-      }
-      if (value.sector != "") {
-        sector = value.sector;
-      } else {
-        sector = "null";
-      }
-      if (value.tipoSepultura != "") {
-        tipoSepultura = value.tipoSepultura;
-      } else {
-        tipoSepultura = "null";
-      }
-      if (value.noLapida != "") {
-        n_lapida = value.noLapida;
-      } else {
-        n_lapida = "null";
-      }
+    let fechaDesde,
+      fechaHasta,
+      tipoSepultura,
+      n_lapida,
+      sector,
+      nombre,
+      apellido;
+    let fechaD, fechaH;
+    if (value.nombres != "") {
+      nombre = value.nombres;
+    } else {
+      nombre = null;
+    }
+    if (value.apellidos != "") {
+      apellido = value.apellidos;
+    } else {
+      apellido = null;
+    }
+    if (value.fechaDesde != "") {
+      fechaDesde = value.fechaDesde.split("T")[0];
+      let arreglo = fechaDesde.split("-");
+      fechaD = new Date(arreglo[0], arreglo[1], arreglo[2]);
+    } else {
+      fechaDesde = null;
+    }
+    if (value.fechaHasta != "") {
+      fechaHasta = value.fechaHasta.split("T")[0];
+      let arregloH = fechaHasta.split("-");
+      fechaH = new Date(arregloH[0], arregloH[1], arregloH[2]);
+    } else {
+      fechaHasta = null;
+    }
+    if (value.sector != "") {
+      sector = value.sector;
+    } else {
+      sector = null;
+    }
+    if (value.tipoSepultura != "") {
+      tipoSepultura = value.tipoSepultura;
+    } else {
+      tipoSepultura = null;
+    }
+    if (value.noLapida != "") {
+      n_lapida = value.noLapida;
+    } else {
+      n_lapida = null;
+    }
+    let diferenciaFecha = fechaH - fechaD;
+    if (
+      (!nombre || !apellido) &&
+      !fechaDesde &&
+      !fechaHasta &&
+      !n_lapida &&
+      !sector &&
+      !tipoSepultura
+    ) {
+      this.messageBusqueda(
+        "Nombres y apellidos son necesarios para la búsqueda..."
+      );
+    } else if (diferenciaFecha < 0) {
+      console.log(diferenciaFecha);
+      this.messageBusqueda(
+        "Datos no válidos, seleccione un rango de fechas válido"
+      );
+    } else {
       await this.showSearchLoading("id_search");
       await this._difunto
         .getDifuntos(
           this.id_camposanto,
-          value.nombres,
-          value.apellidos,
+          nombre,
+          apellido,
           fechaDesde,
           fechaHasta,
           n_lapida,
@@ -201,12 +237,25 @@ export class SearchPage implements OnInit {
     this.sectorOption = value;
   }
 
-  async messageBusqueda() {
+  async messageBusqueda(message) {
     const toast = await this.toastController.create({
-      message: "Nombres y apellidos son necesarios para la búsqueda...",
+      message: message,
       position: "middle",
-      duration: 2500,
+      duration: 2700,
+      color: "dark",
     });
     toast.present();
+  }
+
+  RemoverFiltros() {
+    this.searchFG.setValue({
+      nombres: "",
+      apellidos: "",
+      tipoSepultura: "",
+      sector: "",
+      fechaDesde: "",
+      fechaHasta: "",
+      noLapida: "",
+    });
   }
 }

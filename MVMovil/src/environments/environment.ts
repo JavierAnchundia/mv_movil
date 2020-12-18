@@ -7,7 +7,7 @@ export const environment = {
   camposanto: {
     idCamposanto: 1,
     nombre: "Camposanto La Aurora",
-    telefono: "593999482328",
+    telefono: "999482328",
     correo: "campoecu@parquedelapaz.com",
     linkPagina: "https://parquedelapaz.com/camposanto/sede/la-aurora",
     imagen: "assets/FOTO-CAMPOSANTO.png",
