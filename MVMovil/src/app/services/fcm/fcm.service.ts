@@ -10,7 +10,7 @@ import {
   PushNotificationToken,
   PushNotificationActionPerformed,
 } from "@capacitor/core";
-
+import { environment } from "src/environments/environment";
 const { PushNotifications, Storage } = Plugins;
 
 @Injectable({
@@ -18,6 +18,8 @@ const { PushNotifications, Storage } = Plugins;
 })
 export class FcmService {
   dataNotificacion: any = [];
+  idCamposanto: any;
+
   constructor(
     private http: HttpClient,
     public platform: Platform,
@@ -27,6 +29,7 @@ export class FcmService {
   ) {}
 
   initFCM() {
+    this.idCamposanto = environment.camposanto.idCamposanto;
     /**
      * Cuando se obtiene los permisos para obtener el token
      */
@@ -116,6 +119,7 @@ export class FcmService {
     let data = new FormData();
     data.append("token_device", token);
     data.append("plataform", platformDevice);
+    data.append("id_camposanto", this.idCamposanto);
     return this.http.post(url, data);
   }
 

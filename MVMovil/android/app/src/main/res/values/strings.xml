@@ -5,6 +5,6 @@
     <string name="package_name">com.mapavirtual.app</string>
     <string name="custom_url_scheme">com.mapavirtual.app</string>
     <!-- Registrar id y nombre de la aplicacion creada en facebook developer -->
-    <string name="fb_app_id">921830748297038</string>
-    <string name="fb_app_name">mapavirtual</string>
+    <string name="fb_app_id">675818219748107</string>
+    <string name="fb_app_name">MapaVirtual</string>
 </resources>

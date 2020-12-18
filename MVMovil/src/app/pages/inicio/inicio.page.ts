@@ -65,7 +65,7 @@ export class InicioPage implements OnInit {
    * Permite abrir whatsapp en el teléfono con el numero celular del camposanto
    */
   openWhatsapp() {
-    let numberPhone = environment.camposanto.telefono;
+    let numberPhone = "593" + environment.camposanto.telefono;
     this.urlWhatsapp = "https://wa.me/" + numberPhone;
   }
 
