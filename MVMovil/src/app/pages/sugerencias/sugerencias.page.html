@@ -42,6 +42,31 @@
             <small>Mensaje debe tener entre 10 y 200 carácteres</small>
           </span>
         </div>
+        <!-- <div id="divAdjuntar">
+          <span>Adjuntar Imagen de manera opcional</span>
+        </div> -->
+        <ion-list>
+          <ion-item *ngFor="let img of imagen; index as pos" text-wrap>
+            <ion-thumbnail slot="start">
+              <ion-img [src]="img.path"></ion-img>
+            </ion-thumbnail>
+            <ion-label>{{ img.nombre }}</ion-label>
+            <ion-button slot="end" fill="clear" (click)="eliminarImagen()">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <label for="">{{ base }}</label>
+        </ion-list>
+        <ion-list lines="none" *ngIf="this.validarImagen">
+          <img
+            id="img_foto"
+            src="assets/page-muro/modal/IMAGEN2.png"
+            (click)="seleccionarImagen()"
+          />
+        </ion-list>
+        <small *ngIf="imagen.length == 0" text-center class="advertencia"
+          >Seleccione alguna Imagen</small
+        >
       </div>
       <div id="contentEnviar">
         <ion-button

@@ -1,8 +1,8 @@
 const URL_ROOT = "https://carmsanc.pythonanywhere.com/api";
 const URL_ROOT_AUTH = "https://carmsanc.pythonanywhere.com";
 
-// const URL_ROOT = 'http://192.168.0.101:8000/api'
-// const URL_ROOT_AUTH = 'http://192.168.0.101:8000'
+// const URL_ROOT = "http://127.0.0.1:8000/api";
+// const URL_ROOT_AUTH = "http://127.0.0.1:8000";
 
 const URL_SERVICIOS = {
   url_backend: URL_ROOT_AUTH,
@@ -50,6 +50,7 @@ const URL_SERVICIOS = {
   favoritos_list: URL_ROOT + "/favoritos_list/",
   favoritos_del: URL_ROOT + "/favoritos_del/",
   paquetes_list: URL_ROOT + "/paquetes_list/",
+  contactoPost: URL_ROOT + "/contactoPost/",
 };
 
 export default URL_SERVICIOS;
