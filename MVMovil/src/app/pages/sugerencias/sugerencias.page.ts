@@ -48,7 +48,7 @@ export class SugerenciasPage implements OnInit {
         Validators.compose([
           Validators.required,
           Validators.minLength(10),
-          Validators.maxLength(30),
+          Validators.maxLength(200),
         ])
       ),
     });
@@ -116,8 +116,8 @@ export class SugerenciasPage implements OnInit {
   }
 
   /**
-   * Permite enviar los datos de la publicacion con la imagen como archivo a la base de datos
-   * Llama a la funcion de postImagen del servicio de ImagenService.ts para enviar la informacion al backend
+   * Permite enviar sugerencias con imagen de manera opcional como archivo a la base de datos
+   * Llama a la funcion de postImagen del servicio de SugerenciaService.ts para enviar la informacion al backend
    */
   async postImagen() {
     await this.showMensajeLoading("idMensaje");
@@ -138,10 +138,10 @@ export class SugerenciasPage implements OnInit {
           sugerenciaData.append("id_usuario", id);
           this._sugerencia.postSugerencia(sugerenciaData, token).subscribe(
             async (data) => {
-              console.log(data);
               this.validarImagen = true;
               this.imagen = [];
               await this.dismissMensajeLoading("idMensaje");
+              this.form_sugerencia.reset();
               this.router.navigate(["/inicio"]);
               await this.presentToast(
                 "Se ha subido con éxito...",

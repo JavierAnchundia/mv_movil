@@ -130,6 +130,10 @@ export class LoginPage implements OnInit {
             this.facebbookAlert();
           }
         );
+      })
+      .catch((e) => {
+        this.dismissAuthLoading("idAuth");
+        this.facebbookAlert();
       });
     await this.facebook.logEvent(this.facebook.EVENTS.EVENT_NAME_ADDED_TO_CART);
   }
