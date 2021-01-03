@@ -34,13 +34,15 @@ export class StorageNotificationService {
       difunto = JSON.parse(data.difunto);
       is_difunto = true;
     }
-    await arrayNotification.push({
-      title: data.title,
-      difunto: difunto,
-      is_difunto: is_difunto,
-      time_recibido: new Date().getTime(),
-      tipo: "fcm",
-    });
+    if (is_difunto == true) {
+      await arrayNotification.push({
+        title: data.title,
+        difunto: difunto,
+        message: data.message,
+        time_recibido: new Date().getTime(),
+        tipo: "difunto",
+      });
+    }
     this.storage
       .set(INFO_SESION.STORAGE_NOTIFICATION, arrayNotification)
       .then();
