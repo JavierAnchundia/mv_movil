@@ -2,7 +2,16 @@ import { Component, OnInit } from "@angular/core";
 import { NavigationExtras, Router } from "@angular/router";
 import { StorageNotificationService } from "src/app/services/fcm/storage-notification.service";
 import { ChangeDetectorRef } from "@angular/core";
-import { LoadingController } from "@ionic/angular";
+import { AlertController, LoadingController } from "@ionic/angular";
+import { NotificacionesService } from "src/app/services/notificaciones/notificaciones.service";
+import { environment } from "src/environments/environment";
+
+interface notificacionI {
+  title: string;
+  message: string;
+  type: string;
+  difunto: any;
+}
 
 @Component({
   selector: "app-notificacion",
@@ -10,49 +19,94 @@ import { LoadingController } from "@ionic/angular";
   styleUrls: ["./notificacion.page.scss"],
 })
 export class NotificacionPage implements OnInit {
-  notificaciones: any = [];
+  notificaciones: notificacionI[] = [];
   message: String = "";
   spinnerState: boolean = true;
+  noticacion: notificacionI;
+  notificacionesStored: notificacionI[] = [];
+  idCamposanto: number;
+
   constructor(
     private router: Router,
     private _storageFcm: StorageNotificationService,
     private cRef: ChangeDetectorRef,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private _notificacion: NotificacionesService,
+    private alertController: AlertController
   ) {}
 
   ngOnInit() {
+    this.idCamposanto = environment.camposanto.idCamposanto;
     this._storageFcm.updateNumNP$.subscribe((isState) => {
       if (isState) {
-        this.cargarData();
+        this.cargarNotificaciones();
       }
     });
-    this.cargarData();
+    this.cargarNotificaciones();
   }
 
+  async cargarNotificaciones() {
+    await this.cargarData();
+    await this.obtenerListNotificacion(this.idCamposanto);
+  }
   /**
    * Funcion permite cargar del storage del dispositivo de las notificaciones push que han llegado
    */
   async cargarData() {
     this.spinnerState = await true;
-    // await this.delay(6000);
-    // await this.showNotificacionLoading("id_notificacion");
+    this.notificacionesStored = [];
     await this._storageFcm
       .getListNotificationFcm()
       .then((lista) => {
-        this.notificaciones = lista.reverse();
-        this.cRef.detectChanges();
+        lista.reverse();
+        for (let notifi of lista) {
+          this.noticacion = {
+            title: notifi.title,
+            message: notifi.message,
+            type: notifi.tipo,
+            difunto: notifi.difunto,
+          };
+          this.notificacionesStored.push(this.noticacion);
+        }
         this.spinnerState = false;
-        // this.dismissNotificacionLoading("id_notificacion");
+        this.cRef.detectChanges();
       })
       .catch((error) => {
         this.spinnerState = false;
-        // this.dismissNotificacionLoading("id_notificacion");
       });
   }
 
-  // delay(ms: number) {
-  //   return new Promise((resolve) => setTimeout(resolve, ms));
-  // }
+  async obtenerListNotificacion(id) {
+    this.spinnerState = await true;
+    this.notificaciones = [];
+    await this._notificacion.getNotificaciones(id).subscribe(
+      (data: any) => {
+        data.reverse();
+        for (let notifi of data) {
+          this.noticacion = {
+            title: notifi.titulo,
+            message: notifi.mensaje,
+            type: notifi.tipo,
+            difunto: "",
+          };
+          this.notificaciones.push(this.noticacion);
+        }
+        this.spinnerState = false;
+        this.cRef.detectChanges();
+      },
+      (error) => {
+        this.spinnerState = false;
+      }
+    );
+  }
+
+  goPaquete() {
+    this.router.navigate(["paquetes"]);
+  }
+
+  openTip(title, message) {
+    this.tipAlert(title, message);
+  }
 
   /**
    * Permite cambiar de pantalla a la del muro del difunto
@@ -82,5 +136,21 @@ export class NotificacionPage implements OnInit {
    */
   async dismissNotificacionLoading(idLoading) {
     return await this.loadingController.dismiss(null, null, idLoading);
+  }
+
+  async tipAlert(title, message) {
+    const alert = await this.alertController.create({
+      cssClass: "controlerAlert",
+      header: title,
+      message: message,
+      buttons: [
+        {
+          text: "Ok",
+          cssClass: "colorTextButton",
+          handler: () => {},
+        },
+      ],
+    });
+    await alert.present();
   }
 }
