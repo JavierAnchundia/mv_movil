@@ -45,10 +45,15 @@ export class NotificacionPage implements OnInit {
     this.cargarNotificaciones();
   }
 
+  /**
+   * Permite llamar a las funciones de cargarDarta -> Para cargar notificaciones del localstorage
+   * y para la funcion de obtenerListaNotificacion -> Para cargar desde el endpoint
+   */
   async cargarNotificaciones() {
     await this.cargarData();
     await this.obtenerListNotificacion(this.idCamposanto);
   }
+
   /**
    * Funcion permite cargar del storage del dispositivo de las notificaciones push que han llegado
    */
@@ -76,6 +81,10 @@ export class NotificacionPage implements OnInit {
       });
   }
 
+  /**
+   * @param id del camposanto
+   * Permite cargar las notificaiones que ha emitidio el camposanto
+   */
   async obtenerListNotificacion(id) {
     this.spinnerState = await true;
     this.notificaciones = [];
@@ -100,10 +109,19 @@ export class NotificacionPage implements OnInit {
     );
   }
 
+  /**
+   * Permite llevar de una notificacion que sea del tipo paquete a la view de paquetes de la app
+   */
   goPaquete() {
     this.router.navigate(["paquetes"]);
   }
 
+  /**
+   *
+   * @param title del alert a mostar
+   * @param message del alert a mostrar
+   * Permite abrir una notificacion que sea del tipo tips en un alert
+   */
   openTip(title, message) {
     this.tipAlert(title, message);
   }
@@ -138,6 +156,12 @@ export class NotificacionPage implements OnInit {
     return await this.loadingController.dismiss(null, null, idLoading);
   }
 
+  /**
+   *
+   * @param title del alert
+   * @param message del alert
+   * Esta funcion permite abrir un alert con la informacion de una notificacion del tipo tips
+   */
   async tipAlert(title, message) {
     const alert = await this.alertController.create({
       cssClass: "controlerAlert",
