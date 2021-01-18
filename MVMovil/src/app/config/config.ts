@@ -52,6 +52,7 @@ const URL_SERVICIOS = {
   paquetes_list: URL_ROOT + "/paquetes_list/",
   contactoPost: URL_ROOT + "/contactoPost/",
   notificacion_list: URL_ROOT + "/notificacion_list/",
+  hyoutube_del: URL_ROOT + "/hyoutube_del/",
 };
 
 export default URL_SERVICIOS;

@@ -12,6 +12,7 @@ import {
   ToastController,
 } from "@ionic/angular";
 import INFO_SESION from "src/app/config/infoSesion";
+import { HomenajeYoutubeService } from "src/app/services/homenaje_youtube/homenaje-youtube.service";
 
 @Component({
   selector: "app-content-publicaciones",
@@ -24,12 +25,14 @@ export class ContentPublicacionesComponent implements OnInit {
   url_backend: string = URL_SERVICIOS.url_backend;
   idUser: number;
   spinnerState: boolean = false;
+  urlYoutube = "https://www.youtube.com/watch?v=";
   constructor(
     private serv_h_video: HomenajeVideoService,
     private serv_h_audio: HomenajeAudioService,
     private serv_h_imagen: HomenajeImagenService,
     private serv_h_texto: HomenajeTextoService,
     private serv_h_general: HomenajesService,
+    private serv_h_youtube: HomenajeYoutubeService,
     private storage: Storage,
     private alertController: AlertController,
     private toastController: ToastController,
@@ -72,6 +75,14 @@ export class ContentPublicacionesComponent implements OnInit {
           this.spinnerState = false;
         }
       );
+  }
+
+  deleteVideoYoutube(youtube) {
+    this.alertaConfirmar(
+      "el video de youtube",
+      "youtube",
+      youtube["id_youtube"]
+    );
   }
 
   /**
@@ -147,6 +158,24 @@ export class ContentPublicacionesComponent implements OnInit {
               );
             } else if (publicacion == "video") {
               this.serv_h_video.deleteVideo(id).subscribe(
+                async (resp) => {
+                  await this.dismissPublicacionesLoading("id_delete_publi");
+                  this.getHomenajes();
+                  this.borradoExito(
+                    "Se ha eliminado con éxito la publicación",
+                    "success"
+                  );
+                },
+                (error) => {
+                  this.dismissPublicacionesLoading("id_delete_publi");
+                  this.borradoExito(
+                    "No se ha podido eliminar la publicación",
+                    "danger"
+                  );
+                }
+              );
+            } else if (publicacion == "youtube") {
+              this.serv_h_youtube.deleteVideoYotube(id).subscribe(
                 async (resp) => {
                   await this.dismissPublicacionesLoading("id_delete_publi");
                   this.getHomenajes();

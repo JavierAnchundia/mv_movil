@@ -6,6 +6,11 @@
     <ion-spinner name="crescent"></ion-spinner>
   </div>
   <ion-card *ngFor="let publicacion of this.lista_publicaciones; index as pos">
+    <ion-icon
+      name="star"
+      class="field-icon"
+      *ngIf="!publicacion.gratuito"
+    ></ion-icon>
     <ion-card-header>
       <ion-card-subtitle class="alinear_fecha">
         <small>{{
@@ -38,6 +43,34 @@
         *ngIf="publicacion.id_videocontent.mensaje != null"
       >
         {{ publicacion.id_videocontent.mensaje }}
+      </p>
+    </ion-card-content>
+
+    <ion-card-content *ngIf="publicacion.id_youtube != null">
+      <div
+        class="eliminarPublicacion"
+        *ngIf="this.idUser == publicacion.id_usuario.id"
+      >
+        <ion-icon
+          name="trash-bin"
+          (click)="deleteVideoYoutube(publicacion.id_youtube)"
+        ></ion-icon>
+      </div>
+      <div id="youtubeVideo">
+        <youtube-player
+          videoId="{{ publicacion.id_youtube.video }}"
+          suggestedQuality="highres"
+          [height]="180"
+          [width]="340"
+          [startSeconds]="4"
+          [endSeconds]="8"
+        ></youtube-player>
+      </div>
+      <p
+        class="ion-text-justify ion-padding-bottom mensajePublicacion"
+        *ngIf="publicacion.id_youtube.mensaje != null"
+      >
+        {{ publicacion.id_youtube.mensaje }}
       </p>
     </ion-card-content>
 
